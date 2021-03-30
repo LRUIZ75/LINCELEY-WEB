@@ -5,6 +5,11 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
+// Colores definidos por Linceley
+$linceley-blue:#1D386F;
+$linceley-yellow: #EDB546;
+
+
 //
 // Light style
 //
@@ -13,6 +18,8 @@ $accent: mat-palette($mat-pink, A200, A100, A400);
 $theme: mat-light-theme($primary, $accent);
 
 $config: mat-typography-config();
+
+
 
 @include mat-core();
 

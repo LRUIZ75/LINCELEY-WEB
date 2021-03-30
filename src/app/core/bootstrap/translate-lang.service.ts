@@ -18,7 +18,7 @@ export class TranslateLangService {
       const locationInitialized = this.injector.get(LOCATION_INITIALIZED, Promise.resolve(null));
       locationInitialized.then(() => {
         const browserLang = navigator.language;
-        const defaultLang = browserLang.match(/en-US|zh-CN|zh-TW/) ? browserLang : 'en-US';
+        const defaultLang = browserLang.match(/es-ES|en-US/) ? browserLang : 'es-ES';
 
         this.settings.setLanguage(defaultLang);
         this.translate.setDefaultLang(defaultLang);

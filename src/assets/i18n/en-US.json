@@ -1,6 +1,8 @@
 {
   "menu": {
     "dashboard": "Dashboard",
+    "settings": "Settings",
+    "settings.general": "General Settings",
     "design": "Design",
     "design.colors": "Color System",
     "design.icons": "Material Icons",
@@ -136,5 +138,22 @@
     "confirm_delete": "Confirm delete?",
     "ok": "Ok",
     "close": "Close"
+  },
+  "record_actions": {
+    "add_new": "add new record",
+    "edit": "edit record",
+    "delete": "delete record",
+    "save": "save record",
+    "deactivate": "deactivate record",
+    "actions": "actions",
+    "saved": "successfully saved!!",
+    "cancel": "cancel",
+    "error_occurred": "An error has occurred!!"
+  },
+  "domain": {
+    "company_name": "company name",
+    "country_code": "country ISO-3 Code",
+    "tax_code": "tax number",
+    "logo": "logotype"
   }
 }
