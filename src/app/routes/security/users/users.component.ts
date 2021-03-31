@@ -54,7 +54,7 @@ export class SecurityUsersComponent implements OnInit {
   }
 
   delete(id: string){
-    const dialogConfig = new MatDialogConfig();
+/*     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.closeOnNavigation = true;
@@ -62,7 +62,7 @@ export class SecurityUsersComponent implements OnInit {
     this.deleteDialog.open(DialogDeleteComponent,dialogConfig);
     if(this.dialogResult =="SI"){
       console.log("procedemos con el borrado!!!!");
-    }
+    } */
   }
     
 }

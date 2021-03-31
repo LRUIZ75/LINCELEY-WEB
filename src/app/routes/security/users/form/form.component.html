@@ -1,3 +1,47 @@
-<p>form works!</p>
+<div matero-row fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col" fxLayoutAlign="center">
+    <mat-card fxFlex="100" class="mat-focus-indicator text-black bg-amber-50">
+      <mat-card-header>
+        <mat-card-title>
+          {{ title }}
+        </mat-card-title>
+      </mat-card-header>
 
-{{selectedRow}}
+      <mat-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+          <p>
+            <label for="name">User Name: </label>
+            <input type="text" id="name" name="name" formControlName="name" />
+          </p>
+          <div *ngIf="!name?.valid && (name?.dirty || name?.touched)">
+            <div [hidden]="!name.errors.required">
+              <small class="text-red-700"> User name is required </small>
+            </div>
+            <div [hidden]="!name.errors.minLength">
+              <small class="text-red-700"> Min Length is 5 </small>
+            </div>
+          </div>
+
+          <p>
+            <label for="name">Email: </label>
+            <input type="text" id="email" name="email" formControlName="email" />
+          </p>
+          <div *ngIf="!email?.valid && (email?.dirty || email?.touched)">
+            <div [hidden]="!email.errors.required">
+              <small class="text-red-700"> Email is required </small>
+            </div>
+            <div [hidden]="!name.errors.email">
+              <small class="text-red-700"> email has not valid format </small>
+            </div>
+          </div>
+
+
+
+        </form>
+      </mat-card-content>
+      <mat-card-actions> Acciones </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+{{ selectedRow }}

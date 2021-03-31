@@ -36,7 +36,7 @@ export class StartupService {
             this.settings.setUser({
               id: 1,
               name: 'Admin',
-              email: 'admin329@163.com',
+              email: 'user@linceley.com.mx',
               avatar: './assets/images/avatar.jpg',
             });
           },

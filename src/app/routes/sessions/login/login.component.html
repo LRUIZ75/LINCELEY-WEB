@@ -15,7 +15,7 @@
         <mat-label>{{ 'login.username' | translate }}: user@linceley.com.mx</mat-label>
         <input matInput placeholder="user@linceley.com.mx" formControlName="username" required />
         <mat-error *ngIf="username.invalid">
-          {{ 'login.please_enter' | translate }} <strong>ng-matero</strong>
+          {{ 'login.please_enter' | translate }} <strong>user@linceley.com.mx</strong>
         </mat-error>
       </mat-form-field>
 
@@ -29,7 +29,7 @@
           required
         />
         <mat-error *ngIf="password.invalid">
-          {{ 'login.please_enter' | translate }} <strong>ng-matero</strong>
+          {{ 'login.please_enter' | translate }} <strong>password</strong>
         </mat-error>
       </mat-form-field>
 
