@@ -6,7 +6,7 @@ import { SettingsService } from '@core';
   selector: 'app-translate',
   template: `
     <button mat-icon-button class="matero-toolbar-button" [matMenuTriggerFor]="menu">
-      <mat-icon>translate</mat-icon>
+      <mat-icon>language</mat-icon>
     </button>
 
     <mat-menu #menu="matMenu">

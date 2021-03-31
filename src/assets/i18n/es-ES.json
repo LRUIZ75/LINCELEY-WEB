@@ -86,7 +86,20 @@
     "tables.kitchen-sink": "Fregadero",
     "tables.remote-data": "Datos Remotos",
     "security": "Seguridad",
-    "security.users": "Usuarios"
+    "security.users": "Usuarios",
+    "security.people": "Personas",
+    "security.roleactions": "Roles y Acciones",
+    "organization": "Organización",
+    "organization.companies": "Compañías",
+    "organization.departments": "Departamentos",
+    "organization.distributioncenters": "CEDI's",
+    "organization.employees": "Empleados",
+    "organization.jobpositions": "Puestos",
+    "fleet": "Flota",
+    "fleet.assignments": "Asignaciones",
+    "fleet.drivers": "Repartidores",
+    "fleet.serviceschedules": "Programación de Servicio",
+    "fleet.vehicles": "Vehículos"
   },
   "paginator": {
     "first_page_label": "Primer página",

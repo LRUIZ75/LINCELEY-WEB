@@ -5,6 +5,19 @@
     "settings.general": "General Settings",
     "security": "Security",
     "security.users": "Users",
+    "security.roleactions": "Roles & Actions",
+    "security.people": "People",
+    "organization": "Organization",
+    "organization.companies": "Companies",
+    "organization.departments": "Departments",
+    "organization.jobpositions": "Job Positions",
+    "organization.employees": "Employees",
+    "organization.distributioncenters": "DC's",
+    "fleet": "Fleet",
+    "fleet.vehicles": "Vehicles",
+    "fleet.drivers": "Drivers",
+    "fleet.serviceschedules": "Service Schedules",
+    "fleet.assignments": "Assignments",
     "design": "Design",
     "design.colors": "Color System",
     "design.icons": "Material Icons",
@@ -162,6 +175,5 @@
     "logo": "logotype",
     "names": "Names",
     "lastnames": "Last Names"
-
   }
 }

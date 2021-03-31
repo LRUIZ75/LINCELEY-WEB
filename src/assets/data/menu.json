@@ -1,5 +1,6 @@
 {
-  "menu": [{
+  "menu": [
+    {
       "route": "dashboard",
       "name": "dashboard",
       "type": "link",
@@ -14,41 +15,81 @@
       "name": "security",
       "type": "sub",
       "icon": "admin_panel_settings",
-      "children": [{
+      "children": [
+        {
           "route": "users",
           "name": "users",
           "type": "link"
         },
         {
-          "route": "roles and actions",
-          "name": "404",
+          "route": "roles",
+          "name": "roleactions",
           "type": "link"
         },
         {
-          "route": "500",
-          "name": "500",
+          "route": "people",
+          "name": "people",
           "type": "link"
         }
       ]
     },
     {
-      "route": "sessions",
-      "name": "sessions",
+      "route": "organization",
+      "name": "organization",
       "type": "sub",
-      "icon": "question_answer",
-      "children": [{
-          "route": "403",
-          "name": "403",
+      "icon": "domain",
+      "children": [
+        {
+          "route": "companies",
+          "name": "companies",
           "type": "link"
         },
         {
-          "route": "404",
-          "name": "404",
+          "route": "departments",
+          "name": "departments",
           "type": "link"
         },
         {
-          "route": "500",
-          "name": "500",
+          "route": "jobpositions",
+          "name": "jobpositions",
+          "type": "link"
+        },
+        {
+          "route": "employees",
+          "name": "employees",
+          "type": "link"
+        },
+        {
+          "route": "distributioncenters",
+          "name": "distributioncenters",
+          "type": "link"
+        }
+      ]
+    },
+    {
+      "route": "fleet",
+      "name": "fleet",
+      "type": "sub",
+      "icon": "domain",
+      "children": [
+        {
+          "route": "vehicles",
+          "name": "vehicles",
+          "type": "link"
+        },
+        {
+          "route": "drivers",
+          "name": "drivers",
+          "type": "link"
+        },
+        {
+          "route": "serviceschedules",
+          "name": "serviceschedules",
+          "type": "link"
+        },
+        {
+          "route": "assignments",
+          "name": "assignments",
           "type": "link"
         }
       ]
