@@ -99,7 +99,11 @@
     "fleet.assignments": "Asignaciones",
     "fleet.drivers": "Repartidores",
     "fleet.serviceschedules": "Programación de Servicio",
-    "fleet.vehicles": "Vehículos"
+    "fleet.vehicles": "Vehículos",
+    "clients": "Clientes",
+    "logistic": "Logística",
+    "invoicing": "Facturación",
+    "marketing": "Mercadeo"
   },
   "paginator": {
     "first_page_label": "Primer página",

@@ -70,7 +70,7 @@
       "route": "fleet",
       "name": "fleet",
       "type": "sub",
-      "icon": "domain",
+      "icon": "airport_shuttle",
       "children": [
         {
           "route": "vehicles",
@@ -93,6 +93,30 @@
           "type": "link"
         }
       ]
+    },
+    {
+      "route": "clients",
+      "name": "clients",
+      "type": "link",
+      "icon": "people"
+    },
+    {
+      "route": "logistic",
+      "name": "logistic",
+      "type": "link",
+      "icon": "local_shipping"
+    },
+    {
+      "route": "invoicing",
+      "name": "invoicing",
+      "type": "link",
+      "icon": "local_atm"
+    },
+    {
+      "route": "marketing",
+      "name": "marketing",
+      "type": "link",
+      "icon": "announcement"
     }
   ]
 }

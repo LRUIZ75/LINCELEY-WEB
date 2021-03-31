@@ -69,11 +69,13 @@
   .menu-label,
   .menu-badge {
     transition: swift-ease-out(opacity);
+    
   }
 
   .menu-label,
   .menu-badge {
     @include badge();
+    
   }
 
   .menu-badge {
