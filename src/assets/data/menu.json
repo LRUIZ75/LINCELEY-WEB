@@ -10,6 +10,28 @@
       }
     },
     {
+      "route": "security",
+      "name": "security",
+      "type": "sub",
+      "icon": "admin_panel_settings",
+      "children": [{
+          "route": "users",
+          "name": "users",
+          "type": "link"
+        },
+        {
+          "route": "roles and actions",
+          "name": "404",
+          "type": "link"
+        },
+        {
+          "route": "500",
+          "name": "500",
+          "type": "link"
+        }
+      ]
+    },
+    {
       "route": "sessions",
       "name": "sessions",
       "type": "sub",

@@ -21,3 +21,4 @@ export const defaults: AppSettings = {
   sidenavCollapsed: false,
   language: 'es-ES',
 };
+

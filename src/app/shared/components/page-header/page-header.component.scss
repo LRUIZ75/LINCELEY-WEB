@@ -1,8 +1,10 @@
+@import '../../../../styles/custom/linceley.scss';
+
 .matero-page-header {
   display: block;
   padding: 16px;
   margin: -16px -16px 16px;
-  background-color: #3f51b5;
+  background-color: $linceley-bluelight; //#3f51b5;
   color: #fff;
 
   .matero-breadcrumb {

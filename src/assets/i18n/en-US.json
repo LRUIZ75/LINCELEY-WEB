@@ -3,6 +3,8 @@
     "dashboard": "Dashboard",
     "settings": "Settings",
     "settings.general": "General Settings",
+    "security": "Security",
+    "security.users": "Users",
     "design": "Design",
     "design.colors": "Color System",
     "design.icons": "Material Icons",
@@ -150,10 +152,16 @@
     "cancel": "cancel",
     "error_occurred": "An error has occurred!!"
   },
+  "general": {
+    "home": "Home"
+  },
   "domain": {
     "company_name": "company name",
     "country_code": "country ISO-3 Code",
     "tax_code": "tax number",
-    "logo": "logotype"
+    "logo": "logotype",
+    "names": "Names",
+    "lastnames": "Last Names"
+
   }
 }

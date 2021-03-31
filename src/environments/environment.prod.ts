@@ -3,4 +3,5 @@ export const environment = {
   production: true,
   useHash: false,
   hmr: false,
+  apiURL: 'https://linceley-api.herokuapp.com/API/'
 };

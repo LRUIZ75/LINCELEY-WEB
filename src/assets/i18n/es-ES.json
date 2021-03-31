@@ -84,7 +84,9 @@
     "settings.general": "Configuraciones Generales",
     "tables": "Tablas",
     "tables.kitchen-sink": "Fregadero",
-    "tables.remote-data": "Datos Remotos"
+    "tables.remote-data": "Datos Remotos",
+    "security": "Seguridad",
+    "security.users": "Usuarios"
   },
   "paginator": {
     "first_page_label": "Primer página",
@@ -150,10 +152,15 @@
     "cancel": "cancelar",
     "error_occurred": "Ha ocurrido un error!!"
   },
+  "general": {
+    "home": "Inicio"
+  },
   "domain": {
     "tax_code": "código tributario",
     "company_name": "nombre de compañia",
     "country_code": "código ISO-3 del país",
-    "logo": "logotipo"
+    "logo": "logotipo",
+    "names": "Nombres",
+    "lastnames": "Apellidos"
   }
 }

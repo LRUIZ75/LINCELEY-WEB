@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { MenuService } from '@core/bootstrap/menu.service';
 import { Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-header',
@@ -25,7 +26,7 @@ export class PageHeaderComponent implements OnInit {
   }
   private _hideBreadCrumb = false;
 
-  constructor(private router: Router, private menu: MenuService) {}
+  constructor(private router: Router, private menu: MenuService, private translate: TranslateService) {}
 
   ngOnInit() {
     this.nav = Array.isArray(this.nav) ? this.nav : [];
@@ -40,6 +41,6 @@ export class PageHeaderComponent implements OnInit {
   genBreadcrumb() {
     const routes = this.router.url.slice(1).split('/');
     this.nav = this.menu.getMenuLevel(routes);
-    this.nav.unshift('home');
+    this.nav.unshift(this.translate.instant('general.home'));
   }
 }

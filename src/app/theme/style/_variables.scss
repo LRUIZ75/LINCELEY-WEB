@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '../../../styles/custom/linceley.scss';
 
 // Layout
 $gutter: 16px !default;
@@ -59,3 +60,9 @@ $mat-colors: (
   light: $light-primary-text,
   dark: $dark-primary-text,
 ) !default;
+
+.transparent {
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}

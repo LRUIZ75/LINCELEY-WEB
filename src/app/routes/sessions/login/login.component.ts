@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     private settings: SettingsService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('ng-matero')]],
-      password: ['', [Validators.required, Validators.pattern('ng-matero')]],
+      username: ['', [Validators.required, Validators.pattern('user@linceley.com.mx')]],
+      password: ['', [Validators.required, Validators.pattern('password')]],
     });
   }
 

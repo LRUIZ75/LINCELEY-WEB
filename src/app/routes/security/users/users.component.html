@@ -1,0 +1,18 @@
+<page-header></page-header>
+
+<app-security-users-form [selectedRow]="selected" *ngIf="currentState != 'RETRIEVE'">
+</app-security-users-form>
+
+<app-security-users-list 
+(editEvent)="edit($event)"
+(deleteEvent) = "delete($event)"
+*ngIf="currentState == 'RETRIEVE'"
+> </app-security-users-list>
+
+<div class="customizer-handle" cdkDrag fxLayoutAlign="end center">
+  <button mat-fab 
+  class="bg-blue-A200"
+   (click)="changeMode('ADD')" *ngIf="currentState == 'RETRIEVE'">
+    <mat-icon aria-label="add">add</mat-icon>
+  </button>
+</div>

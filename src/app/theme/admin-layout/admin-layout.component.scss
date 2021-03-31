@@ -2,20 +2,27 @@
 @import '../style/transitions';
 @import '../style/breakpoints';
 
+
+
 .matero-container-wrap,
 .matero-container {
   height: 100%;
+  background-color:$linceley-yellowlight;
+  
+  background-image: "/assets/images/linceleyblack.png";
 }
 
 .matero-content {
   position: relative;
   padding: $gutter;
+  
 }
 
 .matero-sidenav {
   position: absolute;
   overflow-x: hidden;
   transition: swift-ease-out(width); // Only set width property
+  background-color: whitesmoke;//blanchedalmond;
 
   @include mat-elevation(2);
 
@@ -150,6 +157,7 @@
 .matero-header-white {
   .matero-toolbar,
   .matero-topmenu {
-    background-color: white;
+    //background-color: white;
+    background-color: $linceley-header;
   }
 }
