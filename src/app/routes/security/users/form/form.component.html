@@ -1,45 +1,70 @@
-<div matero-row fxLayout="row wrap" fxLayoutAlign="center center">
+<div matero-row fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="formMode == 'ADD'">
   <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col" fxLayoutAlign="center">
-    <mat-card fxFlex="100" class="mat-focus-indicator text-black bg-amber-50">
+
+
+    <mat-card > 
       <mat-card-header>
-        <mat-card-title>
-          {{ title }}
-        </mat-card-title>
+        <mat-card-title>Agregar Usuario</mat-card-title>
       </mat-card-header>
 
-      <mat-card-content>
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
-          <p>
-            <label for="name">User Name: </label>
-            <input type="text" id="name" name="name" formControlName="name" />
-          </p>
-          <div *ngIf="!name?.valid && (name?.dirty || name?.touched)">
-            <div [hidden]="!name.errors.required">
-              <small class="text-red-700"> User name is required </small>
+      <mat-horizontal-stepper [linear] = "true" #stepper>
+        <mat-step [stepControl]="personFormGroup">
+          <form [formGroup]="personFormGroup">
+            <ng-template matStepLabel>Datos Personales</ng-template>
+
+            <mat-form-field>
+              <input matInput placeholder="Nombres" formControlName="names" required  />
+            </mat-form-field>
+             <mat-form-field>
+              <input matInput placeholder="Apellidos" formControlName="lastNames" required  />
+            </mat-form-field> 
+           <mat-form-field>
+              <input matInput placeholder="No. de Identificacón" formControlName="personalId" required />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Celular" formControlName="mobileNumber" />
+            </mat-form-field> 
+
+            <div>
+              <button mat-button matStepperNext >Siguiente</button>
             </div>
-            <div [hidden]="!name.errors.minLength">
-              <small class="text-red-700"> Min Length is 5 </small>
+          </form>
+        </mat-step>
+         <mat-step [stepControl]="accountFormGroup">
+          <form [formGroup]="accountFormGroup">
+            <ng-template matStepLabel>Datos de Cuenta</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Cuenta" formControlName="name" required  />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email" required/>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Contraseña" formControlName="password" required/>
+            </mat-form-field>
+    
+              <mat-slide-toggle color="primary" [(ngModel)]="isActive">
+                Activar esta cuenta?
+              </mat-slide-toggle>
+              <!-- <input matInput placeholder="Activo" formControlName="isActive" /> -->
+
+            <div>
+              <button mat-button matStepperPrevious >Anterior</button>
+              <button mat-button matStepperNext >Siguiente</button>
             </div>
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Permisos</ng-template>
+          Ha terminado!.
+          <div>
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button (click)="stepper.Reiniciar()">Reset</button>
+            <button mat-button (click)="onSubmit()">Reset</button>
           </div>
-
-          <p>
-            <label for="name">Email: </label>
-            <input type="text" id="email" name="email" formControlName="email" />
-          </p>
-          <div *ngIf="!email?.valid && (email?.dirty || email?.touched)">
-            <div [hidden]="!email.errors.required">
-              <small class="text-red-700"> Email is required </small>
-            </div>
-            <div [hidden]="!name.errors.email">
-              <small class="text-red-700"> email has not valid format </small>
-            </div>
-          </div>
-
-
-
-        </form>
-      </mat-card-content>
-      <mat-card-actions> Acciones </mat-card-actions>
+        </mat-step>
+      </mat-horizontal-stepper>
     </mat-card>
   </div>
 </div>

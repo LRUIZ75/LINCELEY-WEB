@@ -17,8 +17,8 @@ export class SecurityUsersListComponent implements OnInit {
   public data: any[] = [];
   public person: any = {};
 
-  @Output() deleteEvent = new EventEmitter<any>();
-  @Output() editEvent = new EventEmitter<any>();
+  @Output() deleteEvent = new EventEmitter<string>();
+  @Output() editEvent = new EventEmitter<string>();
 
   positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
   position = new FormControl(this.positionOptions[2]);
@@ -68,15 +68,15 @@ export class SecurityUsersListComponent implements OnInit {
   }
 
 
-  deleteRequest(object: any) {
-    console.log("Solicitando borrar: " + object._id);
-    this.deleteEvent.emit(object);
+  deleteRequest(id: string) {
+    console.log("Solicitando borrar: " + id);
+    this.deleteEvent.emit(id);
     
   }
 
-  editRequest(object: any){
-    console.log("Solicitando editar: " + object._id);
-    this.editEvent.emit(object);
+  editRequest(id: string){
+    console.log("Solicitando editar: " + id);
+    this.editEvent.emit(id);
   }
 
 }

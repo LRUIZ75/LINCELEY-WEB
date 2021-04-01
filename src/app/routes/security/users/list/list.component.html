@@ -22,7 +22,7 @@
           <b>{{ 'domain.names' | translate | titlecase }}: </b>{{ item.person.names }}
         </p>
         <p>
-          <b>{{ 'domain.lastnames' | translate | titlecase }}: </b>{{ item.person.lastnames }}
+          <b>{{ 'domain.lastnames' | translate | titlecase }}: </b>{{ item.person.lastNames }}
         </p>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="end center">
@@ -42,7 +42,7 @@
         <button mat-icon-button class="bg-blue-800 text-white"
         [mtxTooltip]="tooltipEdit"
         [mtxTooltipPosition]="position.value"
-        (click)="editRequest(item)">
+        (click)="editRequest(item._id)">
           <mat-icon>edit</mat-icon>
         </button>
         &nbsp;
@@ -50,7 +50,7 @@
         class="bg-deep-orange-800 text-white"
         [mtxTooltip]="tooltipDelete"
         [mtxTooltipPosition]="position.value"
-        (click)="deleteRequest(item)"
+        (click)="deleteRequest(item.Id)"
         >
           <mat-icon>clear</mat-icon>
         </button>

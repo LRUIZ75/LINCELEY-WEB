@@ -44,16 +44,17 @@ export class SecurityUsersComponent implements OnInit {
 
   changeMode(mode: string){
     this.currentState = mode as ComponentMode;
+    this.selected = '';
     
   }
-  edit(id: string){
+  editMode(id: string){
     this.changeMode("EDIT");
     this.selected = id;
     console.log("Received: " +  id);
 
   }
 
-  delete(id: string){
+  deleteMode(id: string){
 /*     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;

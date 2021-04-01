@@ -1,6 +1,7 @@
-import { validateAndRewriteCoreSymbol } from '@angular/compiler-cli/src/ngtsc/imports';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-security-users-form',
@@ -11,36 +12,36 @@ export class SecurityUsersFormComponent implements OnInit {
   public data: any = {};
   
   @Input() selectedRow: any;
+  @Input() formMode: string = '';
 
-  public title = 'User Form';
-  public userForm: any;
+  roles : string[] = ["administrador"];
 
-  constructor(private fb: FormBuilder) {
+  public isActive=  false;
 
-    this.userForm = this.fb.group({
-      name: ['', Validators.required, Validators.minLength(5) ],
-      email: ['', Validators.required, Validators.email],
-      password: [''],
-      isActive: [true],
-      person: this.fb.group ({
-        names: ['', Validators.required],
-        lastNames: ['', Validators.required],
-        personalId: ['',Validators.required],
-        mobileNumber:  ['', Validators.required]
-      })
+  public personFormGroup: FormGroup;
+  public accountFormGroup: FormGroup;
+  public 
+
+  constructor(private formBuilder: FormBuilder) {
+    this.personFormGroup = this.formBuilder.group({
+      names: ['', Validators.required],
+      lastNames: ['', Validators.required],
+      personalId: ['',Validators.required],
+      mobileNumber:  ['']
     });
 
+    this.accountFormGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      //isActive: ['']
+    });
    }
 
-   get name(){
-     return this.userForm.get('name');
-   }
-
-    get email() {
-      return this.userForm.get('email');
-    }
+ 
 
   ngOnInit() {
+
   }
 
   onSubmit() {
