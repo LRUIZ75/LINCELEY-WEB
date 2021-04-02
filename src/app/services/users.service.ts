@@ -2,6 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
+
+export class User{
+  constructor(
+    public name: string,
+    public email: string,
+    public salt: string,
+    public password: string,
+    public emailVerified: boolean,
+    public isActive: boolean,
+    public roles: any[],
+    public person: any,
+
+  ){  }
+}
+
 @Injectable({
   providedIn: 'root',
 })

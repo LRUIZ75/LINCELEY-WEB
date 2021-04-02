@@ -2,6 +2,7 @@
 
 .mat-card {
   margin-bottom: $gutter;
+  background-color: map-get($mat-linceley-yellow, 50 );
 }
 
 .mat-accordion {

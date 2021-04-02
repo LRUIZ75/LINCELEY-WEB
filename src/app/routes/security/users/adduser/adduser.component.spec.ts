@@ -1,20 +1,20 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SecurityUsersFormComponent } from './form.component';
+import { SecurityUsersAdduserComponent } from './adduser.component';
 
-describe('SecurityUsersFormComponent', () => {
-  let component: SecurityUsersFormComponent;
-  let fixture: ComponentFixture<SecurityUsersFormComponent>;
+describe('SecurityUsersAdduserComponent', () => {
+  let component: SecurityUsersAdduserComponent;
+  let fixture: ComponentFixture<SecurityUsersAdduserComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecurityUsersFormComponent ]
+      declarations: [ SecurityUsersAdduserComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SecurityUsersFormComponent);
+    fixture = TestBed.createComponent(SecurityUsersAdduserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

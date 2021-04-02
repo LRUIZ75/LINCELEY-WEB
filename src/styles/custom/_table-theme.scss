@@ -5,8 +5,8 @@
   $background: map-get($theme, 'background');
   $foreground: map-get($theme, 'foreground');
 
-  $row-hover-bg: mat-color($mat-indigo, 50);
-  $row-odd-bg: mat-color($mat-gray, 100);
+  $row-hover-bg: mat-color($mat-linceley-blue, 50);
+  $row-odd-bg: mat-color($mat-linceley-blue, 100);
 
   $row-hover-bg-dark: mat-color($mat-blue-gray, 900);
   $row-odd-bg-dark: lighten(mat-color($mat-gray, 900), 10%);

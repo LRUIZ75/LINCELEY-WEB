@@ -3,10 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { SecurityUsersComponent } from './users/users.component';
 import { SecurityPeopleComponent } from './people/people.component';
 
-const routes: Routes = [{ path: 'users', component: SecurityUsersComponent }, { path: 'people', component: SecurityPeopleComponent }];
+const routes: Routes = [
+  { path: 'users', component: SecurityUsersComponent },
+  { path: 'people', component: SecurityPeopleComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SecurityRoutingModule { }
+export class SecurityRoutingModule {}

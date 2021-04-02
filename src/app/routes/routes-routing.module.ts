@@ -27,7 +27,10 @@ const routes: Routes = [
         loadChildren: () => import('./sessions/sessions.module').then(m => m.SessionsModule),
         data: { title: 'Sessions', titleI18n: 'Sessions' },
       },
-  { path: 'security', loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) }
+      {
+        path: 'security',
+        loadChildren: () => import('./security/security.module').then(m => m.SecurityModule),
+      },
     ],
   },
   {

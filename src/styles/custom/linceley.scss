@@ -1,6 +1,69 @@
-// Colores definidos por Linceley
-$linceley-blue:#1D386F;
-$linceley-bluelight:#1d386fea;
-$linceley-yellow: #EDB546;
-$linceley-yellowlight: #f3cc7d7e;
-$linceley-header: rgba(114, 150, 197, 0.774);
+
+
+/* For use in src/lib/core/theming/_palette.scss */
+$mat-linceley-blue: (
+    50 : #e4e7ee,
+    100 : #bbc3d4,
+    200 : #8e9cb7,
+    300 : #61749a,
+    400 : #3f5685,
+    500 : #1d386f,
+    600 : #1a3267,
+    700 : #152b5c,
+    800 : #112452,
+    900 : #0a1740,
+    A100 : #7893ff,
+    A200 : #456aff,
+    A400 : #1241ff,
+    A700 : #0031f7,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$mat-linceley-yellow: (
+    50 : #fdf6e9,
+    100 : #fae9c8,
+    200 : #f6daa3,
+    300 : #f2cb7e,
+    400 : #f0c062,
+    500 : #edb546,
+    600 : #ebae3f,
+    700 : #e8a537,
+    800 : #e59d2f,
+    900 : #e08d20,
+    A100 : #ffffff,
+    A200 : #fff3e5,
+    A400 : #ffdcb2,
+    A700 : #ffd098,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);

@@ -11,8 +11,8 @@
 //
 // Light style
 //
-$primary: mat-palette($mat-indigo);
-$accent: mat-palette($mat-pink, A200, A100, A400);
+$primary: mat-palette($mat-linceley-blue);
+$accent: mat-palette($mat-linceley-yellow, 500, A100, 900);
 $theme: mat-light-theme($primary, $accent);
 
 $config: mat-typography-config();

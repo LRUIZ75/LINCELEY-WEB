@@ -178,6 +178,7 @@
     "country_code": "código ISO-3 del país",
     "logo": "logotipo",
     "names": "Nombres",
-    "lastnames": "Apellidos"
+    "lastnames": "Apellidos",
+    "users": "Usuarios"
   }
 }

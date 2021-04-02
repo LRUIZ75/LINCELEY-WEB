@@ -4,8 +4,10 @@
   display: block;
   padding: 16px;
   margin: -16px -16px 16px;
-  background-color: $linceley-bluelight; //#3f51b5;
-  color: #fff;
+  background-color: map-get($mat-linceley-yellow , 700 );// #3f51b5;
+  //background-color: mat-linceley-yellow-700;// #3f51b5;
+  //color: map-get($mat-linceley-blue , 900 );
+
 
   .matero-breadcrumb {
     margin-top: 8px;

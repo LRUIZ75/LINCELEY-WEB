@@ -178,6 +178,7 @@
     "tax_code": "tax number",
     "logo": "logotype",
     "names": "Names",
-    "lastnames": "Last Names"
+    "lastnames": "Last Names",
+    "users": "Users"
   }
 }

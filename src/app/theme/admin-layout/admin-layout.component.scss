@@ -7,9 +7,6 @@
 .matero-container-wrap,
 .matero-container {
   height: 100%;
-  background-color:$linceley-yellowlight;
-  
-  background-image: "/assets/images/linceleyblack.png";
 }
 
 .matero-content {
@@ -22,7 +19,7 @@
   position: absolute;
   overflow-x: hidden;
   transition: swift-ease-out(width); // Only set width property
-  background-color: whitesmoke;//blanchedalmond;
+  background-color: map-get($mat-linceley-yellow , 500 ); //blanchedalmond;
 
   @include mat-elevation(2);
 
@@ -158,6 +155,6 @@
   .matero-toolbar,
   .matero-topmenu {
     //background-color: white;
-    background-color: $linceley-header;
+    background-color: map-get($mat-linceley-yellow , 500);
   }
 }
