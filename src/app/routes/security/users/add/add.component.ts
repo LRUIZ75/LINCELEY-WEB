@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MtxFormGroupModule } from '@ng-matero/extensions';
-import { PeopleService } from 'app/services/people.service';
-import { UsersService } from 'app/services/users.service';
+import { PeopleService, Person } from 'app/services/people.service';
+import { User, UsersService } from 'app/services/users.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,6 +16,9 @@ export class AddComponent implements OnInit {
   personFormGroup: FormGroup;
   accountFormGroup: FormGroup;
   rolesFormGroup: FormGroup;
+
+  public newPerson: any;
+  public newUser: any;
 
   @Output() changeStateEvent = new EventEmitter<string>();
 
@@ -36,7 +39,7 @@ export class AddComponent implements OnInit {
     });
     this.accountFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
 
@@ -49,27 +52,56 @@ export class AddComponent implements OnInit {
     this.changeStateEvent.emit(value);
   }
 
-  onSubmit() {
+  async onSubmit() {
     //Validate all 3 forms
-    if (!this.personFormGroup.valid) this.toaster.warning('Person Data is not valid', 'Cancelled');
-    if (!this.accountFormGroup.valid)
-      this.toaster.warning('Account Data is not valid', 'Cancelled');
-    if (!this.rolesFormGroup.valid)
-      this.toaster.warning('Permissions Data is not valid', 'Cancelled');
-
-    var result: any;
-    result = this.peopleService.addData(this.personFormGroup.value).toPromise();
-    var person: any = JSON.parse(JSON.stringify(result));
-    
-    if (person?.status != 'ok') {
-      this.toaster.warning('Cannot write new person record', 'Cancelled');
+    if (!this.personFormGroup.valid) {
+      this.toaster.warning('Person data is not valid', 'Cancelled');
+      return;
     }
 
-    //if everything ok,
+    if (!this.accountFormGroup.valid) {
+      this.toaster.warning('Account data is not valid', 'Cancelled');
+      return;
+    }
 
-    //save person
-    //save accout with roles
-    //Toaster Notification
+    if (!this.rolesFormGroup.valid) {
+      this.toaster.warning('Account data is not valid', 'Cancelled');
+      return;
+    }
+
+    var data: any;
+
+    data = <Person>this.personFormGroup.value;
+
+    await this.peopleService
+      .addData(data)
+      .toPromise()
+      .then(resp => {
+        this.newPerson = <Person>resp.created;
+        if (!this.newPerson) {
+          this.toaster.error('Error agregando datos de persona');
+          return;
+        }
+      });
+
+    data = <User>this.accountFormGroup.value;
+    data.person = this.newPerson._id;
+    data.salt = '';
+    data.emailVerified = false;
+    data.isActive = true;
+
+    this.userService.addData(data).subscribe((resp: any) => {
+      this.newUser = <User>resp.created;
+
+      if (!this.newUser) {
+        this.toaster.error('Error agregando datos de cuenta');
+        return;
+      }
+      //Toaster Notification
+      this.toaster.info('Usuario creado! Debe verificar su correo!');
+    });
+
     //change the state back to RETRIEVE mode
+    this.changeState('RETRIEVE');
   }
 }

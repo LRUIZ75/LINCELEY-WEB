@@ -58,9 +58,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initChart() {
-    this.chart1 = new ApexCharts(document.querySelector('#chart1'), this.charts[0]);
+/*     this.chart1 = new ApexCharts(document.querySelector('#chart1'), this.charts[0]);
     this.chart1.render();
     this.chart2 = new ApexCharts(document.querySelector('#chart2'), this.charts[1]);
-    this.chart2.render();
+    this.chart2.render(); */
   }
 }

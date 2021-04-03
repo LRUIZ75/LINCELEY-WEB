@@ -93,12 +93,12 @@ export class SecurityUsersComponent implements OnInit {
     public toaster: ToastrService
     ) {
       this.title= this.translate.instant('domain.users');
-
+      this.getList();
      }
 
   ngOnInit() {
     this.currentState = 'RETRIEVE';
-    this.getList();
+    
 
   }
 
