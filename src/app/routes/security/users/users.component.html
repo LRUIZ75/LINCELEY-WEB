@@ -1,34 +1,43 @@
 <page-header></page-header>
+<div *ngIf="currentState == 'ADD'">
+  <users-add (changeStateEvent)="currentState = $event"> </users-add>
+</div>
 
-<div class="customizer-handle" matTooltip="Agregar usuario"
-     cdkDrag (cdkDragStarted)="handleDragStart($event)">
-  <button mat-fab color ="accent" (click)="openPanel($event)">
-    <mat-icon  aria-label="Agregar un nuevo usuario">add</mat-icon>
+<div
+  class="customizer-handle"
+  matTooltip="Agregar usuario"
+  cdkDrag
+  (cdkDragStarted)="handleDragStart($event)"
+  *ngIf="currentState == 'RETRIEVE'"
+>
+  <button mat-fab color="accent" (click)="openPanel($event)">
+    <mat-icon aria-label="Agregar un nuevo usuario">add</mat-icon>
   </button>
 </div>
 
 <!-- Inicia listado de usuarios -->
-
-
-<mtx-grid [data]="userList"
-          [columns]="columns"
-          [loading]="isLoading"
-          [multiSelectable]="multiSelectable"
-          [rowSelectable]="rowSelectable"
-          [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-          [rowHover]="rowHover"
-          [rowStriped]="rowStriped"
-          [showToolbar]="showToolbar"
-          [toolbarTitle]= "title"
-          [columnHideable]="columnHideable"
-          [columnMovable]="columnMovable"
-          [pageOnFront]="showPaginator"
-          [showPaginator]="showPaginator"
-          [pageSizeOptions]="[5,10,50,100]"
-          [pageIndex]="0"
-          [pageSize]="5"
-          (sortChange)="changeSort($event)"
-          (selectionChange)="changeSelect($event)">
+<mtx-grid
+  [data]="userList"
+  [columns]="columns"
+  [loading]="isLoading"
+  [multiSelectable]="multiSelectable"
+  [rowSelectable]="rowSelectable"
+  [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
+  [rowHover]="rowHover"
+  [rowStriped]="rowStriped"
+  [showToolbar]="showToolbar"
+  [toolbarTitle]="title"
+  [columnHideable]="columnHideable"
+  [columnMovable]="columnMovable"
+  [pageOnFront]="showPaginator"
+  [showPaginator]="showPaginator"
+  [pageSizeOptions]="[5, 10, 50, 100]"
+  [pageIndex]="0"
+  [pageSize]="5"
+  (sortChange)="changeSort($event)"
+  (selectionChange)="changeSelect($event)"
+  *ngIf="currentState == 'RETRIEVE'"
+>
 </mtx-grid>
 <!-- <ng-template #expansionTpl let-row>
   {{row.name}}

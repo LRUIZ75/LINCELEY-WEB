@@ -1,0 +1,67 @@
+<mat-card>
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="personFormGroup">
+      <form [formGroup]="personFormGroup">
+        <ng-template matStepLabel>Datos Personales</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Names" formControlName="names" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Names" formControlName="lastNames" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="ID" formControlName="personalId" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Picture" formControlName="picture" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Mobile Number" formControlName="mobileNumber" required />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="accountFormGroup">
+      <form [formGroup]="accountFormGroup">
+        <ng-template matStepLabel>Cuenta</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Name" formControlName="name" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" required />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="rolesFormGroup">
+        <form [formGroup]="rolesFormGroup">
+          <ng-template matStepLabel>Permisos</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Roles" formControlName="roles" required />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+        <button mat-raised-button color="primary" (click)="changeState('RETRIEVE')">Submit</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>
+

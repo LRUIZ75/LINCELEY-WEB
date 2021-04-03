@@ -4,7 +4,6 @@ import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { PeopleService } from 'app/services/people.service';
-
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 
@@ -135,6 +134,7 @@ export class SecurityUsersComponent implements OnInit {
       return;
     }
     this.opened = true;
+    this.currentState = "ADD";
   }
     
 
