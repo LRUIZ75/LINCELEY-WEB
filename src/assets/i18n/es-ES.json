@@ -179,6 +179,12 @@
     "logo": "logotipo",
     "names": "Nombres",
     "lastnames": "Apellidos",
-    "users": "Usuarios"
+    "users": "Usuarios",
+    "companies": "Compañías",
+    "fullName": "Nombre Completo",
+    "location-lat": "Ubicación (lat)",
+    "location-lng": "Ubicación (lon)",
+    "shortName": "Siglas",
+    "isActive": "activo?"
   }
 }

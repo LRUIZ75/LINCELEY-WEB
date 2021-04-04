@@ -1,21 +1,19 @@
-import { Component,  OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
-import {User,UsersService,PeopleService} from 'app/services'
-
+import { User, UsersService, PeopleService } from 'app/services';
 
 @Component({
   selector: 'app-security-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  providers:[UsersService]
+  providers: [UsersService],
 })
 export class SecurityUsersComponent implements OnInit {
-
   columns: MtxGridColumn[] = [
     {
       header: this.translate.stream('Id'),
@@ -31,7 +29,7 @@ export class SecurityUsersComponent implements OnInit {
     },
     { header: this.translate.stream('Email'), field: 'email' },
     { header: this.translate.stream('Verificado'), field: 'emailVerified' },
-    { header: this.translate.stream('Activo?'), field: 'isActive'},
+    { header: this.translate.stream('Activo?'), field: 'isActive' },
     {
       header: this.translate.stream('table_kitchen_sink.operation'),
       field: 'operation',
@@ -73,33 +71,28 @@ export class SecurityUsersComponent implements OnInit {
   showPaginator = true;
   expandable = false;
 
-/* Variables locales */
+  /* Variables locales */
 
-  public currentState: string = "RETRIEVE";
+  public currentState: string = 'RETRIEVE';
   public selected: string;
   public selectedUser: User;
-  public userList: User[]=[];
+  public userList: User[] = [];
   public title: string;
   dragging = false;
   opened = false;
-
-
-
 
   constructor(
     public userService: UsersService,
     public peopleService: PeopleService,
     public translate: TranslateService,
     public toaster: ToastrService
-    ) {
-      this.title= this.translate.instant('domain.users');
-      this.getList();
-     }
+  ) {
+    this.title = this.translate.instant('domain.users');
+    this.getList();
+  }
 
   ngOnInit() {
     this.currentState = 'RETRIEVE';
-    
-
   }
 
   getList() {
@@ -111,7 +104,6 @@ export class SecurityUsersComponent implements OnInit {
           if (response.status != 'ok') return [];
           this.userList = response.objects as User[];
           //this.userList = this.userList.filter(it => it.isActive == true);
-
         }
       },
       err => {
@@ -121,12 +113,9 @@ export class SecurityUsersComponent implements OnInit {
     );
   }
 
-
-
   handleDragStart(event: CdkDragStart): void {
     this.dragging = true;
   }
-
 
   openPanel(event: MouseEvent) {
     if (this.dragging) {
@@ -134,12 +123,8 @@ export class SecurityUsersComponent implements OnInit {
       return;
     }
     this.opened = true;
-    this.currentState = "ADD";
+    this.currentState = 'ADD';
   }
-    
-
-
-
 
   changeSelect(e: any) {
     console.log(e);
@@ -152,6 +137,4 @@ export class SecurityUsersComponent implements OnInit {
   enableRowExpandable() {
     this.columns[0].showExpand = this.expandable;
   }
-
-
 }

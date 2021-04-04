@@ -179,6 +179,12 @@
     "logo": "logotype",
     "names": "Names",
     "lastnames": "Last Names",
-    "users": "Users"
+    "users": "Users",
+    "companies": "Companies",
+    "fullName": "Full Name",
+    "shortName": "Short Name",
+    "location-lat": "Location (lat)",
+    "location-lng": "Location (lng)",
+    "isActive": "is active?"
   }
 }

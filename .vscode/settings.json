@@ -13,7 +13,5 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.stylelint": true
-  },
-  "ngx-translate.lookup.resourcesType": "json",
-  "ngx-translate.lookup.resourcesPath": "src/assets/i18n/es-ES.json",
+  }
 }
