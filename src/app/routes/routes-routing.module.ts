@@ -31,6 +31,7 @@ const routes: Routes = [
         path: 'security',
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule),
       },
+  { path: 'org', loadChildren: () => import('./org/org.module').then(m => m.OrgModule) },
     ],
   },
   {

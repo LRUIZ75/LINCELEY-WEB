@@ -14,6 +14,47 @@ https://linceley.herokuapp.com/
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Special Code Scaffolding
+
+### Module schematic
+
+Generate a lazy loaded module.
+
+```bash
+$ ng g ng-matero:module <module-name>
+```
+The new module will be created in `routes` folder, it will be added in `routes.module` and its route declaration will be added in `routes-routing.module` automaticly.
+
+### Page schematic
+
+Generate a page component in the module.
+
+```bash
+$ ng g ng-matero:page <page-name> -m=<module-name>
+```
+
+### Generate a entry component in the page component.
+
+**DON'T DO THIS!**
+
+An entry component is loaded by the class, not by selector
+If you don't want this behavior, and instead of that, what you want is a sub-component, then add an angular normal component
+
+```bash
+$ ng g ng-matero:page <page-name>/<entry-component-name> -m=<module-name> -e=true
+```
+
+### Example
+
+Just two steps after initializing the project, you can get a route page.
+
+```bash
+$ ng g ng-matero:module abc
+$ ng g ng-matero:page def -m=abc
+```
+
+Take a look at `http://localhost:4200/#/abc/def`, enjoy it!
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.

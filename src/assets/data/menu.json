@@ -34,7 +34,7 @@
       ]
     },
     {
-      "route": "organization",
+      "route": "org",
       "name": "organization",
       "type": "sub",
       "icon": "domain",
@@ -60,7 +60,7 @@
           "type": "link"
         },
         {
-          "route": "distributioncenters",
+          "route": "dcs",
           "name": "distributioncenters",
           "type": "link"
         }
