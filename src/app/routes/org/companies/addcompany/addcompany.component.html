@@ -1,0 +1,33 @@
+<div class="form_add_edit matero-row" fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="40" fxLayoutAlign="end center">
+    <mat-card class="">
+      <mat-card-title class="mat-title">{{'record_actions.add_new' | translate | titlecase}}: {{'domain.companies' | translate | titlecase}}</mat-card-title>
+      <mat-card-content fxLayoutAlign="end center">
+        <form [formGroup]="companyFormGroup">
+          <mat-form-field>
+            <input matInput placeholder="{{'domain.fullName'| translate | titlecase}}" formControlName="fullName" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="{{'domain.shortName'| translate | titlecase}}" formControlName="shortName" required />
+          </mat-form-field>
+
+          <div formGroupName="location">
+            <mat-form-field>
+              <input matInput placeholder="{{'domain.location-lat'| translate | titlecase}}" formControlName="lat" required />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="{{'domain.location-lng'| translate | titlecase}}" formControlName="lng" required />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-checkbox formControlName="isActive">{{'domain.isActive'| translate | titlecase}}</mat-checkbox>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <button mat-raised-button >{{'record_actions.cancel'| translate | titlecase}}</button>
+        <button mat-raised-button color="primary">{{'record_actions.save'| translate | titlecase}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

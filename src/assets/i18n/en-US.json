@@ -156,7 +156,8 @@
     "delete": "Delete",
     "confirm_delete": "Confirm delete?",
     "ok": "Ok",
-    "close": "Close"
+    "close": "Close",
+    "submit": "Submit"
   },
   "record_actions": {
     "add_new": "add new record",

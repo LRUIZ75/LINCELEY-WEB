@@ -6,6 +6,7 @@ import { OrgDepartmentsComponent } from './departments/departments.component';
 import { OrgJobpositionsComponent } from './jobpositions/jobpositions.component';
 import { OrgEmployeesComponent } from './employees/employees.component';
 import { OrgDcsComponent } from './dcs/dcs.component';
+import { AddcompanyComponent } from './companies/addcompany/addcompany.component';
 
 const COMPONENTS = [OrgCompaniesComponent, OrgDepartmentsComponent, OrgJobpositionsComponent, OrgEmployeesComponent, OrgDcsComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -17,7 +18,8 @@ const COMPONENTS_DYNAMIC = [];
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_DYNAMIC
+    ...COMPONENTS_DYNAMIC,
+    AddcompanyComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC
 })

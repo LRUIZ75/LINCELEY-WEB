@@ -167,7 +167,8 @@
     "actions": "acciones",
     "saved": "Guardado satisfactoriamente!!",
     "cancel": "cancelar",
-    "error_occurred": "Ha ocurrido un error!!"
+    "error_occurred": "Ha ocurrido un error!!",
+    "submit": "Enviar"
   },
   "general": {
     "home": "Inicio"
