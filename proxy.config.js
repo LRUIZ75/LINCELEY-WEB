@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
-  '/users/**': {
-    target: 'https://api.github.com',
+  '/api/**': {
+    target: 'https://linceley-api.herokuapp.com',
     changeOrigin: true,
     secure: false,
     logLevel: 'debug',

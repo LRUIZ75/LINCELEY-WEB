@@ -7,11 +7,13 @@
 .matero-container-wrap,
 .matero-container {
   height: 100%;
+  background-color: whitesmoke; //REM: Cambiado en base al tema Linceley
 }
 
 .matero-content {
   position: relative;
   padding: $gutter;
+  //background-color: white;
   
 }
 
@@ -19,7 +21,7 @@
   position: absolute;
   overflow-x: hidden;
   transition: swift-ease-out(width); // Only set width property
-  background-color: map-get($mat-linceley-yellow , 500 ); //blanchedalmond;
+  //background-color: map-get($mat-linceley-blue , 50 ); //blanchedalmond;
 
   @include mat-elevation(2);
 
@@ -154,7 +156,6 @@
 .matero-header-white {
   .matero-toolbar,
   .matero-topmenu {
-    //background-color: white;
-    background-color: map-get($mat-linceley-yellow , 500);
+    background-color: map-get($mat-linceley-yellow , 500);//REM: Cambiado en base al tema Linceley
   }
 }

@@ -11,9 +11,9 @@
 //
 // Light style
 //
-$primary: mat-palette($mat-linceley-blue);
-$accent: mat-palette($mat-linceley-yellow, 500, A100, 900);
-$theme: mat-light-theme($primary, $accent);
+$primary: mat-palette($mat-linceley-blue); //REM: Cambiado en base al tema Linceley
+$accent: mat-palette($mat-linceley-yellow, 500, A100, 900); //REM: Cambiado en base al tema Linceley
+$theme: mat-light-theme($primary, $accent); //REM: Cambiado en base al tema Linceley
 
 $config: mat-typography-config();
 

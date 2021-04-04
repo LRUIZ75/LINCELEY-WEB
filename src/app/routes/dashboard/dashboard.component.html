@@ -6,7 +6,7 @@
   <!-- Statistics -->
   <div class="matero-col" fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100"
        *ngFor="let stat of stats">
-    <mat-card [ngClass]="['text-white', stat.color]">
+    <mat-card  [ngClass]="['text-white', stat.color]">
       <mat-card-title class="f-s-12 f-w-100">{{stat.title}}</mat-card-title>
       <mat-card-content>
         <h2>{{stat.amount}}</h2>
@@ -22,13 +22,13 @@
 
   <!-- Charts -->
   <div class="matero-col" fxFlex="100" fxFlex.gt-sm="60">
-    <mat-card>
+    <mat-card class="bg-linceley-blue-50">
       <mat-card-subtitle>Traffic</mat-card-subtitle>
       <div id="chart1"></div>
     </mat-card>
   </div>
   <div class="matero-col" fxFlex="100" fxFlex.gt-sm="40">
-    <mat-card>
+    <mat-card class="bg-linceley-blue-100">
       <mat-card-subtitle>Weekly Revenue</mat-card-subtitle>
       <div id="chart2"></div>
     </mat-card>
@@ -36,7 +36,7 @@
 
   <!-- Others -->
   <div class="matero-col" fxFlex.gt-sm="50" fxFlex="100">
-    <mat-card>
+    <mat-card class="bg-linceley-blue-200">
       <mat-tab-group class="m--16">
         <mat-tab label="First">
           <div class="m-16">
@@ -93,22 +93,53 @@
         </mat-tab>
       </mat-tab-group>
     </mat-card>
-    <mat-card>
-      <mat-card-subtitle>Album</mat-card-subtitle>
+    <mat-card class="bg-linceley-blue-400">
+      <mat-card-subtitle class="text-white">Album</mat-card-subtitle>
       <mat-card-content>
         <mat-grid-list cols="2">
           <mat-grid-tile class="bg-red-50">1</mat-grid-tile>
-          <mat-grid-tile class="bg-purple-50">2</mat-grid-tile>
-          <mat-grid-tile class="bg-orange-50">3</mat-grid-tile>
-          <mat-grid-tile class="bg-cyan-50">4</mat-grid-tile>
+          <mat-grid-tile class="bg-linceley-blue-50">2</mat-grid-tile>
+          <mat-grid-tile class="bg-linceley-yellow-50">3</mat-grid-tile>
+          <mat-grid-tile class="bg-green-50">4</mat-grid-tile>
         </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="bg-linceley-blue-100">
+      <mat-card-subtitle>Chips & Buttons</mat-card-subtitle>
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip>One fish</mat-chip>
+          <mat-chip color="primary" selected>Primary fish</mat-chip>
+          <mat-chip color="accent" selected>Accent fish</mat-chip>
+          <mat-chip color="warn" selected>Two fish</mat-chip>
+          <mat-chip class="bg-orange-500" selected>Orange fish</mat-chip>
+          <mat-chip class="bg-teal-500" selected>Teal fish</mat-chip>
+          <mat-chip class="bg-cyan-500" selected>Cyan fish</mat-chip>
+          <mat-chip class="bg-purple-500" selected>Purple fish</mat-chip>
+          <mat-chip class="bg-green-500" selected>Green fish</mat-chip>
+        </mat-chip-list>
+
+        <div>
+          <button mat-raised-button>Basic</button>
+          <button mat-raised-button color="primary">Primary</button>
+          <button mat-raised-button color="accent">Accent</button>
+          <button mat-raised-button color="warn">Warn</button>
+          <button mat-raised-button disabled>Disabled</button>
+          <a mat-raised-button routerLink=".">Link</a>
+          <button mat-raised-button class="bg-orange-500 text-white">Orange</button>
+          <button mat-raised-button class="bg-teal-500 text-white">Teal</button>
+          <button mat-raised-button class="bg-cyan-500 text-white">Cyan</button>
+          <button mat-raised-button class="bg-purple-500 text-white">Purple</button>
+          <button mat-raised-button class="bg-green-500 text-white">Green</button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
 
   <div class="matero-col" fxFlex.gt-sm="50" fxFlex="100">
-    <mat-card>
-      <mat-card-subtitle>Avatar List</mat-card-subtitle>
+    <mat-card class="bg-linceley-yellow-200">
+      <mat-card-subtitle >Avatar List</mat-card-subtitle>
       <mat-list>
         <mat-list-item *ngFor="let message of messages">
           <img matListAvatar [src]="message.img" alt="">
@@ -120,7 +151,7 @@
       </mat-list>
     </mat-card>
 
-    <mat-card>
+    <mat-card class="bg-linceley-yellow-50">
       <mat-card-subtitle>Revenue Table</mat-card-subtitle>
       <mat-card-content>
         <table class="w-full" mat-table [dataSource]="dataSource">
@@ -146,7 +177,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card>
+    <mat-card class="bg-linceley-yellow-100">
       <mat-card-subtitle>Chips & Buttons</mat-card-subtitle>
       <mat-card-content>
         <mat-chip-list>

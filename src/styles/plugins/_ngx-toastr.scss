@@ -22,14 +22,16 @@
     padding-left: 50px;
     color: #fff;
   }
+//REM: Cambiado en base al tema Linceley
 
   .toast-info {
-    background-color: mat-color($mat-linceley-blue, 500);
+    background-color: mat-color($mat-linceley-blue, 500);  
   }
 
   .toast-success {
     background-color: mat-color($mat-green, 500);
   }
+//REM: Cambiado en base al tema Linceley
 
   .toast-warning {
     background-color: mat-color($mat-linceley-yellow, 500);

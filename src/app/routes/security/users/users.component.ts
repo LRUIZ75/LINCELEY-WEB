@@ -1,11 +1,11 @@
 import { Component,  OnInit} from '@angular/core';
-import { User, UsersService } from 'app/services/users.service';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { PeopleService } from 'app/services/people.service';
 import { MtxGridColumn } from '@ng-matero/extensions';
 
+//Import services
+import {User,UsersService,PeopleService} from 'app/services'
 
 
 @Component({

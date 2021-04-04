@@ -4,9 +4,8 @@
   display: block;
   padding: 16px;
   margin: -16px -16px 16px;
-  background-color: map-get($mat-linceley-yellow , 700 );// #3f51b5;
-  //background-color: mat-linceley-yellow-700;// #3f51b5;
-  //color: map-get($mat-linceley-blue , 900 );
+  background-color: rgba(map-get($mat-linceley-blue , 500 ),.95); //REM: Cambiado en base al tema Linceley
+  color: map-get($mat-linceley-blue , 50 ); //REM: Cambiado en base al tema Linceley
 
 
   .matero-breadcrumb {

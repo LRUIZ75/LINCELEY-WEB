@@ -2,7 +2,7 @@
 
 .mat-card {
   margin-bottom: $gutter;
-  background-color: map-get($mat-linceley-yellow, 50 );
+  background-color: map-get($mat-linceley-blue, 50 ); //REM: Cambiado en base al tema Linceley
 }
 
 .mat-accordion {

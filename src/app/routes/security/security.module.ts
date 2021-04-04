@@ -4,8 +4,9 @@ import { SecurityRoutingModule } from './security-routing.module';
 import { SecurityUsersComponent } from './users/users.component';
 import { SecurityPeopleComponent } from './people/people.component';
 import { AddComponent } from './users/add/add.component';
+import { SecurityRolesComponent } from './roles/roles.component';
 
-const COMPONENTS = [SecurityUsersComponent, SecurityPeopleComponent];
+const COMPONENTS = [SecurityUsersComponent, SecurityPeopleComponent, SecurityRolesComponent];
 const COMPONENTS_DYNAMIC = [];
 
 @NgModule({
