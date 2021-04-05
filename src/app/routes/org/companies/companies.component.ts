@@ -107,9 +107,9 @@ export class OrgCompaniesComponent implements OnInit {
         }
       },
       err => {
-        if(err!= 404){
-        var msg = this.translate.instant('record_actions.error_occurred');
-        this.toaster.error(err, msg);
+        if(err.substring(0,3)!= '404'){
+          var msg = this.translate.instant('record_actions.error_occurred');
+          this.toaster.error(err, msg);
         }
       }
     );
@@ -126,6 +126,12 @@ export class OrgCompaniesComponent implements OnInit {
     }
     this.opened = true;
     this.currentState = 'ADD';
+  }
+
+  changeState(state: string){
+    if(state=='RETRIEVE')
+      this.getList();
+    this.currentState = state;
   }
 
   changeSelect(e: any) {

@@ -1,7 +1,6 @@
 <page-header></page-header>
 <div *ngIf="currentState == 'ADD'">
-  <!-- <users-add (changeStateEvent)="currentState = $event"> </users-add> -->
-  <app-addcompany></app-addcompany>
+  <app-addcompany (changeStateEvent)="changeState($event)"></app-addcompany>
 </div>
 
 <div
@@ -34,7 +33,7 @@
   [showPaginator]="showPaginator"
   [pageSizeOptions]="[5, 10, 50, 100]"
   [pageIndex]="0"
-  [pageSize]="5"
+  [pageSize]="10"
   (sortChange)="changeSort($event)"
   (selectionChange)="changeSelect($event)"
   *ngIf="currentState == 'RETRIEVE'"

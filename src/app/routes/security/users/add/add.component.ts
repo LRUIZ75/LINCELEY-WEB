@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AsyncValidatorFn, ValidationErrors, AsyncValidator } from '@angular/forms';
 import { MtxFormGroupModule } from '@ng-matero/extensions';
 import { PeopleService, Person } from 'app/services/people.service';
 import { User, UsersService } from 'app/services/users.service';
@@ -31,20 +31,21 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.personFormGroup = this.formBuilder.group({
-      names: ['', Validators.required],
-      lastNames: ['', Validators.required],
-      personalId: ['', Validators.required],
+      names: ['', [Validators.required, Validators.minLength(2)]],
+      lastNames: ['', [Validators.required, Validators.minLength(2)]],
+      personalId: ['', [Validators.required]],
       picture: [''],
-      mobileNumber: ['', Validators.required],
+      mobileNumber: ['', [Validators.required]],
     });
+
     this.accountFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20), Validators.pattern(/^([A-Z]|[a-z])[A-Za-z0-9]+$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
 
     this.rolesFormGroup = this.formBuilder.group({
-      roles: ['', Validators.required],
+      roles: [[], [Validators.required]],
     });
   }
 
@@ -54,6 +55,9 @@ export class AddComponent implements OnInit {
 
   async onSubmit() {
     //Validate all 3 forms
+    this.personFormGroup.errors
+
+
     if (!this.personFormGroup.valid) {
       this.toaster.warning('Person data is not valid', 'Cancelled');
       return;
@@ -82,6 +86,9 @@ export class AddComponent implements OnInit {
           this.toaster.error('Error agregando datos de persona');
           return;
         }
+      }).catch(err=>{
+        this.toaster.error(err);
+        return;
       });
 
     data = <User>this.accountFormGroup.value;
@@ -90,18 +97,24 @@ export class AddComponent implements OnInit {
     data.emailVerified = false;
     data.isActive = true;
 
-    this.userService.addData(data).subscribe((resp: any) => {
-      this.newUser = <User>resp.created;
+    await this.userService
+      .addData(data)
+      .toPromise()
+      .then(resp => {
+        this.newUser = <User>resp.created;
 
-      if (!this.newUser) {
-        this.toaster.error('Error agregando datos de cuenta');
+        if (!this.newUser) {
+          this.toaster.error('Error agregando datos de cuenta');
+          return;
+        }
+        this.toaster.info('Usuario creado! Debe verificar su correo!');
+        //change the state back to RETRIEVE mode
+        
+      })
+      .catch(err => {
+        this.toaster.error(err);
         return;
-      }
-      //Toaster Notification
-      this.toaster.info('Usuario creado! Debe verificar su correo!');
-    });
-
-    //change the state back to RETRIEVE mode
-    this.changeState('RETRIEVE');
+      });
+      this.changeState('RETRIEVE');
   }
 }

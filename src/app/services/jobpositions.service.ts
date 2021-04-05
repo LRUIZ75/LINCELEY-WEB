@@ -4,26 +4,22 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { NewLineKind } from 'typescript';
 
-export interface Company {
-  fullName: string;
-  shortName: string;
-  isActive: boolean;
-  location: {
-    lat: string;
-    lng: string;
-  };
+export interface JobPosition{
+  name: string,
+  company: string,
+  defaultRole: string,
+  isActive: boolean
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class CompaniesService {
+export class JobPositionsService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + 'company/';
+    this.endpoint = environment.apiURL + "jobpositions";
     console.log('Conectando a :' + this.endpoint);
   }
 
@@ -47,7 +43,7 @@ export class CompaniesService {
 
   /**
    * Adds new user by API
-   * @param  {any} body -New data for user
+   * @param  {any} body -New data for JobPosition
    */
   addData(body: any): Observable<any> {
     return this.http

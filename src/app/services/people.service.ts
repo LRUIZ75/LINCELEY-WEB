@@ -26,12 +26,15 @@ export class PeopleService {
 
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
-      console.error('Ocurrió un error:', error.error.message);
+      console.error('Ocurrió un error:', error.status, error.error.message);
     } else {
-      console.error(`El backend envía el código de error: ${error.status}, ` + `la respuesta fue: `);
-      console.error(JSON.stringify(error.error));
+      console.error(
+        `El backend devolvió =>
+    ${error.message}`
+      );
+      console.debug(JSON.stringify(error.error));
     }
-    return throwError('Algo ha ido mal; por favor intente luego.');
+    return throwError(`${error.status} ` + JSON.stringify(error.error));
   }
 
   private extractData(res: Response): any {

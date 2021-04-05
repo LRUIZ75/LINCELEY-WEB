@@ -88,11 +88,11 @@ export class SecurityUsersComponent implements OnInit {
     public toaster: ToastrService
   ) {
     this.title = this.translate.instant('domain.users');
-    this.getList();
+   // this.getList();
   }
 
   ngOnInit() {
-    this.currentState = 'RETRIEVE';
+    this.changeState('RETRIEVE');
   }
 
   getList() {
@@ -123,7 +123,13 @@ export class SecurityUsersComponent implements OnInit {
       return;
     }
     this.opened = true;
-    this.currentState = 'ADD';
+    this.changeState('ADD');
+  }
+
+  changeState(state: string){
+    if(state=='RETRIEVE')
+      this.getList();
+    this.currentState = state;
   }
 
   changeSelect(e: any) {

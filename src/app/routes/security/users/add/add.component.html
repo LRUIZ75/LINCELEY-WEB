@@ -5,9 +5,21 @@
         <ng-template matStepLabel>Datos Personales</ng-template>
         <mat-form-field>
           <input matInput placeholder="Names" formControlName="names" required />
+          <mat-error *ngIf="personFormGroup.controls.names.invalid">
+            <small *ngIf="personFormGroup.controls.names.errors.required">Required</small>
+            <small *ngIf="personFormGroup.controls.names.errors.minlength"
+              >Minimum length is 2</small
+            >
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Last Names" formControlName="lastNames" required />
+          <mat-error *ngIf="personFormGroup.controls.lastNames.invalid">
+            <small *ngIf="personFormGroup.controls.lastNames.errors.required">Required</small>
+            <small *ngIf="personFormGroup.controls.lastNames.errors.minlength"
+              >Minimum length is 2</small
+            >
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="ID" formControlName="personalId" required />
@@ -42,17 +54,17 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="rolesFormGroup">
-        <form [formGroup]="rolesFormGroup">
-          <ng-template matStepLabel>Permisos</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Roles" formControlName="roles" required />
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
+      <form [formGroup]="rolesFormGroup">
+        <ng-template matStepLabel>Permisos</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Roles" formControlName="roles" required />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
       You are now done.
@@ -64,4 +76,3 @@
     </mat-step>
   </mat-horizontal-stepper>
 </mat-card>
-

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC;EACrB,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,IAAI;EACb,gBAAgB,EAAE,OAAO;EAC3B;;;;;;;;;;;;;;;;SAgBS;EACP,eAAe,EAAE,SAAS;CAC3B",
+    "sources": [
+        "auth-layout.component.scss"
+    ],
+    "names": [],
+    "file": "auth-layout.component.css"
+}

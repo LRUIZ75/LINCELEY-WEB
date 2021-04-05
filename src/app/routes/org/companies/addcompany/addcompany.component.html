@@ -1,8 +1,8 @@
 <div class="form_add_edit matero-row" fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxFlex="40" fxLayoutAlign="end center">
+  <div class="matero-col" fxFlex="40" fxFlexAlign="center">
     <mat-card class="">
       <mat-card-title class="mat-title">{{'record_actions.add_new' | translate | titlecase}}: {{'domain.companies' | translate | titlecase}}</mat-card-title>
-      <mat-card-content fxLayoutAlign="end center">
+      <mat-card-content>
         <form [formGroup]="companyFormGroup">
           <mat-form-field>
             <input matInput placeholder="{{'domain.fullName'| translate | titlecase}}" formControlName="fullName" required />
@@ -25,9 +25,12 @@
         </form>
       </mat-card-content>
       <mat-card-actions align="right">
-        <button mat-raised-button >{{'record_actions.cancel'| translate | titlecase}}</button>
-        <button mat-raised-button color="primary">{{'record_actions.save'| translate | titlecase}}</button>
+        <button mat-raised-button type="reset" (click)="onReset()"
+        >{{'record_actions.cancel'| translate | titlecase}}</button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+        >{{'record_actions.save'| translate | titlecase}}</button>
       </mat-card-actions>
     </mat-card>
+    
   </div>
 </div>

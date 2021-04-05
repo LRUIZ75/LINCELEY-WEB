@@ -1,0 +1,41 @@
+.matero-breadcrumb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0;
+  margin-bottom: 1rem;
+  list-style: none;
+  font-size: .875rem;
+}
+
+.matero-breadcrumb-item {
+  line-height: 18px;
+  text-transform: capitalize;
+}
+
+.matero-breadcrumb-item > a {
+  color: currentColor;
+}
+
+.matero-breadcrumb-item > a:hover {
+  color: currentColor;
+  text-decoration: underline;
+}
+
+.matero-breadcrumb-item > .chevron {
+  height: 18px;
+  width: 18px;
+  font-size: 18px;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.matero-breadcrumb-item > .link {
+  vertical-align: middle;
+}
+/*# sourceMappingURL=breadcrumb.component.css.map */
