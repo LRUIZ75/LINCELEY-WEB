@@ -5,6 +5,7 @@ import { PeopleService, Person } from 'app/services/people.service';
 import { User, UsersService } from 'app/services/users.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'users-add',
   templateUrl: './add.component.html',
@@ -17,8 +18,12 @@ export class AddComponent implements OnInit {
   accountFormGroup: FormGroup;
   rolesFormGroup: FormGroup;
 
+  // Archivos de imagenes
+  files: File[] = [];
+
   public newPerson: any;
   public newUser: any;
+  public hide = true;
 
   @Output() changeStateEvent = new EventEmitter<string>();
 
@@ -34,7 +39,7 @@ export class AddComponent implements OnInit {
       names: ['', [Validators.required, Validators.minLength(2)]],
       lastNames: ['', [Validators.required, Validators.minLength(2)]],
       personalId: ['', [Validators.required]],
-      picture: [''],
+      picture: [{value:'',disabled:true}, [Validators.required]],
       mobileNumber: ['', [Validators.required]],
     });
 
@@ -48,9 +53,53 @@ export class AddComponent implements OnInit {
       roles: [[], [Validators.required]],
     });
   }
+  
+  onSelect(event) {
+    console.log(event);
+    if(this.files.length > 0) {
+      this.files = [];
+    }
+    this.files.push(...event.addedFiles);
+    this.personFormGroup.get('picture').setValue(this.files[0].name);
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+    if(!this.files.length)
+    this.personFormGroup.get('picture').setValue('');
+
+  }
 
   changeState(value: string) {
     this.changeStateEvent.emit(value);
+  }
+
+/**
+ * Leer el archivo desde webkitRelativePath
+ * @param file   this.readFile(this.files[0]).then(fileContents => { // Put this string in a request body to upload it to an API.}
+ * @returns Null o la URL al archivo
+ */
+  private async readFile(file: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+  
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+  
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+  
+      reader.readAsDataURL(file);
+    });
   }
 
   async onSubmit() {
@@ -82,6 +131,30 @@ export class AddComponent implements OnInit {
       .toPromise()
       .then(resp => {
         this.newPerson = <Person>resp.created;
+        if (!this.newPerson) {
+          this.toaster.error('Error agregando datos de persona');
+          return;
+        }
+      }).catch(err=>{
+        this.toaster.error(err);
+        return;
+      });
+
+    var id = data._id;
+    var picture: any;
+    this.readFile(this.files[0])
+    .then((pictureFile) => {
+      picture=pictureFile;
+    })
+    .catch(err => {
+      this.toaster.error(err);
+      return;
+    });
+
+    await.this.peopleService
+    .updatePicture(id,picture).toPromise()
+    .then(resp => {
+      this.newPerson = <Person>resp.updated;
         if (!this.newPerson) {
           this.toaster.error('Error agregando datos de persona');
           return;

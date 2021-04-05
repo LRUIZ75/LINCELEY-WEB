@@ -5,6 +5,7 @@ import { SecurityUsersComponent } from './users/users.component';
 import { SecurityPeopleComponent } from './people/people.component';
 import { AddComponent } from './users/add/add.component';
 import { SecurityRolesComponent } from './roles/roles.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 const COMPONENTS = [SecurityUsersComponent, SecurityPeopleComponent, SecurityRolesComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -12,7 +13,8 @@ const COMPONENTS_DYNAMIC = [];
 @NgModule({
   imports: [
     SharedModule,
-    SecurityRoutingModule
+    SecurityRoutingModule,
+    NgxDropzoneModule
   ],
   declarations: [
     ...COMPONENTS,

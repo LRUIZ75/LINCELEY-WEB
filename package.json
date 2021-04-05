@@ -41,6 +41,7 @@
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "ng-matero": "^11.1.2",
+    "ngx-dropzone": "^3.0.0",
     "ngx-progressbar": "^6.1.0",
     "ngx-toastr": "^13.2.1",
     "photoviewer": "^3.5.7",

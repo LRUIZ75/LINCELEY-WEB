@@ -75,8 +75,12 @@ export class PeopleService {
   }
 
   updatePicture(id: string, picture: string): Observable<any> {
+    
+    let formData: FormData = new FormData;
+    formData.append('picture', picture);
+
     return this.http
-      .put(this.endpoint + 'picture/' + id, picture)
+      .put(this.endpoint + 'picture/' + id, formData)
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
