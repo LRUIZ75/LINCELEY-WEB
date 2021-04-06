@@ -1,8 +1,11 @@
 // Services
 
-
+//Security Scheme
 export * from './people.service'
 export * from './users.service';
+export * from './roles.service';
+export * from './roleactions.service';
+export * from './claims.service';
 
 //Organization Scheme
 export * from './companies.service';

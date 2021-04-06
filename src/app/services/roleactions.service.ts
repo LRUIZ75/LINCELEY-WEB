@@ -5,22 +5,20 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
-export interface Person {
-    names: string,
-    lastNames: string,
-    personalId: string,
-    picture: any,
-    mobileNumber: string
+export interface RoleAction{
+  names: string,
+  role: string,
+  isActive: boolean
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class PeopleService {
+export class RoleActionsService {
   public endpoint: string;
-  constructor(
-    private http: HttpClient) {
-    this.endpoint = environment.apiURL + 'person/';
+
+  constructor(private http: HttpClient) {
+    this.endpoint = environment.apiURL + "roleaction";
     console.log('Conectando a :' + this.endpoint);
   }
 
@@ -43,8 +41,8 @@ export class PeopleService {
   }
 
   /**
-   * Adds new person by API
-   * @param  {any} body -New data for person
+   * Adds new user by API
+   * @param  {any} body -New data for role actions
    */
   addData(body: any): Observable<any> {
     return this.http
@@ -62,25 +60,9 @@ export class PeopleService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  getPicture(id: string): Observable<any> {
-    return this.http
-      .get(this.endpoint + 'picture/' + id)
-      .pipe(map(this.extractData), catchError(this.handleError));
-  }
-
   updateData(id: string, body: any): Observable<any> {
     return this.http
       .put(this.endpoint + id, body)
-      .pipe(map(this.extractData), catchError(this.handleError));
-  }
-
-  updatePicture(id: string, picture: any): Observable<any> {
-    
-    let formData: FormData = new FormData;
-    formData.append('picture', picture as Blob);
-
-    return this.http
-      .put(this.endpoint + 'picture/' + id, formData)
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 

@@ -1,10 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AsyncValidatorFn, ValidationErrors, AsyncValidator } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AsyncValidatorFn,
+  ValidationErrors,
+  AsyncValidator,
+} from '@angular/forms';
 import { MtxFormGroupModule } from '@ng-matero/extensions';
 import { PeopleService, Person } from 'app/services/people.service';
 import { User, UsersService } from 'app/services/users.service';
 import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
   selector: 'users-add',
@@ -20,7 +26,7 @@ export class AddComponent implements OnInit {
 
   // Archivos de imagenes
   files: File[] = [];
-
+  picture: any;
   public newPerson: any;
   public newUser: any;
   public hide = true;
@@ -39,12 +45,20 @@ export class AddComponent implements OnInit {
       names: ['', [Validators.required, Validators.minLength(2)]],
       lastNames: ['', [Validators.required, Validators.minLength(2)]],
       personalId: ['', [Validators.required]],
-      picture: [{value:'',disabled:true}, [Validators.required]],
+      picture: [{ value: '', disabled: true }, [Validators.required]],
       mobileNumber: ['', [Validators.required]],
     });
 
     this.accountFormGroup = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20), Validators.pattern(/^([A-Z]|[a-z])[A-Za-z0-9]+$/)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20),
+          Validators.pattern(/^([A-Z]|[a-z])[A-Za-z0-9]+$/),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
@@ -53,59 +67,56 @@ export class AddComponent implements OnInit {
       roles: [[], [Validators.required]],
     });
   }
-  
+
   onSelect(event) {
     console.log(event);
-    if(this.files.length > 0) {
+    if (this.files.length > 0) {
       this.files = [];
     }
     this.files.push(...event.addedFiles);
     this.personFormGroup.get('picture').setValue(this.files[0].name);
   }
-  
+
   onRemove(event) {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
-    if(!this.files.length)
-    this.personFormGroup.get('picture').setValue('');
-
+    if (!this.files.length) this.personFormGroup.get('picture').setValue('');
   }
 
   changeState(value: string) {
     this.changeStateEvent.emit(value);
   }
 
-/**
- * Leer el archivo desde webkitRelativePath
- * @param file   this.readFile(this.files[0]).then(fileContents => { // Put this string in a request body to upload it to an API.}
- * @returns Null o la URL al archivo
- */
+  /**
+   * Leer el archivo desde webkitRelativePath
+   * @param file   this.readFile(this.files[0]).then(fileContents => { // Put this string in a request body to upload it to an API.}
+   * @returns Null o la URL al archivo
+   */
   private async readFile(file: File): Promise<string | ArrayBuffer> {
     return new Promise<string | ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
-  
+
       reader.onload = e => {
         return resolve((e.target as FileReader).result);
       };
-  
+
       reader.onerror = e => {
         console.error(`FileReader failed on file ${file.name}.`);
         return reject(null);
       };
-  
+
       if (!file) {
         console.error('No file to read.');
         return reject(null);
       }
-  
+
       reader.readAsDataURL(file);
     });
   }
 
   async onSubmit() {
     //Validate all 3 forms
-    this.personFormGroup.errors
-
+    this.personFormGroup.errors;
 
     if (!this.personFormGroup.valid) {
       this.toaster.warning('Person data is not valid', 'Cancelled');
@@ -135,35 +146,43 @@ export class AddComponent implements OnInit {
           this.toaster.error('Error agregando datos de persona');
           return;
         }
-      }).catch(err=>{
+      })
+      .catch(err => {
         this.toaster.error(err);
         return;
       });
 
-    var id = data._id;
-    var picture: any;
-    this.readFile(this.files[0])
-    .then((pictureFile) => {
-      picture=pictureFile;
-    })
-    .catch(err => {
-      this.toaster.error(err);
-      return;
-    });
 
-    await.this.peopleService
-    .updatePicture(id,picture).toPromise()
-    .then(resp => {
-      this.newPerson = <Person>resp.updated;
+    // Set paramaters for updatePicture and
+    if (this.files.length) {
+      await this.readFile(this.files[0])
+        .then(pictureFile => {
+          this.picture = pictureFile;
+        })
+        .catch(err => {
+          this.toaster.error(err);
+          return;
+        });
+    }
+
+    const pictureBlob = new Blob([JSON.stringify(this.picture, null, 2)], {type : 'application/json'});
+/* 
+
+    await this.peopleService
+      .updatePicture(this.newPerson._id, pictureBlob)
+      .toPromise()
+      .then(resp => {
+        this.newPerson = <Person>resp.updated;
         if (!this.newPerson) {
-          this.toaster.error('Error agregando datos de persona');
+          this.toaster.error('Error subiendo imagen de persona');
           return;
         }
-      }).catch(err=>{
+      })
+      .catch(err => {
         this.toaster.error(err);
         return;
       });
-
+ */
     data = <User>this.accountFormGroup.value;
     data.person = this.newPerson._id;
     data.salt = '';
@@ -180,14 +199,13 @@ export class AddComponent implements OnInit {
           this.toaster.error('Error agregando datos de cuenta');
           return;
         }
-        this.toaster.info('Usuario creado! Debe verificar su correo!');
+        this.toaster.info('Usuario creado -> Debe verificar su correo!');
         //change the state back to RETRIEVE mode
-        
       })
       .catch(err => {
         this.toaster.error(err);
         return;
       });
-      this.changeState('RETRIEVE');
+    this.changeState('RETRIEVE');
   }
 }

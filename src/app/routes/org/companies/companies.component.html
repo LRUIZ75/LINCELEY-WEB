@@ -1,6 +1,6 @@
 <page-header></page-header>
 <div *ngIf="currentState == 'ADD'">
-  <app-addcompany (changeStateEvent)="changeState($event)"></app-addcompany>
+  <app-addcompany  [formMode] ="ADD"   (changeStateEvent)="changeState($event)"></app-addcompany>
 </div>
 
 <div
