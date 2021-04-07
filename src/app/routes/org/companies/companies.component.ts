@@ -43,7 +43,7 @@ export class OrgCompaniesComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('table_kitchen_sink.edit'),
-          //click: record => this.edit(record),
+          click: record => this.edit(record),
         },
         {
           color: 'warn',
@@ -54,7 +54,7 @@ export class OrgCompaniesComponent implements OnInit {
           popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
           popCloseText: this.translate.stream('table_kitchen_sink.close'),
           popOkText: this.translate.stream('table_kitchen_sink.ok'),
-          //click: record => this.delete(record),
+          click: record => this.delete(record),
         },
       ],
     },
@@ -75,8 +75,8 @@ export class OrgCompaniesComponent implements OnInit {
   /* Variables locales */
 
   public currentState: string = 'RETRIEVE';
-  public selected: string;
-  public selectedCompany: Company;
+  public selected:  Company;
+
   public companyList: Company[] = [];
   public title: string;
   dragging = false;
@@ -109,7 +109,7 @@ export class OrgCompaniesComponent implements OnInit {
       err => {
         if(err.substring(0,3)!= '404'){
           var msg = this.translate.instant('record_actions.error_occurred');
-          this.toaster.error(err, msg);
+          this.toaster.error(err);
         }
       }
     );
@@ -124,14 +124,44 @@ export class OrgCompaniesComponent implements OnInit {
       this.dragging = false;
       return;
     }
+    this.selected = undefined;
     this.opened = true;
     this.currentState = 'ADD';
   }
 
+  edit(selected){
+    this.selected = selected;
+    this.opened = true;
+    this.currentState = 'EDIT';
+  }
+
+  delete(selected){
+    this.selected = selected;
+
+    this.companyService.deactivateData(selected._id).
+    toPromise()
+    .then( deleted => {
+      if(deleted){
+        this.toaster.success("Operación exitosa!");
+      }
+      else
+        {
+          this.toaster.error("Operación fallida!");
+          return;
+        }
+    }).
+    catch(err => {
+      this.toaster.error(err);
+      return;
+    })
+
+    this.getList();
+  }
+
   changeState(state: string){
+    this.currentState = state;
     if(state=='RETRIEVE')
       this.getList();
-    this.currentState = state;
   }
 
   changeSelect(e: any) {

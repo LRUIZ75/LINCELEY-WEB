@@ -19,6 +19,8 @@ export class AddcompanyComponent implements OnInit {
   @Output() changeStateEvent = new EventEmitter<string>();
 
   @Input() formMode = 'ADD';
+  @Input() initialData: any = {};
+
   constructor(
     private formBuilder: FormBuilder,
     private companyService: CompaniesService,
@@ -27,14 +29,32 @@ export class AddcompanyComponent implements OnInit {
 
   ngOnInit(): void {
     this.companyFormGroup = this.formBuilder.group({
-      fullName: ['', Validators.required],
-      shortName: ['', Validators.required],
-      isActive: [true, Validators.required],
+      fullName: ['', [Validators.required, Validators.minLength(2)]],
+      shortName: ['', [Validators.required]],
+      isActive: [true, [Validators.required]],
       location: this.formBuilder.group({
         lat: ['', Validators.required],
         lng: ['', Validators.required],
       }),
     });
+
+    if (this.formMode == 'EDIT' && this.initialData) {
+      this.companyFormGroup.patchValue(this.initialData as Company);
+      /*this.companyFormGroup.get('fullName').setValue(this.initialData.fullName);
+      this.companyFormGroup.get('shortName').setValue(this.initialData.shortName);
+      this.companyFormGroup.get('isActive').setValue(this.initialData.isActive);
+      this.companyFormGroup.get('fullName').setValue(this.initialData.fullName);
+      this.companyFormGroup.get('lat').setValue(this.initialData.lat);
+      this.companyFormGroup.get('lng').setValue(this.initialData.lng); */
+    }
+  }
+
+  get fullName() {
+    return this.companyFormGroup.get('fullName');
+  }
+
+  get shortName() {
+    return this.companyFormGroup.get('shortName');
   }
 
   /**
@@ -65,6 +85,52 @@ export class AddcompanyComponent implements OnInit {
       return;
     }
 
-    this.changeState('RETRIEVE');
+    this.company = <Company>this.companyFormGroup.value;
+
+    switch(this.formMode){
+      case 'EDIT':
+        this.companyService
+        .updateData(this.initialData._id,this.company)
+        .toPromise()
+        .then(resp => {
+          if (!resp) {
+            this.toaster.error('Operación fallida!');
+            return;
+          }
+  
+          this.company = <Company>resp.updated;
+          this.toaster.success('Operación exitosa!');
+          this.changeState('RETRIEVE');
+        })
+        .catch(err => {
+          this.toaster.error(err);
+        });
+        break;
+
+      case 'ADD':
+        this.companyService
+        .addData(this.company)
+        .toPromise()
+        .then(resp => {
+          if (!resp) {
+            this.toaster.error('Operación fallida!');
+            return;
+          }
+  
+          this.company = <Company>resp.created;
+          this.toaster.success('Operación exitosa!');
+          this.changeState('RETRIEVE');
+        })
+        .catch(err => {
+          this.toaster.error(err);
+        });
+        break;
+
+      default:
+        this.toaster.warning("Se desconoce el modo del forulario");
+
+
+    }
+
   }
 }

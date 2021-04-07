@@ -1,6 +1,10 @@
 <page-header></page-header>
-<div *ngIf="currentState == 'ADD'">
-  <app-addcompany  [formMode] ="ADD"   (changeStateEvent)="changeState($event)"></app-addcompany>
+<div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <app-addcompany  
+  [formMode] ="currentState" 
+  [initialData]="selected" 
+  (changeStateEvent)="changeState($event)">
+</app-addcompany>
 </div>
 
 <div

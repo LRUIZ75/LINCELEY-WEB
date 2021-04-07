@@ -1,36 +1,81 @@
 <div class="form_add_edit matero-row" fxLayout="row wrap" fxLayoutAlign="center center">
   <div class="matero-col" fxFlex="40" fxFlexAlign="center">
     <mat-card class="">
-      <mat-card-title class="mat-title">{{'record_actions.add_new' | translate | titlecase}}: {{'domain.companies' | translate | titlecase}}</mat-card-title>
+      <mat-card-title class="mat-title"
+        >{{ 'record_actions.add_new' | translate | titlecase }}:
+        {{ 'domain.companies' | translate | titlecase }}</mat-card-title
+      >
       <mat-card-content>
         <form [formGroup]="companyFormGroup">
           <mat-form-field>
-            <input matInput placeholder="{{'domain.fullName'| translate | titlecase}}" formControlName="fullName" required />
+            <input
+              matInput
+              placeholder="{{ 'domain.fullName' | translate | titlecase }}"
+              formControlName="fullName"
+              required
+            />
+            <mat-error *ngIf="companyFormGroup.get('fullName').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+            <mat-error *ngIf="companyFormGroup.get('fullName').hasError('minlength')">
+              {{ 'validations.minlength' | translate }}
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field>
-            <input matInput placeholder="{{'domain.shortName'| translate | titlecase}}" formControlName="shortName" required />
+            <input
+              matInput
+              placeholder="{{ 'domain.shortName' | translate | titlecase }}"
+              formControlName="shortName"
+              required
+            />
+            <mat-error *ngIf="companyFormGroup.get('shortName').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
           </mat-form-field>
 
           <div formGroupName="location">
             <mat-form-field>
-              <input matInput placeholder="{{'domain.location-lat'| translate | titlecase}}" formControlName="lat" required />
+              <input
+                matInput
+                placeholder="{{ 'domain.location-lat' | translate | titlecase }}"
+                formControlName="lat"
+                required
+              />
+              <mat-error *ngIf="companyFormGroup.get('location').get('lat').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="{{'domain.location-lng'| translate | titlecase}}" formControlName="lng" required />
+              <input
+                matInput
+                placeholder="{{ 'domain.location-lng' | translate | titlecase }}"
+                formControlName="lng"
+                required
+              />
+              <mat-error *ngIf="companyFormGroup.get('location').get('lng').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
           <div>
-            <mat-checkbox formControlName="isActive">{{'domain.isActive'| translate | titlecase}}</mat-checkbox>
+            <mat-checkbox formControlName="isActive">{{
+              'domain.isActive' | translate | titlecase
+            }}</mat-checkbox>
           </div>
         </form>
       </mat-card-content>
       <mat-card-actions align="right">
-        <button mat-raised-button type="reset" (click)="onReset()"
-        >{{'record_actions.cancel'| translate | titlecase}}</button>
-        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
-        >{{'record_actions.save'| translate | titlecase}}</button>
+        <button mat-raised-button color = "default" type="reset" (click)="onReset()">
+          {{ 'record_actions.reset' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+          {{ 'record_actions.cancel' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+          {{ 'record_actions.save' | translate | titlecase }}
+        </button>
       </mat-card-actions>
     </mat-card>
-    
   </div>
 </div>

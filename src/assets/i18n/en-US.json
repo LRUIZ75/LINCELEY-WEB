@@ -168,7 +168,9 @@
     "actions": "actions",
     "saved": "successfully saved!!",
     "cancel": "cancel",
-    "error_occurred": "An error has occurred!!"
+    "error_occurred": "An error has occurred!!",
+    "submit": "Submit",
+    "reset": "Reset"
   },
   "general": {
     "home": "Home"

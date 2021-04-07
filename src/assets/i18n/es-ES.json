@@ -168,7 +168,8 @@
     "saved": "Guardado satisfactoriamente!!",
     "cancel": "cancelar",
     "error_occurred": "Ha ocurrido un error!!",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "reset": "Resetear"
   },
   "general": {
     "home": "Inicio"
