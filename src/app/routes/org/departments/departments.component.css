@@ -1,1 +1,7 @@
-/* No CSS *//*# sourceMappingURL=departments.component.css.map */
+.customizer-handle {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    z-index: 1;
+  }
+  /*# sourceMappingURL=companies.component.css.map */

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
-export interface Deparment{
+export interface Department{
   name: string,
   company: string,
   isActive: boolean
@@ -14,11 +14,11 @@ export interface Deparment{
 @Injectable({
   providedIn: 'root',
 })
-export class DeparmentsService {
+export class DepartmentsService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + "deparment";
+    this.endpoint = environment.apiURL + "department";
     console.log('Conectando a :' + this.endpoint);
   }
 
