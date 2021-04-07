@@ -120,7 +120,7 @@ export class AddcompanyComponent implements OnInit {
         break;
 
       default:
-        this.toaster.warning("Se desconoce el modo del forulario");
+        this.toaster.warning("Se desconoce el modo del formulario");
 
 
     }

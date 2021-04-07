@@ -13,5 +13,6 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.stylelint": true
-  }
+  },
+  "workbench.colorTheme": "Abyss"
 }

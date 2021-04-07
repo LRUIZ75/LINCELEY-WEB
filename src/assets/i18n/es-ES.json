@@ -141,7 +141,8 @@
     "symbol": "Símbolo",
     "tele": "Teléfono",
     "website": "Sitio web",
-    "weight": "Peso"
+    "weight": "Peso",
+    "submit": "Enviar"
   },
   "user": {
     "logout": "Cerrar sesión",
@@ -187,6 +188,9 @@
     "location-lat": "Ubicación (lat)",
     "location-lng": "Ubicación (lon)",
     "shortName": "Siglas",
-    "isActive": "activo?"
+    "isActive": "activo?",
+    "company": "compañía",
+    "departments": "departamentos",
+    "name": "nombre"
   }
 }

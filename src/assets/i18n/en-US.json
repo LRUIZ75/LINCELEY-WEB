@@ -184,10 +184,13 @@
     "lastnames": "Last Names",
     "users": "Users",
     "companies": "Companies",
+    "company": "company",
     "fullName": "Full Name",
     "shortName": "Short Name",
     "location-lat": "Location (lat)",
     "location-lng": "Location (lng)",
-    "isActive": "is active?"
+    "isActive": "is active?",
+    "departments": "departaments",
+    "name": "name"
   }
 }
