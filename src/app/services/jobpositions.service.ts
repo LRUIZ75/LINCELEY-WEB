@@ -19,7 +19,7 @@ export class JobPositionsService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + "jobpositions";
+    this.endpoint = environment.apiURL + "jobpositions/";
     console.log('Conectando a :' + this.endpoint);
   }
 

@@ -7,17 +7,16 @@
 </app-adddepartment>
 </div>
 
-<div
-  class="customizer-handle"
+<div  
   matTooltip="Agregar Departamento"
   cdkDrag
   (cdkDragStarted)="handleDragStart($event)"
   *ngIf="currentState == 'RETRIEVE'"
 >
-  <button mat-fab color="accent" (click)="openPanel($event)">
+  <button mat-raised-button color="accent" (click)="openPanel($event)">
     <mat-icon aria-label="Agregar nuevo departamento">add</mat-icon>
   </button>
-</div>
+</div> 
 
 <!-- Inicia listado de departamentos' -->
 <mtx-grid

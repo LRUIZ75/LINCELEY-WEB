@@ -20,7 +20,7 @@ export class EmployeesService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + "employee";
+    this.endpoint = environment.apiURL + "employee/";
     console.log('Conectando a :' + this.endpoint);
   }
 

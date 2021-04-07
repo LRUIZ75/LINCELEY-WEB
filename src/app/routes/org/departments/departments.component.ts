@@ -5,20 +5,24 @@ import { ToastrService } from 'ngx-toastr';
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
-import { Company, CompaniesService } from 'app/services';
-import { Department, DepartmentsService } from 'app/services'
+import { Company, CompaniesService, Department, DepartmentsService } from 'app/services';
+import { AnyARecord } from 'node:dns';
+
+export interface DepartmentData {
+  _id: string;
+  name: string;
+  company: string;
+  companyName: string;
+  isActive: boolean;
+}
 
 @Component({
   selector: 'app-org-departments',
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.scss'],
-  providers: [DepartmentsService, CompaniesService]
+  providers: [DepartmentsService, CompaniesService],
 })
-
-
-
 export class OrgDepartmentsComponent implements OnInit {
-
   columns: MtxGridColumn[] = [
     {
       header: this.translate.stream('Id'),
@@ -32,7 +36,8 @@ export class OrgDepartmentsComponent implements OnInit {
       sortable: true,
       disabled: true,
     },
-    { header: this.translate.stream('domain.company'), field: 'company' },
+/*     { header: this.translate.stream('domain.company'), field: 'company' }, */
+    { header: this.translate.stream('domain.company'), field: 'companyName' },
     { header: this.translate.stream('domain.isActive'), field: 'isActive' },
     {
       header: this.translate.stream('table_kitchen_sink.operation'),
@@ -46,7 +51,7 @@ export class OrgDepartmentsComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('table_kitchen_sink.edit'),
-         click: record => this.edit(record),
+          click: record => this.edit(record),
         },
         {
           color: 'warn',
@@ -78,23 +83,25 @@ export class OrgDepartmentsComponent implements OnInit {
   /* Variables locales */
 
   public currentState: string = 'RETRIEVE';
-  public selected:  Company;
+  public selected: Department;
 
+  public departmentList: any[] = [];
+  public departmentData: any[] = [];
+  public companyList: any[] = [];
 
-  public departmentList: Department[] = [];
   public title: string;
   dragging = false;
   opened = false;
 
-
-  @Input() filter: string ='';
+  @Input() filter: string = '';
   constructor(
     public companyService: CompaniesService,
-    public departmentService:DepartmentsService,
+    public departmentService: DepartmentsService,
     public translate: TranslateService,
     public toaster: ToastrService
   ) {
     this.title = this.translate.instant('domain.departments');
+    this.getCompanyList();
     this.getList();
   }
 
@@ -102,22 +109,38 @@ export class OrgDepartmentsComponent implements OnInit {
     this.currentState = 'RETRIEVE';
   }
 
+  getCompanyList() {
+    this.companyService
+      .getData()
+      .toPromise()
+      .then(resp => {
+        this.companyList = resp.objects;
+      });
+  }
+
   getList() {
     this.departmentService.getData().subscribe(
       res => {
         if (res) {
-            var jsonResponse = JSON.stringify(res);
-            var response = JSON.parse(jsonResponse);
-            if (response.status != 'ok') return;
-            this.departmentList = response.objects as Department[];
-            this.departmentList = this.departmentList.filter(it => it.isActive == true);
-            if(this.filter) {
-              this.departmentList = this.departmentList.filter(it => it.isActive == true && it.company == this.filter);
-            }
+          var jsonResponse = JSON.stringify(res);
+          var response = JSON.parse(jsonResponse);
+          if (response.status != 'ok') return;
+          this.departmentList = response.objects;
+          this.departmentList = this.departmentList.filter(it => it.isActive == true);
+          if (this.filter) {
+            this.departmentList = this.departmentList.filter(
+              it => it.isActive == true && it.company == this.filter
+            );
+          }
+
+          for (var i = 0; i < this.departmentList.length; i++) {
+            var comp = this.companyList.find(it => it._id == this.departmentList[i].company);
+            this.departmentList[i].companyName = comp.fullName;
+          }
         }
       },
       err => {
-        if(err.substring(0,3)!= '404'){
+        if (err.substring(0, 3) != '404') {
           var msg = this.translate.instant('record_actions.error_occurred');
           this.toaster.error(err);
         }
@@ -139,39 +162,37 @@ export class OrgDepartmentsComponent implements OnInit {
     this.currentState = 'ADD';
   }
 
-  edit(selected){
+  edit(selected) {
     this.selected = selected;
     this.opened = true;
     this.currentState = 'EDIT';
   }
 
-  delete(selected){
+  delete(selected) {
     this.selected = selected;
 
-    this.departmentService.deactivateData(selected._id).
-    toPromise()
-    .then( deleted => {
-      if(deleted){
-        this.toaster.success("Operación exitosa!");
-      }
-      else
-        {
-          this.toaster.error("Operación fallida!");
+    this.departmentService
+      .deactivateData(selected._id)
+      .toPromise()
+      .then(deleted => {
+        if (deleted) {
+          this.toaster.success('Operación exitosa!');
+        } else {
+          this.toaster.error('Operación fallida!');
           return;
         }
-    }).
-    catch(err => {
-      this.toaster.error(err);
-      return;
-    })
+      })
+      .catch(err => {
+        this.toaster.error(err);
+        return;
+      });
 
     this.getList();
   }
 
-  changeState(state: string){
+  changeState(state: string) {
     this.currentState = state;
-    if(state=='RETRIEVE')
-      this.getList();
+    if (state == 'RETRIEVE') this.getList();
   }
 
   changeSelect(e: any) {

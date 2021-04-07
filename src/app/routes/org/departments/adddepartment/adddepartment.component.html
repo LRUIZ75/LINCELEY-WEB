@@ -28,12 +28,23 @@
             </mat-form-field>
   
             <mat-form-field>
-              <input
+              <mat-select 
+              placeholder="{{ 'domain.company' | translate | titlecase }}"
+              formControlName="company"
+              required
+              >
+                <mat-option *ngFor="let item of companyList" [value]="item._id">
+                  {{ item.fullName }}
+                </mat-option>
+              </mat-select>
+
+
+<!--               <input
                 matInput
                 placeholder="{{ 'domain.company' | translate | titlecase }}"
                 formControlName="company"
                 required
-              />
+              /> -->
               <mat-error *ngIf="departmentFormGroup.get('company').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>

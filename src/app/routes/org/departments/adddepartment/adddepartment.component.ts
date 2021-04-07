@@ -16,6 +16,9 @@ export class AdddepartmentComponent implements OnInit {
      departmentFormGroup: FormGroup;
      department: Department;
 
+     public companyList: any[] = [];
+     public companies: any[] = [];
+
      @Output() changeStateEvent = new EventEmitter<string>();
 
      @Input() formMode = 'ADD';
@@ -26,7 +29,8 @@ export class AdddepartmentComponent implements OnInit {
        private companyService: CompaniesService,
        private departmentService: DepartmentsService,
        private toaster: ToastrService
-     ) {}
+     ) {
+     }
    
      ngOnInit(): void {
        this.departmentFormGroup = this.formBuilder.group({
@@ -38,6 +42,34 @@ export class AdddepartmentComponent implements OnInit {
        if (this.formMode == 'EDIT' && this.initialData) {
          this.departmentFormGroup.patchValue(this.initialData as Department);
        }
+
+       //build Company List for Selecte
+       this.getCompanyList();
+
+
+     }
+
+     getCompanyList() {
+       this.companyService.getData()
+       .toPromise()
+       .then(response => {
+         if(!response){
+           this.toaster.error("No hay datos de compañías!");
+           return;
+         }
+         this.companies = response.objects;
+         switch(this.formMode){
+           case 'ADD':
+             this.companyList = this.companies.filter(company => company.isActive == true);
+             break;
+          default:
+            this.companyList = this.companies;
+         }
+       })
+       .catch(err =>{
+         this.toaster.error(err.message);
+       })
+
      }
    
      get name() {
@@ -113,7 +145,7 @@ export class AdddepartmentComponent implements OnInit {
              this.changeState('RETRIEVE');
            })
            .catch(err => {
-             this.toaster.error(err);
+             this.toaster.error(err.message);
            });
            break;
    

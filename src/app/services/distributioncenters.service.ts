@@ -22,7 +22,7 @@ export class DistributionCentersService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + "distributioncenter";
+    this.endpoint = environment.apiURL + "distributioncenter/";
     console.log('Conectando a :' + this.endpoint);
   }
 

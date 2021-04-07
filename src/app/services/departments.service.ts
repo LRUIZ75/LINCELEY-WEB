@@ -18,7 +18,7 @@ export class DepartmentsService {
   public endpoint: string;
 
   constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + "department";
+    this.endpoint = environment.apiURL + "department/";
     console.log('Conectando a :' + this.endpoint);
   }
 
