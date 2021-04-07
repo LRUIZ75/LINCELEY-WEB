@@ -64,7 +64,7 @@ export class OrgCompaniesComponent implements OnInit {
   multiSelectable = false;
   rowSelectable = true;
   hideRowSelectionCheckbox = false;
-  showToolbar = true;
+  showToolbar = false;
   columnHideable = true;
   columnMovable = true;
   rowHover = true;

@@ -7,17 +7,16 @@
 </app-addcompany>
 </div>
 
-<div
-  class="customizer-handle"
-  matTooltip="Agregar compañía"
+<div  
+  matTooltip="{{'record_actions.add_new'| translate}} {{'domain.companies'| translate}}"
   cdkDrag
   (cdkDragStarted)="handleDragStart($event)"
   *ngIf="currentState == 'RETRIEVE'"
 >
-  <button mat-fab color="accent" (click)="openPanel($event)">
-    <mat-icon aria-label="Agregar nueva compañía">add</mat-icon>
+  <button mat-raised-button color="primary" (click)="openPanel($event)">
+    {{'record_actions.add_new'| translate}}
   </button>
-</div>
+</div> 
 
 <!-- Inicia listado de compañías' -->
 <mtx-grid
