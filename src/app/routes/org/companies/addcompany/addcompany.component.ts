@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
-import { MtxFormGroupModule } from '@ng-matero/extensions';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Company, CompaniesService } from 'app/services';
 import { ToastrService } from 'ngx-toastr';
 
@@ -40,12 +39,6 @@ export class AddcompanyComponent implements OnInit {
 
     if (this.formMode == 'EDIT' && this.initialData) {
       this.companyFormGroup.patchValue(this.initialData as Company);
-      /*this.companyFormGroup.get('fullName').setValue(this.initialData.fullName);
-      this.companyFormGroup.get('shortName').setValue(this.initialData.shortName);
-      this.companyFormGroup.get('isActive').setValue(this.initialData.isActive);
-      this.companyFormGroup.get('fullName').setValue(this.initialData.fullName);
-      this.companyFormGroup.get('lat').setValue(this.initialData.lat);
-      this.companyFormGroup.get('lng').setValue(this.initialData.lng); */
     }
   }
 
