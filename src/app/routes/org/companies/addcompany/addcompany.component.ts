@@ -15,6 +15,9 @@ export class AddcompanyComponent implements OnInit {
   companyFormGroup: FormGroup;
   company: Company;
 
+  public latitude: any;
+  public longitude: any;
+
   @Output() changeStateEvent = new EventEmitter<string>();
 
   @Input() formMode = 'ADD';
@@ -32,13 +35,34 @@ export class AddcompanyComponent implements OnInit {
       shortName: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
       location: this.formBuilder.group({
-        lat: ['', Validators.required],
-        lng: ['', Validators.required],
+        lat: [1, [Validators.required]],
+        lng: [2, [Validators.required]],
       }),
     });
 
     if (this.formMode == 'EDIT' && this.initialData) {
       this.companyFormGroup.patchValue(this.initialData as Company);
+    }
+
+    if (this.formMode == 'ADD') {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.initialData = {
+            fullName: '',
+            shortName: '',
+            isActive: true,
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          };
+          this.companyFormGroup.patchValue(this.initialData as Company);
+
+          this.latitude = position.coords.latitude.toString();
+          this.longitude = position.coords.longitude.toString();
+          console.log(this.latitude, this.longitude);
+        });
+      }
     }
   }
 
@@ -48,6 +72,22 @@ export class AddcompanyComponent implements OnInit {
 
   get shortName() {
     return this.companyFormGroup.get('shortName');
+  }
+
+  get lat() {
+    return this.companyFormGroup.get('location').get('lat');
+  }
+
+  set lat(value) {
+    this.companyFormGroup.get('location').get('lat').setValue(value);
+  }
+
+  get lng() {
+    return this.companyFormGroup.get('location').get('lng');
+  }
+
+  set lng(value) {
+    this.companyFormGroup.get('location').get('lng').setValue(value);
   }
 
   /**
@@ -80,50 +120,47 @@ export class AddcompanyComponent implements OnInit {
 
     this.company = <Company>this.companyFormGroup.value;
 
-    switch(this.formMode){
+    switch (this.formMode) {
       case 'EDIT':
         this.companyService
-        .updateData(this.initialData._id,this.company)
-        .toPromise()
-        .then(resp => {
-          if (!resp) {
-            this.toaster.error('Operación fallida!');
-            return;
-          }
-  
-          this.company = <Company>resp.updated;
-          this.toaster.success('Operación exitosa!');
-          this.changeState('RETRIEVE');
-        })
-        .catch(err => {
-          this.toaster.error(err);
-        });
+          .updateData(this.initialData._id, this.company)
+          .toPromise()
+          .then(resp => {
+            if (!resp) {
+              this.toaster.error('Operación fallida!');
+              return;
+            }
+
+            this.company = <Company>resp.updated;
+            this.toaster.success('Operación exitosa!');
+            this.changeState('RETRIEVE');
+          })
+          .catch(err => {
+            this.toaster.error(err);
+          });
         break;
 
       case 'ADD':
         this.companyService
-        .addData(this.company)
-        .toPromise()
-        .then(resp => {
-          if (!resp) {
-            this.toaster.error('Operación fallida!');
-            return;
-          }
-  
-          this.company = <Company>resp.created;
-          this.toaster.success('Operación exitosa!');
-          this.changeState('RETRIEVE');
-        })
-        .catch(err => {
-          this.toaster.error(err);
-        });
+          .addData(this.company)
+          .toPromise()
+          .then(resp => {
+            if (!resp) {
+              this.toaster.error('Operación fallida!');
+              return;
+            }
+
+            this.company = <Company>resp.created;
+            this.toaster.success('Operación exitosa!');
+            this.changeState('RETRIEVE');
+          })
+          .catch(err => {
+            this.toaster.error(err);
+          });
         break;
 
       default:
-        this.toaster.warning("Se desconoce el modo del formulario");
-
-
+        this.toaster.warning('Se desconoce el modo del formulario');
     }
-
   }
 }

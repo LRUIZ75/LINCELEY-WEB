@@ -6,6 +6,7 @@ import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
 import { Company, CompaniesService } from 'app/services';
+import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({
   selector: 'app-org-companies',
@@ -27,8 +28,8 @@ export class OrgCompaniesComponent implements OnInit {
       sortable: true,
       disabled: true,
     },
-    { header: this.translate.stream('domain.shortName'), field: 'shortName' },
-    { header: this.translate.stream('domain.isActive'), field: 'isActive' },
+    { header: this.translate.stream('domain.shortName'), field: 'shortName', sortable:true },
+    { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable:true, type: 'boolean' },
     { header: this.translate.stream('domain.location-lat'), field: 'location.lat' },
     { header: this.translate.stream('domain.location-lng'), field: 'location.lng' },
     {
@@ -92,10 +93,17 @@ export class OrgCompaniesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentState = 'RETRIEVE';
+    
+    if('geolocation' in navigator) {
+      console.log('geolocation is available');
+    } else {
+      console.log('geolocation is NOT available');
+    }
+    
   }
 
   getList() {
+    this.isLoading=true;
     this.companyService.getData().subscribe(
       res => {
         if (res) {

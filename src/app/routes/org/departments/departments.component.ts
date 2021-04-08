@@ -1,12 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
-import { Company, CompaniesService, Department, DepartmentsService } from 'app/services';
-import { AnyARecord } from 'node:dns';
+import { CompaniesService, Department, DepartmentsService } from 'app/services';
 
 export interface DepartmentData {
   _id: string;
@@ -36,9 +35,9 @@ export class OrgDepartmentsComponent implements OnInit {
       sortable: true,
       disabled: true,
     },
-/*     { header: this.translate.stream('domain.company'), field: 'company' }, */
-    { header: this.translate.stream('domain.company'), field: 'companyName' },
-    { header: this.translate.stream('domain.isActive'), field: 'isActive' },
+    { header: this.translate.stream('domain.company'), field: 'company', hide: true }, 
+    { header: this.translate.stream('domain.company'), field: 'companyName', sortable: true },
+    { header: this.translate.stream('domain.isActive'), field: 'isActive' ,sortable: true  },
     {
       header: this.translate.stream('table_kitchen_sink.operation'),
       field: 'operation',
@@ -86,7 +85,7 @@ export class OrgDepartmentsComponent implements OnInit {
   public selected: Department;
 
   public departmentList: any[] = [];
-  public departmentData: any[] = [];
+/*   public departmentData: any[] = []; */
   public companyList: any[] = [];
 
   public title: string;
@@ -119,6 +118,7 @@ export class OrgDepartmentsComponent implements OnInit {
   }
 
   getList() {
+    this.isLoading = true
     this.departmentService.getData().subscribe(
       res => {
         if (res) {
@@ -146,6 +146,7 @@ export class OrgDepartmentsComponent implements OnInit {
         }
       }
     );
+
   }
 
   handleDragStart(event: CdkDragStart): void {
