@@ -11,13 +11,14 @@ import {
   CompaniesService,
   Department,
   DepartmentsService,
+  RolesService
 } from 'app/services';
 
 @Component({
   selector: 'app-org-jobpositions',
   templateUrl: './jobpositions.component.html',
   styleUrls: ['./jobpositions.component.scss'],
-  providers: [JobPositionsService, DepartmentsService, CompaniesService],
+  providers: [JobPositionsService, DepartmentsService, CompaniesService, RolesService],
 })
 export class OrgJobpositionsComponent implements OnInit {
 
@@ -36,6 +37,8 @@ export class OrgJobpositionsComponent implements OnInit {
     },
     { header: this.translate.stream('domain.company'), field: 'company', hide: true },
     { header: this.translate.stream('domain.company'), field: 'companyName', sortable: true },
+    { header: this.translate.stream('domain.defaultrole'), field: 'defaultRole', hide: true },
+    { header: this.translate.stream('domain.defaultrole'), field: 'roleName', sortable: true },
     { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable: true },
     {
       header: this.translate.stream('table_kitchen_sink.operation'),
@@ -86,6 +89,7 @@ export class OrgJobpositionsComponent implements OnInit {
   public jobpositionList: any[] = [];
   public companyList: any[] = [];
   public departmentList: any[] = [];
+  public roleList: any[] = [];
 
   public title: string;
   public filterCompany: any;
@@ -100,12 +104,15 @@ export class OrgJobpositionsComponent implements OnInit {
     public companyService: CompaniesService,
     public departmentService: DepartmentsService,
     public jobpositionService: JobPositionsService,
+    public roleService: RolesService,
     public translate: TranslateService,
     public toaster: ToastrService
   ) {
     this.title = this.translate.instant('domain.departments');
     this.getCompanyList();
     this.getDepartmentList();
+    this.getRoleList();
+
     this.getList();
   }
 
@@ -131,8 +138,16 @@ export class OrgJobpositionsComponent implements OnInit {
     });
   }
 
+  getRoleList() {
+    this.roleService
+    .getData()
+    .toPromise()
+    .then(resp => {
+      this.roleList = resp.objects;
+    });
+  }
+
   getList() {
-    this.isLoading = true;
     this.jobpositionService.getData().subscribe(
       res => {
         if (res) {
@@ -150,7 +165,13 @@ export class OrgJobpositionsComponent implements OnInit {
           for (var i = 0; i < this.jobpositionList.length; i++) {
             var comp = this.companyList.find(it => it._id == this.jobpositionList[i].company);
             this.jobpositionList[i].companyName = comp.fullName;
+
+            var role = this.roleList.find(it => it._id == this.jobpositionList[i].defaultRole);
+            this.jobpositionList[i].roleName = role.name;
           }
+
+
+
         }
       },
       err => {

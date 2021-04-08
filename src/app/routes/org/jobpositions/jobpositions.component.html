@@ -22,6 +22,7 @@
         {{ 'record_actions.add_new' | translate }}
       </button>
     </div>
+
     <div fxFlex="20" class="filter">
       <mat-select
       [(ngModel)]="filterCompany" #fltCompany="ngModel"
@@ -34,9 +35,9 @@
       </mat-select>
     </div>
 
-    <div fxFlex="20" class="filter">
+<!--     <div fxFlex="20" class="filter">
       <mat-select
-      [(ngModel)]="filterDepartment" #fltCompany="ngModel"
+      [(ngModel)]="filterDepartment" #fltDepartment="ngModel"
         placeholder="{{'record_actions.filterby'| translate|titlecase}} {{ 'domain.department' | translate | titlecase }}"
         required
       >
@@ -44,7 +45,8 @@
           {{ departmentItem.name }}
         </mat-option>
       </mat-select>
-    </div>
+    </div> -->
+
     <div fxFlex="20" class="filter">
         <button mat-icon-button (click)="resetFilters()">
             <mat-icon>clear_all</mat-icon>

@@ -193,6 +193,8 @@
     "isActive": "is active?",
     "departments": "departaments",
     "department": "department",
-    "name": "name"
+    "name": "name",
+    "role": "role",
+    "defaultrole": "default role"
   }
 }

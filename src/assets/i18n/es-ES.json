@@ -193,6 +193,8 @@
     "company": "compañía",
     "departments": "departamentos",
     "name": "nombre",
-    "department": "departamento"
+    "department": "departamento",
+    "role": "rol",
+    "defaultrole": "rol predeterminado"
   }
 }

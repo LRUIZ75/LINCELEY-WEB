@@ -1,19 +1,51 @@
 <page-header></page-header>
 <breadcrumb></breadcrumb>
+<div>
+  <mat-card>
+    <mat-card-header class="bg-linceley-blue-700 text-linceley-blue-50">
 
+      <mat-card-title
+        >This colors are based on Material Design Standard,Linceley Blue and
+        Yellow</mat-card-title
+      >
+
+      <mat-card-subtitle class="text-linceley-blue-100">This dashboard page is just a demo, so it's not a realistic look of any page of your application</mat-card-subtitle>
+      <mat-card-subtitle class="text-linceley-blue-100">This is how real pages would be: 
+        <a mat-button color="default" type="link"  href="/org/companies">Companies</a>
+        <a mat-button color="default" type="link"  href="/org/departments">Departments</a>
+        <a mat-button color="default" type="link"  href="/org/jobpositions">Job Positions</a>
+      
+      
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>This <b>mat-card</b> is the default container for all <b>first-class UI elements</b></p>
+      <p>Palettes from Linceley Colors are based on index 500:</p>
+      <img src="/assets/images/palettes.png">
+    </mat-card-content>
+  </mat-card>
+</div>
 <div class="matero-row" fxLayout="row wrap">
-
   <!-- Statistics -->
-  <div class="matero-col" fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100"
-       *ngFor="let stat of stats">
-    <mat-card  [ngClass]="['text-white', stat.color]">
-      <mat-card-title class="f-s-12 f-w-100">{{stat.title}}</mat-card-title>
+
+  <div
+    class="matero-col"
+    fxFlex.gt-sm="25"
+    fxFlex.gt-xs="50"
+    fxFlex="100"
+    *ngFor="let stat of stats"
+  >
+    <mat-card [ngClass]="['text-white', stat.color]">
+      <mat-card-title class="f-s-12 f-w-100">{{ stat.title }}</mat-card-title>
       <mat-card-content>
-        <h2>{{stat.amount}}</h2>
-        <mtx-progress [value]="stat.progress.value"
-                      height="2px"
-                      foreground="rgba(255,255,255,1)"
-                      background='rgba(0,0,0,.5)'>
+        <h2>{{ stat.amount }}</h2>
+        <mtx-progress
+          [value]="stat.progress.value"
+          height="2px"
+          foreground="rgba(255,255,255,1)"
+          background="rgba(0,0,0,.5)"
+        >
         </mtx-progress>
         <small class="text-muted">Monthly</small>
       </mat-card-content>
@@ -23,13 +55,13 @@
   <!-- Charts -->
   <div class="matero-col" fxFlex="100" fxFlex.gt-sm="60">
     <mat-card class="bg-linceley-blue-50">
-      <mat-card-subtitle>Traffic</mat-card-subtitle>
+      <mat-card-subtitle>mat-card linceley blue 50</mat-card-subtitle>
       <div id="chart1"></div>
     </mat-card>
   </div>
   <div class="matero-col" fxFlex="100" fxFlex.gt-sm="40">
     <mat-card class="bg-linceley-blue-100">
-      <mat-card-subtitle>Weekly Revenue</mat-card-subtitle>
+      <mat-card-subtitle>mat-card linceley blue 100</mat-card-subtitle>
       <div id="chart2"></div>
     </mat-card>
   </div>
@@ -40,55 +72,48 @@
       <mat-tab-group class="m--16">
         <mat-tab label="First">
           <div class="m-16">
-            <img class="d-block w-full" src="assets/images/pixabay/2.jpg" alt="">
-            <h3>Aenean viverra arcu nec pellentesque ultrices. In erat purus, adipiscing nec lacinia
-              at, ornare ac eros.
+            <img class="d-block w-full" src="assets/images/pixabay/2.jpg" alt="" />
+            <h3>
+              mat-card 200
             </h3>
             <p>
               Nullam at risus metus. Quisque nisl purus, pulvinar ut mauris vel, elementum suscipit
-              eros. Praesent
-              ornare ante massa, egestas pellentesque orci convallis ut. Curabitur consequat
-              convallis est, id luctus
-              mauris lacinia vel. Nullam tristique lobortis mauris, ultricies fermentum lacus
-              bibendum id. Proin non
-              ante tortor. Suspendisse pulvinar ornare tellus nec pulvinar. Nam pellentesque
-              accumsan mi, non
-              pellentesque sem convallis sed. Quisque rutrum erat id auctor gravida.</p>
+              eros. Praesent ornare ante massa, egestas pellentesque orci convallis ut. Curabitur
+              consequat convallis est, id luctus mauris lacinia vel. Nullam tristique lobortis
+              mauris, ultricies fermentum lacus bibendum id. Proin non ante tortor. Suspendisse
+              pulvinar ornare tellus nec pulvinar. Nam pellentesque accumsan mi, non pellentesque
+              sem convallis sed. Quisque rutrum erat id auctor gravida.
+            </p>
           </div>
         </mat-tab>
         <mat-tab label="Second">
           <div class="m-16">
-            <img class="d-block w-full" src="assets/images/pixabay/8.jpg" alt="">
+            <img class="d-block w-full" src="assets/images/pixabay/8.jpg" alt="" />
             <h3>Vestibulum vitae diam nec odio dapibus placerat. Ut ut lorem justo.</h3>
             <p>
               Fusce bibendum augue nec fermentum tempus. Sed laoreet dictum tempus. Aenean ac sem
-              quis nulla malesuada
-              volutpat. Nunc vitae urna pulvinar velit commodo cursus. Nullam eu felis quis diam
-              adipiscing hendrerit
-              vel ac turpis. Nam mattis fringilla euismod. Donec eu ipsum sit amet mauris iaculis
-              aliquet. Quisque sit
-              amet feugiat odio. Cras convallis lorem at libero lobortis, placerat lobortis sapien
-              lacinia. Duis sit
-              amet elit bibendum sapien dignissim bibendum.</p>
-
+              quis nulla malesuada volutpat. Nunc vitae urna pulvinar velit commodo cursus. Nullam
+              eu felis quis diam adipiscing hendrerit vel ac turpis. Nam mattis fringilla euismod.
+              Donec eu ipsum sit amet mauris iaculis aliquet. Quisque sit amet feugiat odio. Cras
+              convallis lorem at libero lobortis, placerat lobortis sapien lacinia. Duis sit amet
+              elit bibendum sapien dignissim bibendum.
+            </p>
           </div>
         </mat-tab>
         <mat-tab label="Third">
           <div class="m-16">
-            <img class="d-block w-full" src="assets/images/pixabay/16.jpg" alt="">
-            <h3>Maecenas eget turpis luctus, scelerisque arcu id, iaculis urna. Interdum et
-              malesuada fames ac ante
-              ipsum primis in faucibus.</h3>
+            <img class="d-block w-full" src="assets/images/pixabay/16.jpg" alt="" />
+            <h3>
+              Maecenas eget turpis luctus, scelerisque arcu id, iaculis urna. Interdum et malesuada
+              fames ac ante ipsum primis in faucibus.
+            </h3>
             <p>
               Morbi placerat est nec pharetra placerat. Ut laoreet nunc accumsan orci aliquam
-              accumsan. Maecenas
-              volutpat dolor vitae sapien ultricies fringilla. Suspendisse vitae orci sed nibh
-              ultrices tristique.
-              Aenean in ante eget urna semper imperdiet. Pellentesque sagittis a nulla at
-              scelerisque. Nam augue nulla,
-              accumsan quis nisi a, facilisis eleifend nulla. Praesent aliquet odio non imperdiet
-              fringilla.</p>
-
+              accumsan. Maecenas volutpat dolor vitae sapien ultricies fringilla. Suspendisse vitae
+              orci sed nibh ultrices tristique. Aenean in ante eget urna semper imperdiet.
+              Pellentesque sagittis a nulla at scelerisque. Nam augue nulla, accumsan quis nisi a,
+              facilisis eleifend nulla. Praesent aliquet odio non imperdiet fringilla.
+            </p>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -139,13 +164,13 @@
 
   <div class="matero-col" fxFlex.gt-sm="50" fxFlex="100">
     <mat-card class="bg-linceley-yellow-200">
-      <mat-card-subtitle >Avatar List</mat-card-subtitle>
+      <mat-card-subtitle>Avatar List</mat-card-subtitle>
       <mat-list>
         <mat-list-item *ngFor="let message of messages">
-          <img matListAvatar [src]="message.img" alt="">
-          <h3 matLine> {{message.subject}} </h3>
+          <img matListAvatar [src]="message.img" alt="" />
+          <h3 matLine>{{ message.subject }}</h3>
           <p matLine>
-            <span>{{message.content}} </span>
+            <span>{{ message.content }} </span>
           </p>
         </mat-list-item>
       </mat-list>
@@ -156,23 +181,23 @@
       <mat-card-content>
         <table class="w-full" mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element;"> {{element.position}} </td>
+            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
           </ng-container>
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element;"> {{element.name}} </td>
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
           </ng-container>
           <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element;"> {{element.weight}} </td>
+            <th mat-header-cell *matHeaderCellDef>Weight</th>
+            <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
           </ng-container>
           <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Symbol </th>
-            <td mat-cell *matCellDef="let element;"> {{element.symbol}} </td>
+            <th mat-header-cell *matHeaderCellDef>Symbol</th>
+            <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </mat-card-content>
     </mat-card>
@@ -207,6 +232,5 @@
         </div>
       </mat-card-content>
     </mat-card>
-
   </div>
 </div>

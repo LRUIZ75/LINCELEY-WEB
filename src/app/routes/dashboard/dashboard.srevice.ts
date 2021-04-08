@@ -58,7 +58,7 @@ const MESSAGES = [
 export class DashboardService {
   stats = [
     {
-      title: 'Total Sales',
+      title: 'Linceley Blue 500',
       amount: '180,200',
       progress: {
         value: 50,
@@ -66,7 +66,7 @@ export class DashboardService {
       color: 'bg-linceley-blue-500',
     },
     {
-      title: 'Revenue',
+      title: 'Material Red 500',
       amount: '70,205',
       progress: {
         value: 70,
@@ -74,7 +74,7 @@ export class DashboardService {
       color: 'bg-red-500',
     },
     {
-      title: 'Traffic',
+      title: 'Linceley Yellow 500',
       amount: '1,291,922',
       progress: {
         value: 80,
@@ -82,12 +82,12 @@ export class DashboardService {
       color: 'bg-linceley-yellow-500',
     },
     {
-      title: 'New User',
+      title: 'Material Green 500',
       amount: '1,922',
       progress: {
         value: 40,
       },
-      color: 'bg-teal-500',
+      color: 'bg-green-500',
     },
   ];
 
