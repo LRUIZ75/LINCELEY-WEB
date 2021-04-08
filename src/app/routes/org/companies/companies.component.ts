@@ -151,6 +151,7 @@ export class OrgCompaniesComponent implements OnInit {
     .then( deleted => {
       if(deleted){
         this.toaster.success("Operación exitosa!");
+        this.getList();
       }
       else
         {
@@ -163,7 +164,7 @@ export class OrgCompaniesComponent implements OnInit {
       return;
     })
 
-    this.getList();
+    
   }
 
   changeState(state: string){

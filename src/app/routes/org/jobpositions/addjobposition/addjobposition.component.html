@@ -3,15 +3,15 @@
       <mat-card class="">
          <mat-card-title class="mat-title" *ngIf="formMode=='ADD'">
           {{ 'record_actions.add_new' | translate | titlecase }}:
-          {{ 'domain.departments' | translate | titlecase }}
+          {{ 'domain.jobpositions' | translate | titlecase }}
          </mat-card-title>
           <mat-card-title class="mat-title" *ngIf="formMode=='EDIT'">
             {{ 'record_actions.edit' | translate | titlecase }}:
-            {{ 'domain.departments' | translate | titlecase }}
+            {{ 'domain.jobpositions' | translate | titlecase }}
             </mat-card-title
         >
         <mat-card-content>
-          <form [formGroup]="departmentFormGroup">
+          <form [formGroup]="jobpositionFormGroup">
             <mat-form-field>
               <input
                 matInput
@@ -19,10 +19,10 @@
                 formControlName="name"
                 required
               />
-              <mat-error *ngIf="departmentFormGroup.get('name').hasError('required')">
+              <mat-error *ngIf="jobpositionFormGroup.get('name').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>
-              <mat-error *ngIf="departmentFormGroup.get('name').hasError('minlength')">
+              <mat-error *ngIf="jobpositionFormGroup.get('name').hasError('minlength')">
                 {{ 'validations.minlength' | translate }}
               </mat-error>
             </mat-form-field>
@@ -38,7 +38,7 @@
                 </mat-option>
               </mat-select>
 
-              <mat-error *ngIf="departmentFormGroup.get('company').hasError('required')">
+              <mat-error *ngIf="jobpositionFormGroup.get('company').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>
             </mat-form-field>
@@ -52,7 +52,7 @@
           </form>
         </mat-card-content>
         <mat-card-actions align="right">
-          <button *ngIf="formMode == 'ADD'"  mat-raised-button color = "default" type="reset" (click)="onReset()">
+          <button *ngIf="formMode == 'ADD'" mat-raised-button color = "default" type="reset" (click)="onReset()">
             {{ 'record_actions.reset' | translate | titlecase }}
           </button>
           <button mat-raised-button color="default" type="cancel" (click)="onCancel()">

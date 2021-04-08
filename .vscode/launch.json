@@ -5,12 +5,6 @@
     "version": "0.2.0",
     "configurations": [  
         {
-            "command": "ng serve",
-            "name": "ng serve",
-            "request": "launch",
-            "type": "node-terminal"
-        },
-        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome",

@@ -36,6 +36,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   stats = this.dashboardSrv.getStats();
 
+  public demoVisible: boolean = false;
+
   constructor(
     private dashboardSrv: DashboardService,
     private ngZone: NgZone,

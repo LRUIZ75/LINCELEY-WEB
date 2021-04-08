@@ -174,7 +174,8 @@
     "filterby": "filter by"
   },
   "general": {
-    "home": "Home"
+    "home": "Home",
+    "demo": "demo"
   },
   "domain": {
     "company_name": "company name",
@@ -195,6 +196,8 @@
     "department": "department",
     "name": "name",
     "role": "role",
-    "defaultrole": "default role"
+    "defaultrole": "default role",
+    "jobpositions": "job positions",
+    "jobposition": "job position"
   }
 }

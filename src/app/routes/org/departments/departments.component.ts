@@ -170,6 +170,7 @@ export class OrgDepartmentsComponent implements OnInit {
       .then(deleted => {
         if (deleted) {
           this.toaster.success('Operación exitosa!');
+          this.getList();
         } else {
           this.toaster.error('Operación fallida!');
           return;
@@ -180,7 +181,6 @@ export class OrgDepartmentsComponent implements OnInit {
         return;
       });
 
-    this.getList();
   }
 
   changeState(state: string) {

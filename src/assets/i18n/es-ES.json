@@ -174,7 +174,8 @@
     "filterby": "filtrar por"
   },
   "general": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "demo": "demostración"
   },
   "domain": {
     "tax_code": "código tributario",
@@ -195,6 +196,8 @@
     "name": "nombre",
     "department": "departamento",
     "role": "rol",
-    "defaultrole": "rol predeterminado"
+    "defaultrole": "rol predeterminado",
+    "jobposition": "puesto",
+    "jobpositions": "puestos"
   }
 }
