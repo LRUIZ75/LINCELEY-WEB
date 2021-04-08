@@ -170,7 +170,8 @@
     "cancel": "cancel",
     "error_occurred": "An error has occurred!!",
     "submit": "Submit",
-    "reset": "Reset"
+    "reset": "Reset",
+    "filterby": "filter by"
   },
   "general": {
     "home": "Home"
@@ -191,6 +192,7 @@
     "location-lng": "Location (lng)",
     "isActive": "is active?",
     "departments": "departaments",
+    "department": "department",
     "name": "name"
   }
 }

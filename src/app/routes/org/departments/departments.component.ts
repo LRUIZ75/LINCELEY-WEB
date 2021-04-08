@@ -7,13 +7,6 @@ import { MtxGridColumn } from '@ng-matero/extensions';
 //Import services
 import { CompaniesService, Department, DepartmentsService } from 'app/services';
 
-export interface DepartmentData {
-  _id: string;
-  name: string;
-  company: string;
-  companyName: string;
-  isActive: boolean;
-}
 
 @Component({
   selector: 'app-org-departments',
@@ -85,7 +78,6 @@ export class OrgDepartmentsComponent implements OnInit {
   public selected: Department;
 
   public departmentList: any[] = [];
-/*   public departmentData: any[] = []; */
   public companyList: any[] = [];
 
   public title: string;

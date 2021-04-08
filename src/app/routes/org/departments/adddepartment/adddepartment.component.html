@@ -38,13 +38,6 @@
                 </mat-option>
               </mat-select>
 
-
-<!--               <input
-                matInput
-                placeholder="{{ 'domain.company' | translate | titlecase }}"
-                formControlName="company"
-                required
-              /> -->
               <mat-error *ngIf="departmentFormGroup.get('company').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>

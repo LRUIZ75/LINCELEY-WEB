@@ -170,7 +170,8 @@
     "cancel": "cancelar",
     "error_occurred": "Ha ocurrido un error!!",
     "submit": "Enviar",
-    "reset": "Resetear"
+    "reset": "Resetear",
+    "filterby": "filtrar por"
   },
   "general": {
     "home": "Inicio"
@@ -191,6 +192,7 @@
     "isActive": "activo?",
     "company": "compañía",
     "departments": "departamentos",
-    "name": "nombre"
+    "name": "nombre",
+    "department": "departamento"
   }
 }
