@@ -206,12 +206,13 @@ export class OrgJobpositionsComponent implements OnInit {
   delete(selected) {
     this.selected = selected;
 
-    this.departmentService
+    this.jobpositionService
       .deactivateData(selected._id)
       .toPromise()
       .then(deleted => {
         if (deleted) {
           this.toaster.success('Operación exitosa!');
+          this.getList();
         } else {
           this.toaster.error('Operación fallida!');
           return;
@@ -222,7 +223,7 @@ export class OrgJobpositionsComponent implements OnInit {
         return;
       });
 
-    this.getList();
+    
   }
 
   changeState(state: string) {

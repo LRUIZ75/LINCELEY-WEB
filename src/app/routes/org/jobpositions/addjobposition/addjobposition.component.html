@@ -43,6 +43,21 @@
               </mat-error>
             </mat-form-field>
   
+            <mat-form-field>
+                <mat-select 
+                placeholder="{{ 'domain.defaultrole' | translate | titlecase }}"
+                formControlName="defaultRole"
+                required
+                >
+                  <mat-option *ngFor="let item of roleList" [value]="item._id">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+  
+                <mat-error *ngIf="jobpositionFormGroup.get('defaultRole').hasError('required')">
+                  {{ 'validations.required' | translate }}
+                </mat-error>
+              </mat-form-field>
 
             <div>
               <mat-checkbox formControlName="isActive">{{
