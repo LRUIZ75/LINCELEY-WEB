@@ -198,6 +198,8 @@
     "role": "rol",
     "defaultrole": "rol predeterminado",
     "jobposition": "puesto",
-    "jobpositions": "puestos"
+    "jobpositions": "puestos",
+    "employeeid": "id de empleado",
+    "user": "usuario"
   }
 }

@@ -198,6 +198,8 @@
     "role": "role",
     "defaultrole": "default role",
     "jobpositions": "job positions",
-    "jobposition": "job position"
+    "jobposition": "job position",
+    "employeeid": "employee id",
+    "user": "user"
   }
 }

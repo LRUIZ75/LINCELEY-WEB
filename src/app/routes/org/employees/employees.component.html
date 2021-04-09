@@ -1,3 +1,91 @@
 <page-header></page-header>
+<!-- <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <app-addjobposition
+    [formMode]="currentState"
+    [initialData]="selected"
+    (changeStateEvent)="changeState($event)"
+  >
+  </app-addjobposition>
+</div> -->
 
-<p>employees works!</p>
+<mat-card *ngIf="currentState == 'RETRIEVE'">
+  <mat-toolbar>
+    <div
+      matTooltip="{{ 'record_actions.add_new' | translate }} {{
+        'domain.jobpositions' | translate
+      }}"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button color="primary" (click)="openPanel($event)">
+        {{ 'record_actions.add_new' | translate }}
+      </button>
+    </div>
+
+    <div fxFlex="20" class="filter">
+      <mat-select
+      [(ngModel)]="filterCompany" #fltCompany="ngModel"
+        placeholder="{{'record_actions.filterby'| translate|titlecase}} {{ 'domain.company' | translate | titlecase }}"
+        required
+      >
+        <mat-option  *ngFor="let companyItem of companyList" [value]="companyItem._id">
+          {{ companyItem.fullName }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+<!--     <div fxFlex="20" class="filter">
+      <mat-select
+      [(ngModel)]="filterDepartment" #fltDepartment="ngModel"
+        placeholder="{{'record_actions.filterby'| translate|titlecase}} {{ 'domain.department' | translate | titlecase }}"
+        required
+      >
+        <mat-option  *ngFor="let departmentItem of departmentList" [value]="departmentItem._id">
+          {{ departmentItem.name }}
+        </mat-option>
+      </mat-select>
+    </div> -->
+
+    <div fxFlex="20" class="filter">
+        <button mat-icon-button (click)="resetFilters()">
+            <mat-icon>clear_all</mat-icon>
+        </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-card-content>
+    <!-- Inicia listado de departamentos' -->
+    <mtx-grid
+      [data]="employeeList"
+      [columns]="columns"
+      [loading]="isLoading"
+      [multiSelectable]="multiSelectable"
+      [rowSelectable]="rowSelectable"
+      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
+      [rowHover]="rowHover"
+      [rowStriped]="rowStriped"
+      [showToolbar]="showToolbar"
+      [toolbarTitle]="title"
+      [columnHideable]="columnHideable"
+      [columnMovable]="columnMovable"
+      [pageOnFront]="showPaginator"
+      [showPaginator]="showPaginator"
+      [pageSizeOptions]="[5, 10, 50, 100]"
+      [pageIndex]="0"
+      [pageSize]="10"
+      (sortChange)="changeSort($event)"
+      (selectionChange)="changeSelect($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+    </mtx-grid>
+  </mat-card-content>
+</mat-card>
+
+<!-- <ng-template #expansionTpl let-row>
+  {{row.name}}
+</ng-template> -->
+
+<!-- <button mat-stroked-button (click)="updateCell()">Update Cell</button>
+<button mat-stroked-button (click)="updateList()">Update List</button>
+ -->
