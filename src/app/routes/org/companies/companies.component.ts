@@ -6,7 +6,6 @@ import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
 import { Company, CompaniesService } from 'app/services';
-import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({
   selector: 'app-org-companies',
