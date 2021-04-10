@@ -13,3 +13,7 @@ export * from './departments.service';
 export * from './jobpositions.service';
 export * from './employees.service';
 export * from './distributioncenters.service';
+
+//Fleet schema
+export * from './drivers.service';
+
