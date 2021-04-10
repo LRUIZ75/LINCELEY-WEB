@@ -12,7 +12,7 @@ export interface Person {
     picture: any,
     phone: string,
     mobile: string,
-    bithdate: string,
+    birthdate: string,
     homeAddress: string,
     isUser: boolean,
     isEmployee: boolean,

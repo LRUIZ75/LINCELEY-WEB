@@ -1,13 +1,13 @@
 <page-header></page-header>
-<!-- <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
-  <app-addcompany
+<div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <app-addpeople
     [formMode]="currentState"
     [initialData]="selected"
     (changeStateEvent)="changeState($event)"
   >
-  </app-addcompany>
+  </app-addpeople>
   
-</div> -->
+</div>
 
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>

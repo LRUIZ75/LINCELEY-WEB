@@ -18,7 +18,7 @@ export class SecurityPeopleComponent implements OnInit {
     {
       header: this.translate.stream('Id'),
       field: '_id',
-      hide: false,
+      hide: true,
       sortable: true,
     },
     {
@@ -164,6 +164,9 @@ export class SecurityPeopleComponent implements OnInit {
     this.opened = true;
     this.currentState = 'EDIT';
   }
+
+  disableDelete(record): boolean
+    {return record.isEmployee || record.isUser || record.isClient;}
 
   delete(selected) {
     this.selected = selected;

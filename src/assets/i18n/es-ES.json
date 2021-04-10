@@ -202,6 +202,16 @@
     "employeeid": "id de empleado",
     "user": "usuario",
     "employees": "empleados",
-    "person": "persona"
+    "person": "persona",
+    "citizenid": "identificación",
+    "isclient": "es cliente",
+    "isemployee": "es empleado",
+    "isuser": "es usuario",
+    "mobile": "móvil",
+    "people": "personas",
+    "phone": "teléfono",
+    "birthdate": "fecha de nacimiento",
+    "homeaddress": "dirección domicilio",
+    "picture": "fotografía"
   }
 }

@@ -202,6 +202,16 @@
     "employeeid": "employee id",
     "user": "user",
     "employees": "employees",
-    "person": "person"
+    "person": "person",
+    "people": "people",
+    "citizenid": "citizen id",
+    "phone": "phone",
+    "mobile": "mobile",
+    "isuser": "is user",
+    "isemployee": "is employee",
+    "isclient": "is client",
+    "picture": "picture",
+    "birthdate": "birthdate",
+    "homeaddress": "home address"
   }
 }
