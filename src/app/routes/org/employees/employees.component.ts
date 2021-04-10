@@ -239,7 +239,7 @@ export class OrgEmployeesComponent implements OnInit {
   delete(selected) {
     this.selected = selected;
 
-    this.jobpositionService
+    this.employeeService
       .deactivateData(selected._id)
       .toPromise()
       .then(deleted => {
