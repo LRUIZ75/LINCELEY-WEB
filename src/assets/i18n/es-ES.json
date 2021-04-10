@@ -200,6 +200,8 @@
     "jobposition": "puesto",
     "jobpositions": "puestos",
     "employeeid": "id de empleado",
-    "user": "usuario"
+    "user": "usuario",
+    "employees": "empleados",
+    "person": "persona"
   }
 }

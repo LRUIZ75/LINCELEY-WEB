@@ -9,6 +9,7 @@ import { OrgDcsComponent } from './dcs/dcs.component';
 import { AddcompanyComponent } from './companies/addcompany/addcompany.component';
 import { AdddepartmentComponent } from './departments/adddepartment/adddepartment.component';
 import { AddjobpositionComponent } from './jobpositions/addjobposition/addjobposition.component';
+import { AddemployeeComponent } from './employees/addemployee/addemployee.component';
 
 const COMPONENTS = [OrgCompaniesComponent, OrgDepartmentsComponent, OrgJobpositionsComponent, OrgEmployeesComponent, OrgDcsComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -23,7 +24,8 @@ const COMPONENTS_DYNAMIC = [];
     ...COMPONENTS_DYNAMIC,
     AddcompanyComponent,
     AdddepartmentComponent,
-    AddjobpositionComponent
+    AddjobpositionComponent,
+    AddemployeeComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC
 })

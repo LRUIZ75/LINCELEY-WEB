@@ -1,0 +1,119 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxLayout.lt-md="80" fxLayout.md="50" fxLayout.lg="40" fxFlexAlign="center">
+    <mat-card class="">
+      <mat-card-title class="mat-title" *ngIf="formMode == 'ADD'">
+        {{ 'record_actions.add_new' | translate | titlecase }}:
+        {{ 'domain.employees' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-title class="mat-title" *ngIf="formMode == 'EDIT'">
+        {{ 'record_actions.edit' | translate | titlecase }}:
+        {{ 'domain.employees' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="employeeFormGroup">
+          <mat-form-field>
+            <mat-select
+              placeholder="{{'record_actions.filterby' | translate | titlecase }} {{ 'domain.company' | translate | titlecase }}"
+              (selectionChange)="onSelectCompany($event)"
+            >
+              <mat-option *ngFor="let item of companyList" [value]="item._id">
+                {{ item.fullName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.employeeid' | translate | titlecase }}"
+              formControlName="employeeId"
+              required
+            />
+            <!--               <mat-error *ngIf="employeeFormGroup.get('employeeId').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="employeeFormGroup.get('employeeId').hasError('minlength')">
+                {{ 'validations.minlength' | translate }}
+              </mat-error> -->
+          </mat-form-field>
+
+
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.department' | translate | titlecase }}"
+              formControlName="department"
+              [(ngModel)]="selectedDepartment"
+              required
+            >
+              <mat-option *ngFor="let item of departmentList" [value]="item._id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="employeeFormGroup.get('department').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.jobposition' | translate | titlecase }}"
+              formControlName="jobposition"
+              [(ngModel)]="selectedJobPosition"
+              required
+            >
+              <mat-option *ngFor="let item of jobpositionList" [value]="item._id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="employeeFormGroup.get('jobposition').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.person' | translate | titlecase }}"
+              formControlName="person"
+              [(ngModel)]="selectedPerson"
+              required
+            >
+              <mat-option *ngFor="let item of peopleList" [value]="item._id">
+                {{ item.names }} {{ item.lastNames }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="employeeFormGroup.get('person').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <div>
+            <mat-checkbox formControlName="isActive">{{
+              'domain.isActive' | translate | titlecase
+            }}</mat-checkbox>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <button
+          *ngIf="formMode == 'ADD'"
+          mat-raised-button
+          color="default"
+          type="reset"
+          (click)="onReset()"
+        >
+          {{ 'record_actions.reset' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+          {{ 'record_actions.cancel' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+          {{ 'record_actions.save' | translate | titlecase }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

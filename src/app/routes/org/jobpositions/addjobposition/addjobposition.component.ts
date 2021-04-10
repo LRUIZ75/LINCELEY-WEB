@@ -53,7 +53,7 @@ export class AddjobpositionComponent implements OnInit {
     });
 
     if (this.formMode == 'EDIT' && this.initialData) {
-      this.jobpositionFormGroup.patchValue(this.initialData as Department);
+      this.jobpositionFormGroup.patchValue(this.initialData as JobPosition);
     }
 
     //build Company List for Selecte

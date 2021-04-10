@@ -11,9 +11,10 @@ import {
   Department,
   DepartmentsService,
   JobPositionsService,
-  UsersService,
   Employee,
-  EmployeesService
+  EmployeesService,
+  Person,
+  PeopleService
 } from 'app/services';
 
 @Component({
@@ -25,7 +26,7 @@ import {
     CompaniesService,
     DepartmentsService, 
     EmployeesService,
-    UsersService
+    PeopleService,
   ],
 
 })
@@ -48,8 +49,8 @@ export class OrgEmployeesComponent implements OnInit {
     { header: this.translate.stream('domain.department'), field: 'departmentName', sortable: true },
     { header: this.translate.stream('domain.jobposition'), field: 'jobposition', hide: true },
     { header: this.translate.stream('domain.jobposition'), field: 'jobPositionName', sortable: true },
-    { header: this.translate.stream('domain.user'), field: 'user', hide: true },
-    { header: this.translate.stream('domain.user'), field: 'userName', sortable: true },
+    { header: this.translate.stream('domain.person'), field: 'person', hide: true },
+    { header: this.translate.stream('domain.person'), field: 'personName', sortable: true },
     { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable: true },
     {
       header: this.translate.stream('table_kitchen_sink.operation'),
@@ -98,7 +99,7 @@ export class OrgEmployeesComponent implements OnInit {
   public selected: Department;
 
   public employeeList: any[] = [];
-  public userList: any[] = [];
+  public peopleList: any[] = [];
   public departmentList: any[] = [];
   public jobpositionList: any[] = [];
   public companyList: any[] = [];
@@ -117,12 +118,12 @@ export class OrgEmployeesComponent implements OnInit {
     public companyService: CompaniesService,
     public departmentService: DepartmentsService,
     public jobpositionService: JobPositionsService,
-    public userService: UsersService,
+    public peopleService: PeopleService,
     public translate: TranslateService,
     public toaster: ToastrService
   ) {
     this.title = this.translate.instant('domain.departments');
-    this.getUserList();
+    this.getPeopleList();
     this.getDepartmentList();
     this.getJobpositionList();
     this.getCompanyList();
@@ -134,12 +135,12 @@ export class OrgEmployeesComponent implements OnInit {
     this.currentState = 'RETRIEVE';
   }
 
-  getUserList() {
-    this.userService
+  getPeopleList() {
+    this.peopleService
       .getData()
       .toPromise()
       .then(resp => {
-        this.userList = resp.objects;
+        this.peopleList = resp.objects;
       });
   }
 
@@ -149,6 +150,7 @@ export class OrgEmployeesComponent implements OnInit {
     .toPromise()
     .then(resp => {
       this.companyList = resp.objects;
+      this.companyList = this.companyList.filter(company => company.isActive)
     });
   }
 
@@ -158,6 +160,7 @@ export class OrgEmployeesComponent implements OnInit {
     .toPromise()
     .then(resp => {
       this.departmentList = resp.objects;
+      this.departmentList = this.departmentList.filter(dep => dep.isActive);
     });
   }
 
@@ -167,6 +170,7 @@ export class OrgEmployeesComponent implements OnInit {
     .toPromise()
     .then(resp => {
       this.jobpositionList = resp.objects;
+      this.jobpositionList = this.jobpositionList.filter(jp => jp.isActive);
     });
   }
 
@@ -190,13 +194,13 @@ export class OrgEmployeesComponent implements OnInit {
 
             //departments's names
             var dept = this.departmentList.find(it => it._id == this.employeeList[i].department);
-            this.employeeList[i].departmentName = dept.name;
+            this.employeeList[i].departmentName = dept == undefined ?"": dept.name;
             //user's names
-            var users = this.userList.find(it => it._id == this.employeeList[i].user);
-            this.employeeList[i].userName = users.name;
+            var people = <Person> this.peopleList.find(it => it._id == this.employeeList[i].person);
+            this.employeeList[i].personName = people.names + " " + people.lastNames; //using virtual fullName
             //job's positions names
             var jp = this.jobpositionList.find(it => it._id == this.employeeList[i].jobposition);
-            this.employeeList[i].jobPositionName = jp.name;
+            this.employeeList[i].jobPositionName = jp==undefined?"":jp.name;
           }
 
 

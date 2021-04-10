@@ -8,9 +8,15 @@ import { environment } from '@env/environment';
 export interface Person {
     names: string,
     lastNames: string,
-    personalId: string,
+    citizenId: string,
     picture: any,
-    mobileNumber: string
+    phone: string,
+    mobile: string,
+    bithdate: string,
+    homeAddress: string,
+    isUser: boolean,
+    isEmployee: boolean,
+    isClient: boolean
 }
 
 @Injectable({

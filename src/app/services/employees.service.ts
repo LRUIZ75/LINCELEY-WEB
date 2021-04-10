@@ -9,7 +9,7 @@ export interface Employee{
   employeeId: string,
   department: string,
   jobposition: string,
-  user: string,
+  person: string,
   isActive: boolean
 }
 
