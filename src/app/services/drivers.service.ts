@@ -1,5 +1,5 @@
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -48,10 +48,11 @@ export class DriversService {
     return throwError(`${error.status} ` + JSON.stringify(error.error));
   }
 
-  private extractData(res: Response): any {
+  private extractData(res: HttpResponse<any>): any {
     const body = res;
     return body || {};
   }
+
 
   /**
    * Adds new driver by API
@@ -85,14 +86,14 @@ export class DriversService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  updatePicture(id: string, picture: any): Observable<any> {
-
-    let formData: FormData = new FormData;
-    formData.append('picture', picture as Blob);
-
-    return this.http
-      .put(this.endpoint + 'picture/' + id, formData)
-      .pipe(map(this.extractData), catchError(this.handleError));
+  updatePicture(id: string, picture: File): Observable<any> {
+    let formData: FormData = new FormData();
+    formData.append('picture', picture);
+    const req = new HttpRequest('PUT', `${this.endpoint}/picture/${id}`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+    return this.http.request(req).pipe(map(this.extractData), catchError(this.handleError));
   }
 
   deleteData(id: string): Observable<any> {
