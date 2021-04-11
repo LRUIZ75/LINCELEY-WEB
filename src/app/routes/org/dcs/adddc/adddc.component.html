@@ -1,0 +1,91 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div   fxLayout.lt-md="80" fxLayout.md="50"  fxLayout.lg="40"  fxFlexAlign="center" >
+      <mat-card class="">
+         <mat-card-title class="mat-title" *ngIf="formMode=='ADD'">
+          {{ 'record_actions.add_new' | translate | titlecase }}:
+          {{ 'domain.distributioncenters' | translate | titlecase }}
+         </mat-card-title>
+          <mat-card-title class="mat-title" *ngIf="formMode=='EDIT'">
+            {{ 'record_actions.edit' | translate | titlecase }}:
+            {{ 'domain.distributioncenters' | translate | titlecase }}
+            </mat-card-title
+        >
+        <mat-card-content>
+          <form [formGroup]="dcFormGroup">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="{{ 'domain.name' | translate | titlecase }}"
+                formControlName="name"
+                required
+              />
+              <mat-error *ngIf="dcFormGroup.get('name').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="dcFormGroup.get('name').hasError('minlength')">
+                {{ 'validations.minlength' | translate }}
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+                <mat-select 
+                placeholder="{{ 'domain.company' | translate | titlecase }}"
+                formControlName="company"
+                required
+                >
+                  <mat-option *ngFor="let item of companyList" [value]="item._id">
+                    {{ item.fullName }}
+                  </mat-option>
+                </mat-select>
+  
+                <mat-error *ngIf="dcFormGroup.get('company').hasError('required')">
+                  {{ 'validations.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+  
+            <div formGroupName="location">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="{{ 'domain.location-lat' | translate | titlecase }}"
+                  formControlName="lat"
+                  required
+                />
+                <mat-error *ngIf="dcFormGroup.get('location').get('lat').hasError('required')">
+                  {{ 'validations.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="{{ 'domain.location-lng' | translate | titlecase }}"
+                  formControlName="lng"
+                  required
+                />
+                <mat-error *ngIf="dcFormGroup.get('location').get('lng').hasError('required')">
+                  {{ 'validations.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox formControlName="isActive">{{
+                'domain.isActive' | translate | titlecase
+              }}</mat-checkbox>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions align="right">
+          <button *ngIf="formMode == 'ADD'" mat-raised-button color = "default" type="reset" (click)="onReset()">
+            {{ 'record_actions.reset' | translate | titlecase }}
+          </button>
+          <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+            {{ 'record_actions.cancel' | translate | titlecase }}
+          </button>
+          <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+            {{ 'record_actions.save' | translate | titlecase }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  

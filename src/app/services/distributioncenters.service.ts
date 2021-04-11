@@ -9,8 +9,8 @@ export interface DistributionCenter{
   company: string,
   name: string,
   location: {
-    lat: string,
-    lng: string
+    lat: number,
+    lng: number
   },
   isActive: boolean
 }
