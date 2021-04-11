@@ -1,29 +1,37 @@
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse, HttpRequest } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { NewLineKind } from 'typescript';
 
-export interface Company {
-  fullName: string;
-  shortName: string;
-  isActive: boolean;
-  location: {
-    lat: number;
-    lng: number;
-  };
+export interface Driver
+{
+  employee: string,
+  isExternal: boolean,
+  person: string,
+  company: string,
+  isActive: boolean,
+  isAvailable: boolean,
+  documents: {
+    licenseCard: string,
+    insuranceCard: string
+  },
+  documentsComparison: {
+      licenseCard: string,
+      insuranceCard: string,
+      isOk: boolean
+  }
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class CompaniesService {
+export class DriversService {
   public endpoint: string;
-
-  constructor(private http: HttpClient) {
-    this.endpoint = environment.apiURL + 'company/';
+  constructor(
+    private http: HttpClient) {
+    this.endpoint = environment.apiURL +  'driver/';
     console.log('Conectando a :' + this.endpoint);
   }
 
@@ -40,15 +48,15 @@ export class CompaniesService {
     return throwError(`${error.status} ` + JSON.stringify(error.error));
   }
 
-  private extractData(res: Response): any {
+  private extractData(res: HttpResponse<any>): any {
     const body = res;
     return body || {};
   }
-  
+
 
   /**
-   * Adds new user by API
-   * @param  {any} body -New data for user
+   * Adds new driver by API
+   * @param  {any} body -New data for driver
    */
   addData(body: any): Observable<any> {
     return this.http
@@ -66,10 +74,26 @@ export class CompaniesService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
+  getPicture(id: string): Observable<any> {
+    return this.http
+      .get(this.endpoint + 'picture/' + id)
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
   updateData(id: string, body: any): Observable<any> {
     return this.http
       .put(this.endpoint + id, body)
       .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
+  updatePicture(id: string, picture: File): Observable<any> {
+    let formData: FormData = new FormData();
+    formData.append('picture', picture);
+    const req = new HttpRequest('PUT', `${this.endpoint}/picture/${id}`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+    return this.http.request(req).pipe(map(this.extractData), catchError(this.handleError));
   }
 
   deleteData(id: string): Observable<any> {
