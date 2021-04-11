@@ -165,11 +165,11 @@ export class AddComponent implements OnInit {
         });
     }
 
-    const pictureBlob = new Blob([JSON.stringify(this.picture, null, 2)], {type : 'application/json'});
-/* 
+    
+
 
     await this.peopleService
-      .updatePicture(this.newPerson._id, pictureBlob)
+      .updatePicture(this.newPerson._id, this.files[0])
       .toPromise()
       .then(resp => {
         this.newPerson = <Person>resp.updated;
@@ -182,7 +182,7 @@ export class AddComponent implements OnInit {
         this.toaster.error(err);
         return;
       });
- */
+
     data = <User>this.accountFormGroup.value;
     data.person = this.newPerson._id;
     data.salt = '';

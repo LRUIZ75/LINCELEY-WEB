@@ -1,32 +1,43 @@
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
-export interface Person {
-    names: string,
-    lastNames: string,
-    citizenId: string,
-    picture: any,
-    phone: string,
-    mobile: string,
-    birthdate: string,
-    homeAddress: string,
-    isUser: boolean,
-    isEmployee: boolean,
-    isClient: boolean
+
+
+export enum VehicleType {
+  AUTO = 'AUTO',
+  MOTO = 'MOTO',
+  PICKUPTRUCK = 'PICKUP',
+  TRUCK = 'TRUCK',
+}
+
+export interface Vehicle {
+  plateNumber: string,
+  vehicleType: VehicleType | string,
+  brand: string,
+  model: string,
+  year: number,
+  color: string,
+  isExternal: boolean
+  company: string,
+  isActive: boolean, 
+  isAvailable: boolean,
+  registrationCard: string,
+  insuranceCard: string,
+  owner: string
+
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class PeopleService {
+export class VehiclesService {
   public endpoint: string;
-  constructor(
-    private http: HttpClient) {
-    this.endpoint = environment.apiURL + 'person/';
+  constructor(private http: HttpClient) {
+    this.endpoint = environment.apiURL + 'vehicle/';
     console.log('Conectando a :' + this.endpoint);
   }
 
@@ -48,10 +59,7 @@ export class PeopleService {
     return body || {};
   }
 
-  /**
-   * Adds new person by API
-   * @param  {any} body -New data for person
-   */
+
   addData(body: any): Observable<any> {
     return this.http
       .post(this.endpoint, body)
@@ -80,10 +88,18 @@ export class PeopleService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  updatePicture(id: string, picture: File): Observable<any> {
+
+  /**
+   * Update pictures into fields insuranceCard or registrationCard
+   * @param fieldname insuranceCard | registrationCard
+   * @param id Vehicle OID
+   * @param picture File
+   * @returns response or error
+   */
+  updatePicture(fieldname: string, id: string,  picture: File): Observable<any> {
     let formData: FormData = new FormData();
     formData.append('picture', picture);
-    const req = new HttpRequest('PUT', `${this.endpoint}/picture/${id}`, formData, {
+    const req = new HttpRequest('PUT', `${this.endpoint}${fieldname}/${id}`, formData, {
       reportProgress: true,
       responseType: 'json',
     });
