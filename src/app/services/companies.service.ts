@@ -11,8 +11,8 @@ export interface Company {
   shortName: string;
   isActive: boolean;
   location: {
-    lat: string;
-    lng: string;
+    lat: number;
+    lng: number;
   };
 }
 

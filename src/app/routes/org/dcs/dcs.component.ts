@@ -29,7 +29,7 @@ export class OrgDcsComponent implements OnInit {
       disabled: true,
     },
     { header: this.translate.stream('domain.company'), field: 'company', sortable:true, hide: true},
-    { header: this.translate.stream('domain.companyName'), field: 'companyName', sortable:true },
+    { header: this.translate.stream('domain.company'), field: 'companyName', sortable:true },
     { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable:true, type: 'boolean' },
     { header: this.translate.stream('domain.location-lat'), field: 'location.lat' },
     { header: this.translate.stream('domain.location-lng'), field: 'location.lng' },

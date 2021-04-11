@@ -6,13 +6,16 @@ import { SettingsService, StartupService, TokenService } from '@core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
+  public visible = false;
+
   constructor(
     private fb: FormBuilder,
-    private router: Router,
+    private router: Router, 
     private token: TokenService,
     private startup: StartupService,
     private settings: SettingsService
