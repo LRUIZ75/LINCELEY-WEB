@@ -158,7 +158,7 @@ export class FleetDriversComponent implements OnInit {
               //var emp = this.employeeList.find(it => it._id == this.driverList[i].employee);
               var per = this.personList.find(it => it._id == this.driverList[i].person);
               this.driverList[i].companyName = !comp?"":comp.fullName;
-              this.driverList[i].personName = !per?"":per.names + " " + per.lastNames ;
+              this.driverList[i].personName = !per?"":(per.names + " " + (!per.lastNames?"":per.lastNames) );
             }
         }
       },

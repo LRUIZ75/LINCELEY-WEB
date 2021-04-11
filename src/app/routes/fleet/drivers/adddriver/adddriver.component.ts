@@ -52,7 +52,7 @@ export class AdddriverComponent implements OnInit {
    this.driverFormGroup = this.formBuilder.group({
      company: ['', [Validators.required]],
      person: ['', [Validators.required]],
-     employee: ['', [Validators.required]], //odem mrevisar cuando validar
+     //employee: ['', [Validators.required]], //odem mrevisar cuando validar
      isExternal: [false, [Validators.required]],
      isActive: [true, [Validators.required]],
      isAvailable: [true, [Validators.required]],
@@ -74,8 +74,8 @@ export class AdddriverComponent implements OnInit {
    // obtener listas requeridas de las que depende el componente
    //build Company List for Selecte
    this.getCompanyList();
-   this.getEmployeeList();
-   this.getPersonList();
+   //this.getEmployeeList();
+   this.getPersonList(false); //primer llenado con personas que son empleadas
  }
 
  getCompanyList() {
@@ -124,7 +124,7 @@ export class AdddriverComponent implements OnInit {
      });
  }
 
- getPersonList() {
+ getPersonList(isExternal:boolean=false) {
   this.personService
     .getData()
     .toPromise()
@@ -134,13 +134,17 @@ export class AdddriverComponent implements OnInit {
         return;
       }
       this.people = response.objects;
-      switch (this.formMode) {
-        case 'ADD':
-          this.personList = this.people.filter(people => people.isActive == true);
-          break;
-        default:
-          this.personList = this.people;
-      }
+
+       /*switch (this.formMode) {
+         case 'ADD':
+           //validar si la llista de persona no es externa... filtrarla por las personas empleadas activas
+           this.personList = this.people.filter(people => people.isEmployee == true);
+           break;
+         default:
+           this.personList = this.people.filter(people => people.isEmployee == !isExternal);
+       }*/
+
+       this.personList = this.personList.filter(people => people.isEmployee == !isExternal);
     })
     .catch(err => {
       this.toaster.error(err.message);
@@ -150,9 +154,9 @@ export class AdddriverComponent implements OnInit {
  get company() {
    return this.driverFormGroup.get('company');
  }
- get employee() {
+ /*get employee() {
   return this.driverFormGroup.get('employee');
- }
+ }*/
  get person() {
   return this.driverFormGroup.get('person');
  }
@@ -229,5 +233,8 @@ export class AdddriverComponent implements OnInit {
      default:
        this.toaster.warning('Se desconoce el modo del formulario');
    }
+ }
+ onChangeIsExternal(isExternal) {
+  this.getPersonList(isExternal);
  }
 }
