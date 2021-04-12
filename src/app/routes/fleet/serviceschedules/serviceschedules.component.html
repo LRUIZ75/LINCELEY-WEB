@@ -1,3 +1,59 @@
 <page-header></page-header>
+<!-- <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <app-adddc
+    [formMode]="currentState"
+    [initialData]="selected"
+    (changeStateEvent)="changeState($event)"
+  >
+  </app-adddc>
+</div> -->
 
-<p>serviceschedules works!</p>
+<mat-card *ngIf="currentState == 'RETRIEVE'">
+  <mat-toolbar>
+    <div
+      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.serviceschedules' | translate }}"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button color="primary" (click)="openPanel($event)">
+        {{ 'record_actions.add_new' | translate }}
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-card-content>
+    <!-- Inicia listado de departamentos' -->
+    <mtx-grid
+      [data]="scheduleList"
+      [columns]="columns"
+      [loading]="isLoading"
+      [multiSelectable]="multiSelectable"
+      [rowSelectable]="rowSelectable"
+      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
+      [rowHover]="rowHover"
+      [rowStriped]="rowStriped"
+      [showToolbar]="showToolbar"
+      [toolbarTitle]="title"
+      [columnHideable]="columnHideable"
+      [columnMovable]="columnMovable"
+      [pageOnFront]="showPaginator"
+      [showPaginator]="showPaginator"
+      [pageSizeOptions]="[5, 10, 50, 100]"
+      [pageIndex]="0"
+      [pageSize]="10"
+      (sortChange)="changeSort($event)"
+      (selectionChange)="changeSelect($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+    </mtx-grid>
+  </mat-card-content>
+</mat-card>
+
+<!-- <ng-template #expansionTpl let-row>
+  {{row.name}}
+</ng-template> -->
+
+<!-- <button mat-stroked-button (click)="updateCell()">Update Cell</button>
+<button mat-stroked-button (click)="updateList()">Update List</button>
+ -->
