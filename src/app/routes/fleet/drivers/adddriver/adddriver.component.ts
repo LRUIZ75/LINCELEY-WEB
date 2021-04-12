@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
   Driver,
   DriversService,
@@ -52,7 +53,6 @@ export class AdddriverComponent implements OnInit {
    this.driverFormGroup = this.formBuilder.group({
      company: ['', [Validators.required]],
      person: ['', [Validators.required]],
-     //employee: ['', [Validators.required]], //odem mrevisar cuando validar
      isExternal: [false, [Validators.required]],
      isActive: [true, [Validators.required]],
      isAvailable: [true, [Validators.required]],
@@ -74,7 +74,6 @@ export class AdddriverComponent implements OnInit {
    // obtener listas requeridas de las que depende el componente
    //build Company List for Selecte
    this.getCompanyList();
-   //this.getEmployeeList();
    this.getPersonList(false); //primer llenado con personas que son empleadas
  }
 
@@ -101,29 +100,6 @@ export class AdddriverComponent implements OnInit {
      });
  }
 
- getEmployeeList() {
-   this.employeeService
-     .getData()
-     .toPromise()
-     .then(response => {
-       if (!response) {
-         this.toaster.error('No hay datos de empleados!');
-         return;
-       }
-       this.employees = response.objects;
-       switch (this.formMode) {
-         case 'ADD':
-           this.employeeList = this.employees.filter(employees => employees.isActive == true);
-           break;
-         default:
-           this.employeeList = this.employees;
-       }
-     })
-     .catch(err => {
-       this.toaster.error(err.message);
-     });
- }
-
  getPersonList(isExternal:boolean=false) {
   this.personService
     .getData()
@@ -143,20 +119,18 @@ export class AdddriverComponent implements OnInit {
          default:
            this.personList = this.people.filter(people => people.isEmployee == !isExternal);
        }*/
-
-       this.personList = this.personList.filter(people => people.isEmployee == !isExternal);
+       //isExternal=true;
+       this.personList = this.people.filter(people => people.isEmployee == !isExternal);
     })
     .catch(err => {
       this.toaster.error(err.message);
     });
 }
-
+// PROPIEDADES
  get company() {
    return this.driverFormGroup.get('company');
  }
- /*get employee() {
-  return this.driverFormGroup.get('employee');
- }*/
+
  get person() {
   return this.driverFormGroup.get('person');
  }
@@ -234,7 +208,8 @@ export class AdddriverComponent implements OnInit {
        this.toaster.warning('Se desconoce el modo del formulario');
    }
  }
- onChangeIsExternal(isExternal) {
-  this.getPersonList(isExternal);
+ onChangeIsExternal(event: MatCheckboxChange) {
+  this.getPersonList(event.checked);
+
  }
 }
