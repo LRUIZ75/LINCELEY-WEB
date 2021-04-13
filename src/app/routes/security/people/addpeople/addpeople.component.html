@@ -63,12 +63,7 @@
               placeholder="{{ 'domain.picture' | translate | titlecase }}"
               formControlName="picture"
             />
-<!--             <mat-error *ngIf="personFormGroup.get('picture').hasError('required')">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-            <mat-error *ngIf="personFormGroup.get('picture').hasError('minlength')">
-              {{ 'validations.minlength' | translate }}
-            </mat-error> -->
+
           </mat-form-field>
 
           <mat-form-field>
@@ -77,12 +72,6 @@
               placeholder="{{ 'domain.phone' | translate | titlecase }}"
               formControlName="phone"
             />
-<!--             <mat-error *ngIf="personFormGroup.get('phone').hasError('required')">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-            <mat-error *ngIf="personFormGroup.get('phone').hasError('minlength')">
-              {{ 'validations.minlength' | translate }}
-            </mat-error> -->
           </mat-form-field>
 
           <mat-form-field>
@@ -112,27 +101,7 @@
             <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
             <mat-datepicker #birthdayPicker startView="year"></mat-datepicker>
 
-<!--             <mat-error *ngIf="personFormGroup.get('birthdate').hasError('required')">
-              {{ 'validations.mobile' | translate }}
-            </mat-error>
-            <mat-error *ngIf="personFormGroup.get('birthdate').hasError('minlength')">
-              {{ 'validations.mobile' | translate }}
-            </mat-error> -->
           </mat-form-field>
-
-
-<!--           <mat-form-field>
-            <mat-label>Date of birth</mat-label>
-            <input matInput
-                   [matDatepicker]="birthdayPicker"
-                   [(ngModel)]="birthday"
-                   #birthdayModel="ngModel"
-                   [max]="maxBirthday"
-                   required>
-            <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
-            <mat-datepicker #birthdayPicker startView="year"></mat-datepicker>
-           
-          </mat-form-field> -->
 
 
           <mat-form-field>
@@ -141,30 +110,42 @@
               placeholder="{{ 'domain.homeaddress' | translate | titlecase }}"
               formControlName="homeAddress"
             />
-<!--             <mat-error *ngIf="personFormGroup.get('homeAddress').hasError('required')">
-              {{ 'validations.mobile' | translate }}
-            </mat-error>
-            <mat-error *ngIf="personFormGroup.get('homeAddress').hasError('minlength')">
-              {{ 'validations.mobile' | translate }}
-            </mat-error> -->
+
           </mat-form-field>
+          <div class="matero-row" fxAlign="center">
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="40">
+              <mat-checkbox formControlName="isUser"
+                > {{'domain.isuser' | translate | titlecase }} 
+              </mat-checkbox>
+     
+              <mat-checkbox formControlName="isEmployee"
+                > {{'domain.isemployee' | translate | titlecase }} 
+              </mat-checkbox>
+  
+              <mat-checkbox formControlName="isClient"
+                > {{'domain.isclient' | translate | titlecase }} 
+              </mat-checkbox>
+            </div>
 
-
-
-
-          <div>
-            <mat-checkbox formControlName="isUser"
-              > {{'domain.isuser' | translate | titlecase }} 
-            </mat-checkbox>
-   
-            <mat-checkbox formControlName="isEmployee"
-              > {{'domain.isemployee' | translate | titlecase }} 
-            </mat-checkbox>
-
-            <mat-checkbox formControlName="isClient"
-              > {{'domain.isclient' | translate | titlecase }} 
-            </mat-checkbox>
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="40">
+              <!-- in app.component.html -->
+              <ngx-dropzone (change)="onSelect($event)">
+                <ngx-dropzone-label>Nueva Fotografía: clic o arrastre</ngx-dropzone-label>
+                <ngx-dropzone-image-preview
+                  *ngFor="let f of files"
+                  [multiple]="false"
+                  accept="image/*"
+                  [removable]="true"
+                  (removed)="onRemove(f)"
+                  [file]="f"
+                >
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+            </div>
           </div>
+
+
         </form>
       </mat-card-content>
       <mat-card-actions align="right">

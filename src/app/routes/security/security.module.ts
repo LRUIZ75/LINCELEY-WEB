@@ -7,6 +7,7 @@ import { AddComponent } from './users/add/add.component';
 import { SecurityRolesComponent } from './roles/roles.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AddpeopleComponent } from './people/addpeople/addpeople.component';
+import { PersoncardComponent } from './people/personcard/personcard.component';
 
 const COMPONENTS = [SecurityUsersComponent, SecurityPeopleComponent, SecurityRolesComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -21,7 +22,8 @@ const COMPONENTS_DYNAMIC = [];
     ...COMPONENTS,
     ...COMPONENTS_DYNAMIC,
     AddComponent,
-    AddpeopleComponent
+    AddpeopleComponent,
+    PersoncardComponent,
   ],
   entryComponents: COMPONENTS_DYNAMIC
 })

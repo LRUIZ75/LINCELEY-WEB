@@ -212,6 +212,13 @@
     "isclient": "is client",
     "picture": "picture",
     "birthdate": "birthdate",
-    "homeaddress": "home address"
-  }
+    "homeaddress": "home address",
+    "serviceschedules": "service schedules",
+    "vehicle": "vehicle",
+    "servicestatus": "service status",
+    "startschedule": "schedule start",
+    "term": "term",
+    "repeatevery": "repeate every"
+  },
+  "AVAILABLE": "AVAILABLE"
 }

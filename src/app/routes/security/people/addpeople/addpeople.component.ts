@@ -13,7 +13,11 @@ export class AddpeopleComponent implements OnInit {
    * Formulario de Agregar/Editar
    */
   personFormGroup: FormGroup;
-  person: Person;
+  public person: Person;
+  public newPerson: any = {};
+
+  files: File[] = [];
+  picture: any;
 
   birthday: Date;
   maxBirthday = new Date();
@@ -42,13 +46,16 @@ export class AddpeopleComponent implements OnInit {
       homeAddress: [''],
       isUser: [false],
       isEmployee: [false],
-      isClient: [false ],
+      isClient: [false],
     });
 
     if (this.formMode == 'EDIT' && this.initialData) {
       this.personFormGroup.patchValue(this.initialData as Person);
       this.birthday = this.initialData.birthdate;
     }
+
+    this.personFormGroup.get("picture").disable();
+    
   }
 
   /*   get fullName() {
@@ -87,7 +94,7 @@ export class AddpeopleComponent implements OnInit {
       return;
     }
 
-    this.person = <Person>this.personFormGroup.value;
+    this.person = <Person> this.personFormGroup.value;
 
     switch (this.formMode) {
       case 'EDIT':
@@ -100,7 +107,9 @@ export class AddpeopleComponent implements OnInit {
               return;
             }
 
-            this.person = <Person>resp.updated;
+            this.newPerson = <Person> resp.updated;
+            if (this.files.length > 0) //solicita nueva imagen en modo editar
+            this.updatePicture(this.newPerson._id);
             this.toaster.success('Operación exitosa!');
             this.changeState('RETRIEVE');
           })
@@ -119,17 +128,48 @@ export class AddpeopleComponent implements OnInit {
               return;
             }
 
-            this.person = <Person>resp.created;
+            this.newPerson = <Person> resp.created;
+            if(this.files.length > 0) //agregó una foto
+            this.updatePicture(this.newPerson._id);
             this.toaster.success('Operación exitosa!');
             this.changeState('RETRIEVE');
           })
           .catch(err => {
             this.toaster.error(err);
           });
+
         break;
 
       default:
         this.toaster.warning('Se desconoce el modo del formulario');
     }
+
+
+  }
+
+  updatePicture(id: string) {
+    //update picture data
+
+    this.peopleService
+      .updatePicture(id, this.files[0])
+      .toPromise()
+      .then(resp => {
+        if (!resp) {
+          this.toaster.error('Operación fallida!');
+          return;
+        }
+      })
+      .catch(err => {
+        this.toaster.error(err);
+      });
+  }
+
+  onSelect(event) {
+    console.log(event);
+    if (this.files.length > 0) {
+      this.files = [];
+    }
+    this.files.push(...event.addedFiles);
+    this.personFormGroup.get('picture').setValue(this.files[0].name);
   }
 }

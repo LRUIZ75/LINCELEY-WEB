@@ -17,5 +17,4 @@ export * from './distributioncenters.service';
 //Fleet schema
 export * from './drivers.service';
 export * from './vehicles.service';
-
-
+export * from './serviceshedules.service';

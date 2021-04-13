@@ -198,7 +198,7 @@ export class SecurityPeopleComponent implements OnInit {
   }
 
   changeSelect(e: any) {
-    this.selected = <Person>e;
+    this.selected = <Person>e[0];
   }
 
   changeSort(e: any) {

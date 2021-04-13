@@ -1,5 +1,6 @@
 const PROXY_CONFIG = {
   '/api/**': {
+
     target: 'https://linceley-api.herokuapp.com',
     changeOrigin: true,
     secure: false,

@@ -1,4 +1,7 @@
 <page-header></page-header>
+<app-personcard *ngIf="selected && currentState !='ADD'" [person] = selected>
+</app-personcard>
+
 <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
   <app-addpeople
     [formMode]="currentState"
@@ -8,6 +11,7 @@
   </app-addpeople>
   
 </div>
+
 
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
@@ -44,6 +48,7 @@
       [pageSize]="10"
       (sortChange)="changeSort($event)"
       (selectionChange)="changeSelect($event)"
+      (rowSelectionChange)="changeSelect($event)"
       *ngIf="currentState == 'RETRIEVE'"
     >
     </mtx-grid>

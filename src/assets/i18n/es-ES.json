@@ -212,6 +212,13 @@
     "phone": "teléfono",
     "birthdate": "fecha de nacimiento",
     "homeaddress": "dirección domicilio",
-    "picture": "fotografía"
-  }
+    "picture": "fotografía",
+    "repeatevery": "repetir cada",
+    "serviceschedules": "programaciones de servicio",
+    "servicestatus": "estado de servicio",
+    "startschedule": "inicio de programación",
+    "term": "plazo",
+    "vehicle": "vehículo"
+  },
+  "AVAILABLE": "DISPONIBLE"
 }

@@ -7,6 +7,8 @@ import { FleetServiceschedulesComponent } from './serviceschedules/serviceschedu
 import { FleetAssignmentsComponent } from './assignments/assignments.component';
 import { AdddriverComponent } from './drivers/adddriver/adddriver.component';
 import { AddvehicleComponent } from './vehicles/addvehicle/addvehicle.component';
+import { AddservscheduleComponent } from './serviceschedules/addservschedule/addservschedule.component';
+
 
 const COMPONENTS = [FleetDriversComponent, FleetVehiclesComponent, FleetServiceschedulesComponent, FleetAssignmentsComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -21,6 +23,7 @@ const COMPONENTS_DYNAMIC = [];
     ...COMPONENTS_DYNAMIC,
     AdddriverComponent,
     AddvehicleComponent
+    AddservscheduleComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC
 })
