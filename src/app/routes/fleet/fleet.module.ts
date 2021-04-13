@@ -22,7 +22,7 @@ const COMPONENTS_DYNAMIC = [];
     ...COMPONENTS,
     ...COMPONENTS_DYNAMIC,
     AdddriverComponent,
-    AddvehicleComponent
+    AddvehicleComponent,
     AddservscheduleComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC
