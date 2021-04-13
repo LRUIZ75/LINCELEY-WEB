@@ -61,9 +61,9 @@ export class AdddriverComponent implements OnInit {
        insuranceCard: ["", [Validators.required]],
      }),
      documentsComparison: this.formBuilder.group({
-      licenseCard: ["", [Validators.required]],
-      insuranceCard: ["", [Validators.required]],
-      isOk: [true, [Validators.required]],
+      licenseCard: [""],
+      insuranceCard: [""],
+      isOk: [true],
     }),
    });
 
@@ -134,6 +134,21 @@ export class AdddriverComponent implements OnInit {
  get person() {
   return this.driverFormGroup.get('person');
  }
+
+get licenseCard() {
+  return this.driverFormGroup.get('documents').get('licenseCard');
+}
+
+set licenseCard(value) {
+  this.driverFormGroup.get('documents').get('licenseCard').setValue(value);
+}
+
+get insuranceCard() {
+  return this.driverFormGroup.get('documents').get('insuranceCard');
+}
+set insuranceCard(value) {
+  this.driverFormGroup.get('documents').get('insuranceCard').setValue(value);
+}
 
  /**
   * Resetea el valor de todos los campos

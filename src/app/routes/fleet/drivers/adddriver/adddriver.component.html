@@ -55,6 +55,33 @@
               'domain.isAvailable' | translate | titlecase
             }}</mat-checkbox>
           </div>
+
+          <div formGroupName="documents">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="{{ 'domain.licenseCard' | translate | titlecase }}"
+                formControlName="licenseCard"
+                required
+              />
+              <mat-error *ngIf="driverFormGroup.get('documents').get('licenseCard').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
+                formControlName="insuranceCard"
+                required
+              />
+              <mat-error *ngIf="driverFormGroup.get('documents').get('insuranceCard').hasError('required')">
+                {{ 'validations.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
         </form>
       </mat-card-content>
       <mat-card-actions align="right">
