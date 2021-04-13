@@ -3,14 +3,14 @@
     <mat-card class="">
       <mat-card-title class="mat-title" *ngIf="formMode == 'ADD'">
         {{ 'record_actions.add_new' | translate | titlecase }}:
-        {{ 'domain.drivers' | translate | titlecase }}
+        {{ 'domain.vehicles' | translate | titlecase }}
       </mat-card-title>
       <mat-card-title class="mat-title" *ngIf="formMode == 'EDIT'">
         {{ 'record_actions.edit' | translate | titlecase }}:
-        {{ 'domain.drivers' | translate | titlecase }}
+        {{ 'domain.vehicles' | translate | titlecase }}
       </mat-card-title>
       <mat-card-content>
-        <form [formGroup]="driverFormGroup">
+        <form [formGroup]="vehicleFormGroup">
 
           <mat-form-field>
             <mat-select
@@ -23,29 +23,13 @@
               </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="driverFormGroup.get('company').hasError('required')">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select
-              placeholder="{{ 'domain.person' | translate | titlecase }}"
-              formControlName="person"
-              required
-            >
-              <mat-option *ngFor="let item of personList" [value]="item._id">
-                {{ item.names + ' ' + (!item.lastNames ? '' : item.lastNames) }}
-              </mat-option>
-            </mat-select>
-
-            <mat-error *ngIf="driverFormGroup.get('person').hasError('required')">
+            <mat-error *ngIf="vehicleFormGroup.get('company').hasError('required')">
               {{ 'validations.required' | translate }}
             </mat-error>
           </mat-form-field>
 
           <div>
-            <mat-checkbox formControlName="isExternal"  (change)="onChangeIsExternal($event)">{{
+            <mat-checkbox formControlName="isExternal"  >{{
               'domain.isExternal' | translate | titlecase
             }}</mat-checkbox>
             <mat-checkbox formControlName="isActive">{{
@@ -60,11 +44,11 @@
             <mat-form-field>
               <input
                 matInput
-                placeholder="{{ 'domain.licenseCard' | translate | titlecase }}"
-                formControlName="licenseCard"
+                placeholder="{{ 'domain.registrationCard' | translate | titlecase }}"
+                formControlName="registrationCard"
                 required
               />
-              <mat-error *ngIf="driverFormGroup.get('documents').get('licenseCard').hasError('required')">
+              <mat-error *ngIf="vehicleFormGroup.get('registrationCard').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>
             </mat-form-field>
@@ -75,7 +59,7 @@
                 formControlName="insuranceCard"
                 required
               />
-              <mat-error *ngIf="driverFormGroup.get('documents').get('insuranceCard').hasError('required')">
+              <mat-error *ngIf="vehicleFormGroup.get('insuranceCard').hasError('required')">
                 {{ 'validations.required' | translate }}
               </mat-error>
             </mat-form-field>

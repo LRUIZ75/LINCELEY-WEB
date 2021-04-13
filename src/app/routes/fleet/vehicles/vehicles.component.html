@@ -1,3 +1,51 @@
 <page-header></page-header>
+ <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <app-addvehicle
+    [formMode]="currentState"
+    [initialData]="selected"
+    (changeStateEvent)="changeState($event)"
+  >
+  </app-addvehicle> 
+</div>
 
-<p>vehicles works!</p>
+<mat-card *ngIf="currentState == 'RETRIEVE'">
+  <mat-toolbar>
+    <div
+      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.vehicles' | translate }}"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button color="primary" (click)="openPanel($event)">
+        {{ 'record_actions.add_new' | translate }}
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-card-content>
+    <!-- Inicia listado de vehiculos' -->
+    <mtx-grid
+      [data]="vehicleList"
+      [columns]="columns"
+      [loading]="isLoading"
+      [multiSelectable]="multiSelectable"
+      [rowSelectable]="rowSelectable"
+      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
+      [rowHover]="rowHover"
+      [rowStriped]="rowStriped"
+      [showToolbar]="showToolbar"
+      [toolbarTitle]="title"
+      [columnHideable]="columnHideable"
+      [columnMovable]="columnMovable"
+      [pageOnFront]="showPaginator"
+      [showPaginator]="showPaginator"
+      [pageSizeOptions]="[5, 10, 50, 100]"
+      [pageIndex]="0"
+      [pageSize]="10"
+      (sortChange)="changeSort($event)"
+      (selectionChange)="changeSelect($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+    </mtx-grid>
+  </mat-card-content>
+</mat-card>

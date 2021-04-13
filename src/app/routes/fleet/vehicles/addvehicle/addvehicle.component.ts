@@ -2,38 +2,27 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
-  Driver,
-  DriversService,
+  Vehicle,
+  VehiclesService,
   Company,
-  CompaniesService,
-  Employee,
-  EmployeesService,
-  Person,
-  PeopleService
+  CompaniesService
 } from 'app/services';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
-  selector: 'app-adddriver',
-  templateUrl: './adddriver.component.html',
-  styleUrls: ['./adddriver.component.scss']
+  selector: 'app-addvehicle',
+  templateUrl: './addvehicle.component.html',
+  styleUrls: ['./addvehicle.component.scss']
 })
-export class AdddriverComponent implements OnInit {
+export class AddvehicleComponent implements OnInit {
 /**
    * Formulario de Agregar/Editar
    */
- driverFormGroup: FormGroup;
- driver: Driver;
+ vehicleFormGroup: FormGroup;
+ vehicle: Vehicle;
 
  public companyList: any[] = [];
  public companies: any[] = [];
-
- public employeeList: any[] = [];
- public employees: any[] = [];
-
- public personList: any[] = [];
- public people: any[] = [];
 
  @Output() changeStateEvent = new EventEmitter<string>();
 
@@ -43,38 +32,34 @@ export class AdddriverComponent implements OnInit {
  constructor(
    private formBuilder: FormBuilder,
    private companyService: CompaniesService,
-   private employeeService: EmployeesService,
-   private personService: PeopleService,
-   private driverService: DriversService,
+   private vehicleService: VehiclesService,
    private toaster: ToastrService
  ) {}
 
  ngOnInit(): void {
-   this.driverFormGroup = this.formBuilder.group({
-     company: ['', [Validators.required]],
-     person: ['', [Validators.required]],
+   this.vehicleFormGroup = this.formBuilder.group({
+     plateNumber:['', [Validators.required]],
+     vehicleType:['', [Validators.required]],
+     brand:['', [Validators.required]],
+     model: ['', [Validators.required]],
+     year: '',
+     color: '',
+     company: '',
      isExternal: [false, [Validators.required]],
      isActive: [true, [Validators.required]],
      isAvailable: [true, [Validators.required]],
-     documents: this.formBuilder.group({
-       licenseCard: ["", [Validators.required]],
-       insuranceCard: ["", [Validators.required]],
-     }),
-     documentsComparison: this.formBuilder.group({
-      licenseCard: [""],
-      insuranceCard: [""],
-      isOk: [true],
-    }),
+     registrationCard: '',
+     insuranceCard: '',
+     owner: '',
    });
 
    if (this.formMode == 'EDIT' && this.initialData) {
-     this.driverFormGroup.patchValue(this.initialData as Driver);
+     this.vehicleFormGroup.patchValue(this.initialData as Vehicle);
    }
 
    // obtener listas requeridas de las que depende el componente
    //build Company List for Selecte
    this.getCompanyList();
-   this.getPersonList(false); //primer llenado con personas que son empleadas
  }
 
  getCompanyList() {
@@ -100,61 +85,18 @@ export class AdddriverComponent implements OnInit {
      });
  }
 
- getPersonList(isExternal:boolean=false) {
-  this.personService
-    .getData()
-    .toPromise()
-    .then(response => {
-      if (!response) {
-        this.toaster.error('No hay datos de personas!');
-        return;
-      }
-      this.people = response.objects;
 
-       /*switch (this.formMode) {
-         case 'ADD':
-           //validar si la llista de persona no es externa... filtrarla por las personas empleadas activas
-           this.personList = this.people.filter(people => people.isEmployee == true);
-           break;
-         default:
-           this.personList = this.people.filter(people => people.isEmployee == !isExternal);
-       }*/
-       //isExternal=true;
-       this.personList = this.people.filter(people => people.isEmployee == !isExternal);
-    })
-    .catch(err => {
-      this.toaster.error(err.message);
-    });
-}
 // PROPIEDADES
  get company() {
-   return this.driverFormGroup.get('company');
+   return this.vehicleFormGroup.get('company');
  }
 
- get person() {
-  return this.driverFormGroup.get('person');
- }
-
-get licenseCard() {
-  return this.driverFormGroup.get('documents').get('licenseCard');
-}
-
-set licenseCard(value) {
-  this.driverFormGroup.get('documents').get('licenseCard').setValue(value);
-}
-
-get insuranceCard() {
-  return this.driverFormGroup.get('documents').get('insuranceCard');
-}
-set insuranceCard(value) {
-  this.driverFormGroup.get('documents').get('insuranceCard').setValue(value);
-}
 
  /**
   * Resetea el valor de todos los campos
   */
  onReset() {
-   this.driverFormGroup.reset();
+   this.vehicleFormGroup.reset();
  }
 
  /**
@@ -173,17 +115,17 @@ set insuranceCard(value) {
  }
 
  onSubmit() {
-   if (!this.driverFormGroup.valid) {
+   if (!this.vehicleFormGroup.valid) {
      this.toaster.warning('El formulario tiene erorres!');
      return;
    }
 
-   this.driver = <Driver>this.driverFormGroup.value;
+   this.vehicle = <Vehicle>this.vehicleFormGroup.value;
 
    switch (this.formMode) {
      case 'EDIT':
-       this.driverService
-         .updateData(this.initialData._id, this.driver)
+       this.vehicleService
+         .updateData(this.initialData._id, this.vehicle)
          .toPromise()
          .then(resp => {
            if (!resp) {
@@ -191,7 +133,7 @@ set insuranceCard(value) {
              return;
            }
 
-           this.driver = <Driver>resp.updated;
+           this.vehicle = <Vehicle>resp.updated;
            this.toaster.success('Operación exitosa!');
            this.changeState('RETRIEVE');
          })
@@ -201,8 +143,8 @@ set insuranceCard(value) {
        break;
 
      case 'ADD':
-       this.driverService
-         .addData(this.driver)
+       this.vehicleService
+         .addData(this.vehicle)
          .toPromise()
          .then(resp => {
            if (!resp) {
@@ -210,7 +152,7 @@ set insuranceCard(value) {
              return;
            }
 
-           this.driver = <Driver>resp.created;
+           this.vehicle = <Vehicle>resp.created;
            this.toaster.success('Operación exitosa!');
            this.changeState('RETRIEVE');
          })
@@ -223,8 +165,5 @@ set insuranceCard(value) {
        this.toaster.warning('Se desconoce el modo del formulario');
    }
  }
- onChangeIsExternal(event: MatCheckboxChange) {
-  this.getPersonList(event.checked);
-
- }
+ 
 }
