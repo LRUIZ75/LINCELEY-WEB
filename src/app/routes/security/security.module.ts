@@ -21,7 +21,7 @@ const COMPONENTS_DYNAMIC = [];
     ...COMPONENTS,
     ...COMPONENTS_DYNAMIC,
     AddComponent,
-    AddpeopleComponent
+    AddpeopleComponent,
   ],
   entryComponents: COMPONENTS_DYNAMIC
 })

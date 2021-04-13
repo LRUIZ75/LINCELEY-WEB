@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface Person {
+    _id: string,
     names: string,
     lastNames: string,
     citizenId: string,
@@ -83,7 +84,7 @@ export class PeopleService {
   updatePicture(id: string, picture: File): Observable<any> {
     let formData: FormData = new FormData();
     formData.append('picture', picture);
-    const req = new HttpRequest('PUT', `${this.endpoint}/picture/${id}`, formData, {
+    const req = new HttpRequest('PUT', `${this.endpoint}picture/${id}`, formData, {
       reportProgress: true,
       responseType: 'json',
     });
