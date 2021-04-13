@@ -6,7 +6,8 @@ import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
 import { Company, CompaniesService, Vehicle, VehiclesService} from 'app/services';
-import { compilePipeFromMetadata } from '@angular/compiler';
+
+
 
 @Component({
   selector: 'app-fleet-vehicles',
