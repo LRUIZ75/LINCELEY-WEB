@@ -1,0 +1,15 @@
+<mat-card class="person-card f-s-12 f-w-500">
+  <mat-card-header>
+    <img mat-card-avatar src="{{ baseURL }}person/picture/{{ person.picture }}" />
+    <mat-card-title>{{ person.names }} {{ person.lastNames }}</mat-card-title>
+    <mat-card-subtitle>{{ person.citizenId }} </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <!--         <div>
+            <b>Picture Src: </b>{{baseURL}} 
+         </div> -->
+    <div><b>Teléfono: </b>{{ person.phone }}</div>
+    <div><b>Movil: </b>{{ person.mobile }}</div>
+    <div><b>Dirección: </b>{{ person.homeAddress }}</div>
+  </mat-card-content>
+</mat-card>
