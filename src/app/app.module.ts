@@ -20,7 +20,6 @@ import { httpInterceptorProviders } from '@core/interceptors';
 import { appInitializerProviders } from '@core/initializers';
 import { FormlyConfigModule } from './formly-config.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 
@@ -43,7 +42,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
       },
     }),
     NoopAnimationsModule,
-    NgxDropzoneModule
   ],
   providers: [httpInterceptorProviders, appInitializerProviders],
   bootstrap: [AppComponent],

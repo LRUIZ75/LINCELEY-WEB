@@ -23,6 +23,7 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 const MODULES = [
   MaterialModule,
@@ -36,6 +37,7 @@ const MODULES = [
   FormlyMaterialModule,
   ToastrModule,
   TranslateModule,
+  NgxDropzoneModule
 ];
 const COMPONENTS = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
 const COMPONENTS_DYNAMIC = [];

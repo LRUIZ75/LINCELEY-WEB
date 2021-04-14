@@ -6,7 +6,8 @@ import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
 import { Company, CompaniesService, Vehicle, VehiclesService} from 'app/services';
-import { compilePipeFromMetadata } from '@angular/compiler';
+
+
 
 @Component({
   selector: 'app-fleet-vehicles',
@@ -28,11 +29,10 @@ export class FleetVehiclesComponent implements OnInit {
       sortable: true,
       disabled: true,
     },
-    { header: this.translate.stream('domain.brand'), field: 'brand', sortable:true },
-    { header: this.translate.stream('domain.model'), field: 'model', sortable:true },
-    { header: this.translate.stream('domain.year'), field: 'year', sortable:true },
+    { header: this.translate.stream('domain.description'), field: 'description', sortable:true },
     { header: this.translate.stream('domain.vehicleType'), field: 'vehicleType', sortable:true },
     { header: this.translate.stream('domain.companyName'), field: 'companyName', sortable:true },
+    { header: this.translate.stream('domain.owner'), field: 'owner', sortable:true },
     { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable:true, type: 'boolean' },
     { header: this.translate.stream('domain.isExternal'), field: 'isExternal' },
     { header: this.translate.stream('domain.isAvailable'), field: 'isAvailable' },
@@ -139,6 +139,9 @@ export class FleetVehiclesComponent implements OnInit {
             for (var i = 0; i < this.vehicleList.length; i++) {
               var comp = this.companyList.find(it => it._id == this.vehicleList[i].company);
               this.vehicleList[i].companyName = !comp?"":comp.fullName;
+              this.vehicleList[i].description = (!this.vehicleList[i].brand?"-": this.vehicleList[i].brand) + ' '
+                                              + (!this.vehicleList[i].model?"-": this.vehicleList[i].model) + ' '
+                                              + (!this.vehicleList[i].year?"-": this.vehicleList[i].year);
             }
         }
       },

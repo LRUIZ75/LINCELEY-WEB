@@ -11,25 +11,87 @@
       </mat-card-title>
       <mat-card-content>
         <form [formGroup]="vehicleFormGroup">
-
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.plateNumber' | translate | titlecase }}"
+              formControlName="plateNumber"
+              required
+            />
+            <mat-error *ngIf="vehicleFormGroup.get('plateNumber').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.vehicleType' | translate | titlecase }}"
+              formControlName="vehicleType"
+              required
+            >
+              <mat-option *ngFor="let item of typeList" [value]="item.id">
+                {{ item.type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.brand' | translate | titlecase }}"
+              formControlName="brand"
+              required
+            />
+            <mat-error *ngIf="vehicleFormGroup.get('brand').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.model' | translate | titlecase }}"
+              formControlName="model"
+              required
+            />
+            <mat-error *ngIf="vehicleFormGroup.get('model').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.year' | translate | titlecase }}"
+              formControlName="year"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.color' | translate | titlecase }}"
+              formControlName="color"
+            />
+          </mat-form-field>
           <mat-form-field>
             <mat-select
               placeholder="{{ 'domain.company' | translate | titlecase }}"
               formControlName="company"
-              required
             >
               <mat-option *ngFor="let item of companyList" [value]="item._id">
                 {{ item.fullName }}
               </mat-option>
             </mat-select>
-
-            <mat-error *ngIf="vehicleFormGroup.get('company').hasError('required')">
-              {{ 'validations.required' | translate }}
-            </mat-error>
           </mat-form-field>
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.owner' | translate | titlecase }}"
+              formControlName="owner"
+            >
+              <mat-option *ngFor="let item of personList" [value]="item._id">
+                {{ item.names + ' ' + (!item.lastNames ? '' : item.lastNames) }}
+              </mat-option>
+            </mat-select>
 
+          </mat-form-field>
           <div>
-            <mat-checkbox formControlName="isExternal"  >{{
+            <mat-checkbox formControlName="isExternal">{{
               'domain.isExternal' | translate | titlecase
             }}</mat-checkbox>
             <mat-checkbox formControlName="isActive">{{
@@ -40,29 +102,52 @@
             }}</mat-checkbox>
           </div>
 
-          <div formGroupName="documents">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="{{ 'domain.registrationCard' | translate | titlecase }}"
-                formControlName="registrationCard"
-                required
-              />
-              <mat-error *ngIf="vehicleFormGroup.get('registrationCard').hasError('required')">
-                {{ 'validations.required' | translate }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
-                formControlName="insuranceCard"
-                required
-              />
-              <mat-error *ngIf="vehicleFormGroup.get('insuranceCard').hasError('required')">
-                {{ 'validations.required' | translate }}
-              </mat-error>
-            </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.registrationCard' | translate | titlecase }}"
+              formControlName="registrationCard" disabled=true
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
+              formControlName="insuranceCard" disabled=true
+            />
+          </mat-form-field>
+
+          <div class="matero-row" fxAlign="center">
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
+              <ngx-dropzone (change)="onSelectRegistracionCard($event)">
+                <ngx-dropzone-label>Nueva Fotografía de tarjeta de registro: clic o arrastre</ngx-dropzone-label>
+                <ngx-dropzone-image-preview
+                  *ngFor="let f of filesRegistrationCard"
+
+                  accept="image/*"
+                  [removable]="true"
+                  (removed)="onSelectRegistracionCard(f)"
+                  [file]="f"
+                >
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+            </div>
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
+              <ngx-dropzone (change)="onSelectInsuranceCard($event)">
+                <ngx-dropzone-label>Nueva Fotografía de tarjeta de seguro: clic o arrastre</ngx-dropzone-label>
+                <ngx-dropzone-image-preview
+                  *ngFor="let fi of filesInsuranceCard"
+
+                  accept="image/*"
+                  [removable]="true"
+                  (removed)="onSelectInsuranceCard(fi)"
+                  [file]="fi"
+                >
+                  <ngx-dropzone-label>{{ fi.name }} ({{ fi.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+            </div>
           </div>
 
 
