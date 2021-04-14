@@ -23,7 +23,7 @@ export class AddvehicleComponent implements OnInit {
   vehicleFormGroup: FormGroup;
   vehicle: Vehicle;
 
-  public typeList: [{"id":"AUTO","type":"AUTO"}, {"id":"MOTO","type":"MOTO"}, {"id":"PICKUP","type":"PICKUP"}, {"id":"TRUCK","type":"TRUCK"}];
+  public typeList: any[]= [{"id":"AUTO","type":"AUTO"}, {"id":"MOTO","type":"MOTO"}, {"id":"PICKUP","type":"PICKUP"}, {"id":"TRUCK","type":"TRUCK"}];
   public companyList: any[] = [];
   public companies: any[] = [];
   public personList: any[] = [];

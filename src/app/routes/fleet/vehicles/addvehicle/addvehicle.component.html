@@ -18,14 +18,14 @@
               formControlName="plateNumber"
               required
             />
-           <!--  <mat-error *ngIf="vehicleFormGroup.get('plateNumber').hasError('required')">
+            <mat-error *ngIf="vehicleFormGroup.get('plateNumber').hasError('required')">
               {{ 'validations.required' | translate }}
-            </mat-error> -->
+            </mat-error>
           </mat-form-field>
-        <!--   <mat-form-field>
+          <mat-form-field>
             <mat-select
-              placeholder="{{ 'domain.typeVehicle' | translate | titlecase }}"
-              formControlName="typeVehicle"
+              placeholder="{{ 'domain.vehicleType' | translate | titlecase }}"
+              formControlName="vehicleType"
               required
             >
               <mat-option *ngFor="let item of typeList" [value]="item.id">
@@ -68,8 +68,8 @@
               placeholder="{{ 'domain.color' | translate | titlecase }}"
               formControlName="color"
             />
-          </mat-form-field> -->
-          <!-- <mat-form-field>
+          </mat-form-field>
+          <mat-form-field>
             <mat-select
               placeholder="{{ 'domain.company' | translate | titlecase }}"
               formControlName="company"
@@ -115,11 +115,10 @@
               placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
               formControlName="insuranceCard" disabled=true
             />
-          </mat-form-field> -->
-<!--
-          <div class="matero-row" fxAlign="center">
-                       <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
+          </mat-form-field>
 
+          <div class="matero-row" fxAlign="center">
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
               <ngx-dropzone (change)="onSelectRegistracionCard($event)">
                 <ngx-dropzone-label>Nueva Fotografía de tarjeta de registro: clic o arrastre</ngx-dropzone-label>
                 <ngx-dropzone-image-preview
@@ -133,7 +132,8 @@
                   <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
               </ngx-dropzone>
-
+            </div>
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
               <ngx-dropzone (change)="onSelectInsuranceCard($event)">
                 <ngx-dropzone-label>Nueva Fotografía de tarjeta de seguro: clic o arrastre</ngx-dropzone-label>
                 <ngx-dropzone-image-preview
@@ -142,14 +142,14 @@
                   accept="image/*"
                   [removable]="true"
                   (removed)="onSelectInsuranceCard(fi)"
-                  [file]="f"
+                  [file]="fi"
                 >
                   <ngx-dropzone-label>{{ fi.name }} ({{ fi.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
               </ngx-dropzone>
             </div>
           </div>
- -->
+
 
         </form>
       </mat-card-content>
