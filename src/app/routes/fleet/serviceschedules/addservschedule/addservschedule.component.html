@@ -1,1 +1,138 @@
-<p>addservschedule works!</p>
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxLayout.lt-md="80" fxLayout.md="50" fxLayout.lg="40" fxFlexAlign="center">
+    <mat-card class="">
+      <mat-card-title class="mat-title" *ngIf="formMode == 'ADD'">
+        {{ 'record_actions.add_new' | translate | titlecase }}:
+        {{ 'domain.serviceschedules' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-title class="mat-title" *ngIf="formMode == 'EDIT'">
+        {{ 'record_actions.edit' | translate | titlecase }}:
+        {{ 'domain.serviceschedules' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="scheduleFormGroup">
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.vehicle' | translate | titlecase }}"
+              formControlName="vehicle"
+              required
+            >
+              <mat-option *ngFor="let item of vehicleList" [value]="item._id">
+                {{ item.plateNumber }} - {{ item.brand }} {{ item.model }} {{ item.year }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="scheduleFormGroup.get('vehicle').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.servicestatus' | translate | titlecase }}"
+              formControlName="serviceStatus"
+              required
+            >
+              <mat-option *ngFor="let item of serviceStatusList" [value]="item.id">
+                {{ item.text }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="scheduleFormGroup.get('serviceStatus').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.startschedule' | translate | titlecase }}"
+              formControlName="startDate"
+              [matDatepicker]="datePicker"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker startView="year"></mat-datepicker>
+          </mat-form-field>
+
+          <!--           <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.term' | translate | titlecase }}"
+              formControlName="term"
+              required
+            >
+              <mat-option *ngFor="let item of termList" [value]="item.term">
+                {{ item.term }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="scheduleFormGroup.get('term').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field>
+            <input
+              matInput
+              matTooltip="Formato: nn&lt; d | w | m | y &gt;"
+              placeholder="{{ 'domain.term' | translate | titlecase }}"
+              formControlName="term"
+              pattern="[0-9]+[dwmy]{1}"
+              minlength="2"
+              maxlength="3"
+            />
+
+            <mat-error *ngIf="scheduleFormGroup.get('term').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              matTooltip="Formato: nn&lt; d | w | m | y &gt;"
+              placeholder="{{ 'domain.repeatevery' | translate | titlecase }}"
+              formControlName="repeatEvery"
+              pattern="[0-9]+[dwmy]{1}"
+              minlength="2"
+              maxlength="3"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea
+              matInput
+              placeholder="{{ 'domain.comments' | translate | titlecase }}"
+              formControlName="comments"
+              rows="4"
+            >
+            </textarea>
+          </mat-form-field>
+
+          <div>
+            <mat-slide-toggle formControlName="isActive">
+              {{ 'domain.isActive' | translate | titlecase }}
+            </mat-slide-toggle>
+            <!-- <mat-checkbox formControlName="isActive">{{ 'domain.isActive' | translate | titlecase }}</mat-checkbox> -->
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <button
+          *ngIf="formMode == 'ADD'"
+          mat-raised-button
+          color="default"
+          type="reset"
+          (click)="onReset()"
+        >
+          {{ 'record_actions.reset' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+          {{ 'record_actions.cancel' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+          {{ 'record_actions.save' | translate | titlecase }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -218,7 +218,11 @@
     "servicestatus": "service status",
     "startschedule": "schedule start",
     "term": "term",
-    "repeatevery": "repeate every"
+    "repeatevery": "repeate every",
+    "comments": "comments",
+    "startdate": "start date"
   },
-  "AVAILABLE": "AVAILABLE"
+  "AVAILABLE": "AVAILABLE",
+  "SERVICING": "SERVICING",
+  "ON-DUTY": "ON-DUTY"
 }

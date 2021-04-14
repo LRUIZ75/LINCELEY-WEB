@@ -36,10 +36,16 @@ export class FleetServiceschedulesComponent implements OnInit {
       disabled: true,
       hide: true,
     },
-    { header: this.translate.stream('domain.vehicle'), field: 'vehiclePlate', sortable: true },
+    { header: this.translate.stream('domain.vehicle'), field: 'vehicleDescription', sortable: true },
     {
       header: this.translate.stream('domain.servicestatus'),
       field: 'serviceStatus',
+      sortable: true,
+      hide: true,
+    },
+    {
+      header: this.translate.stream('domain.servicestatus'),
+      field: 'serviceStatusName',
       sortable: true,
     },
     { header: this.translate.stream('domain.startschedule'), field: 'startDate' },
@@ -160,9 +166,10 @@ export class FleetServiceschedulesComponent implements OnInit {
 
           for (var i = 0; i < this.scheduleList.length; i++) {
             var veh = this.vehicleList.find(ve => ve._id == this.scheduleList[i].vehicle);
-            this.scheduleList[i].vehiclePlate = !veh ? '' : veh.plateNumber;
+            this.scheduleList[i].vehicleDescription = !veh ? '' : veh.plateNumber + ' - ' 
+            +  veh.vehicleType + ': ' +veh.brand + ' ' + veh.model + ' ' + veh.year ;
             //traducir inemdiatamente los valores de estado de servicio
-            this.scheduleList[i].serviceStatus = this.translate.instant(
+            this.scheduleList[i].serviceStatusName = this.translate.instant(
               this.scheduleList[i].serviceStatus
             );
           }

@@ -218,7 +218,11 @@
     "servicestatus": "estado de servicio",
     "startschedule": "inicio de programación",
     "term": "plazo",
-    "vehicle": "vehículo"
+    "vehicle": "vehículo",
+    "comments": "comentarios",
+    "startdate": "fecha de inicio"
   },
-  "AVAILABLE": "DISPONIBLE"
+  "AVAILABLE": "DISPONIBLE",
+  "ON-DUTY": "EN SERVICIO",
+  "SERVICING": "EN MANTENIMIENTO"
 }
