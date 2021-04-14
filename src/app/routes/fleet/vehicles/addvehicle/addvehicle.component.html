@@ -38,6 +38,7 @@
               matInput
               placeholder="{{ 'domain.brand' | translate | titlecase }}"
               formControlName="brand"
+              oninput="this.value = this.value.toUpperCase()"
               required
             />
             <mat-error *ngIf="vehicleFormGroup.get('brand').hasError('required')">
@@ -49,6 +50,7 @@
               matInput
               placeholder="{{ 'domain.model' | translate | titlecase }}"
               formControlName="model"
+              oninput="this.value = this.value.toUpperCase()"
               required
             />
             <mat-error *ngIf="vehicleFormGroup.get('model').hasError('required')">
@@ -106,14 +108,14 @@
             <input
               matInput
               placeholder="{{ 'domain.registrationCard' | translate | titlecase }}"
-              formControlName="registrationCard" disabled=true
+              formControlName="registrationCard"
             />
           </mat-form-field>
           <mat-form-field>
             <input
               matInput
               placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
-              formControlName="insuranceCard" disabled=true
+              formControlName="insuranceCard"
             />
           </mat-form-field>
 

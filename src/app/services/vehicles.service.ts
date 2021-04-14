@@ -15,6 +15,7 @@ export enum VehicleType {
 }
 
 export interface Vehicle {
+  _id: string,
   plateNumber: string,
   vehicleType: VehicleType | string,
   brand: string,
@@ -23,7 +24,7 @@ export interface Vehicle {
   color: string,
   isExternal: boolean
   company: string,
-  isActive: boolean, 
+  isActive: boolean,
   isAvailable: boolean,
   registrationCard: string,
   insuranceCard: string,

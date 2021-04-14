@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
-import { Company, CompaniesService, Vehicle, VehiclesService} from 'app/services';
+import { Company, CompaniesService, Vehicle, VehiclesService, Person, PeopleService} from 'app/services';
 
 
 
@@ -32,7 +32,7 @@ export class FleetVehiclesComponent implements OnInit {
     { header: this.translate.stream('domain.description'), field: 'description', sortable:true },
     { header: this.translate.stream('domain.vehicleType'), field: 'vehicleType', sortable:true },
     { header: this.translate.stream('domain.companyName'), field: 'companyName', sortable:true },
-    { header: this.translate.stream('domain.owner'), field: 'owner', sortable:true },
+    { header: this.translate.stream('domain.ownerName'), field: 'ownerName', sortable:true },
     { header: this.translate.stream('domain.isActive'), field: 'isActive', sortable:true, type: 'boolean' },
     { header: this.translate.stream('domain.isExternal'), field: 'isExternal' },
     { header: this.translate.stream('domain.isAvailable'), field: 'isAvailable' },
@@ -84,6 +84,7 @@ export class FleetVehiclesComponent implements OnInit {
 
   public vehicleList: any[]=[];
   public companyList: any[] = [];
+  public personList: any[]=[];
   public title: string;
   dragging = false;
   opened = false;
@@ -97,16 +98,27 @@ export class FleetVehiclesComponent implements OnInit {
       });
   }
 
+  getPersonList() {
+    this.personService
+      .getData()
+      .toPromise()
+      .then(resp => {
+        this.personList = resp.objects;
+      });
+  }
+
 
   @Input() filter: string = '';
   constructor(
     public companyService: CompaniesService,
+    public personService: PeopleService,
     public vehicleService: VehiclesService,
     public translate: TranslateService,
     public toaster: ToastrService
   ) {
     this.title = this.translate.instant('domain.vehicles');
     this.getCompanyList();
+    this.getPersonList();
     this.getList();
   }
 
@@ -142,6 +154,10 @@ export class FleetVehiclesComponent implements OnInit {
               this.vehicleList[i].description = (!this.vehicleList[i].brand?"-": this.vehicleList[i].brand) + ' '
                                               + (!this.vehicleList[i].model?"-": this.vehicleList[i].model) + ' '
                                               + (!this.vehicleList[i].year?"-": this.vehicleList[i].year);
+
+              var per = this.personList.find(it => it._id == this.vehicleList[i].owner);
+
+              this.vehicleList[i].ownerName = !per?"":(per.names + " " + (!per.lastNames?"":per.lastNames) );
             }
         }
       },

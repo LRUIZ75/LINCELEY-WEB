@@ -174,6 +174,9 @@ export class AddvehicleComponent implements OnInit {
 
     this.vehicle = <Vehicle>this.vehicleFormGroup.value;
 
+    this.vehicle.registrationCard = this.vehicleFormGroup.get('registrationCard').value;
+    this.vehicle.insuranceCard = this.vehicleFormGroup.get('insuranceCard').value;
+
     switch (this.formMode) {
       case 'EDIT':
         this.vehicleService
@@ -189,11 +192,11 @@ export class AddvehicleComponent implements OnInit {
 
             if (this.filesRegistrationCard.length > 0)
               //nueva foto de registro
-              this.updatePicture('registrationCard', this.initialData._id);
+              this.updatePicture('registrationCard', this.vehicle._id);
 
             if (this.filesInsuranceCard.length > 0)
               //nueva foto de registro
-              this.updatePicture('insuranceCard', this.initialData._id);
+              this.updatePicture('insuranceCard', this.vehicle._id);
 
             this.toaster.success('Operación exitosa!');
             this.changeState('RETRIEVE');
@@ -214,11 +217,21 @@ export class AddvehicleComponent implements OnInit {
             }
 
             this.vehicle = <Vehicle>resp.created;
+
+            if (this.filesRegistrationCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('registrationCard', this.vehicle._id);
+
+            if (this.filesInsuranceCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('insuranceCard', this.vehicle._id);
+
+
             this.toaster.success('Operación exitosa!');
             this.changeState('RETRIEVE');
           })
           .catch(err => {
-            this.toaster.error(err.message);
+            this.toaster.error(err);
           });
         break;
 
@@ -233,7 +246,7 @@ export class AddvehicleComponent implements OnInit {
       this.filesRegistrationCard = [];
     }
     this.filesRegistrationCard.push(...event.addedFiles);
-    this.vehicleFormGroup.get('picture').setValue(this.filesRegistrationCard[0].name);
+    this.vehicleFormGroup.get('registrationCard').setValue(this.filesRegistrationCard[0].name);
   }
   onSelectInsuranceCard(event) {
     console.log(event);
@@ -241,6 +254,6 @@ export class AddvehicleComponent implements OnInit {
       this.filesInsuranceCard = [];
     }
     this.filesInsuranceCard.push(...event.addedFiles);
-    this.vehicleFormGroup.get('picture').setValue(this.filesInsuranceCard[0].name);
+    this.vehicleFormGroup.get('insuranceCard').setValue(this.filesInsuranceCard[0].name);
   }
 }
