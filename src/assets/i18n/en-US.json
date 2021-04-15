@@ -218,7 +218,23 @@
     "servicestatus": "service status",
     "startschedule": "schedule start",
     "term": "term",
-    "repeatevery": "repeate every"
+    "repeatevery": "repeate every",
+    "platenumber": "plate number",
+    "vehicletype": "vehicle type",
+    "brand": "brand",
+    "model": "model",
+    "year": "year",
+    "color": "color",
+    "owner": "owner",
+    "isexternal": "is external",
+    "isavailable": "is available",
+    "registrationcard": "registration card",
+    "licensecard": "license card",
+    "insurancecard": "insurance card",
+    "description": "description",
+    "ownername": "owner name",
+    "vehicles": "vehicles",
+    "drivers": "drivers"
   },
   "AVAILABLE": "AVAILABLE"
 }

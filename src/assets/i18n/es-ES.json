@@ -218,7 +218,23 @@
     "servicestatus": "estado de servicio",
     "startschedule": "inicio de programación",
     "term": "plazo",
-    "vehicle": "vehículo"
+    "vehicle": "vehículo",
+    "brand": "marca",
+    "color": "color",
+    "description": "descripción",
+    "drivers": "repartidores",
+    "insurancecard": "tarjeta de seguro",
+    "isavailable": "disponible?",
+    "isexternal": "externo?",
+    "licensecard": "licencia de conductor",
+    "model": "modelo",
+    "owner": "propietario",
+    "ownername": "nombre del propietario",
+    "platenumber": "número de placa",
+    "registrationcard": "tarjeta de registro",
+    "vehicles": "vehículos",
+    "vehicletype": "tipo de vehículo",
+    "year": "año"
   },
   "AVAILABLE": "DISPONIBLE"
 }
