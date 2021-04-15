@@ -12,13 +12,10 @@ import {
   PeopleService,
   Vehicle,
   VehiclesService,
-  ServiceStatus,
-  ServiceSchedule,
   ServiceshedulesService,
   Assignment,
   AssignmentsService,
 } from 'app/services';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fleet-assignments',
@@ -118,7 +115,7 @@ export class FleetAssignmentsComponent implements OnInit {
 
   public title: string;
   public personNames: string;
-public today = new Date().toISOString();;
+  public today = new Date().toISOString();
 
   dragging = false;
   opened = false;
@@ -203,10 +200,8 @@ public today = new Date().toISOString();;
                 veh.year;
             var driver = this.driverList.find(drv => drv._id == this.assignmentList[i].driver);
 
-            
             if (driver.person) {
-
-/*               var promise = this.getPerson(driver.person);
+              /*               var promise = this.getPerson(driver.person);
               //let persona:any = {};
               await promise.then(value => {
                 this.person = value;
@@ -217,11 +212,13 @@ public today = new Date().toISOString();;
 
               var person = this.personList.find(p => p._id == driver.person);
               this.assignmentList[i].driverDescription = person.names + ' ' + person.lastNames;
-              this.assignmentList[i].assignmentDate = this.assignmentList[i].assignmentDate.substring(0,10);
+              this.assignmentList[i].assignmentDate = this.assignmentList[
+                i
+              ].assignmentDate.substring(0, 10);
             }
           }
           //this.assignmentList = this.assignmentList.sort((a,b)=> (a.assignmentDate - b.assignmentDate));
-          this.today =new Date().toISOString().substring(0,10);
+          this.today = new Date().toISOString().substring(0, 10);
           this.assignmentList = this.assignmentList.filter(a => a.assignmentDate == this.today);
         },
         err => {
@@ -233,12 +230,12 @@ public today = new Date().toISOString();;
       );
   }
 
-   getDateISOString( date: Date) : string {
+  getDateISOString(date: Date): string {
     return date.toISOString().substring(0, 10);
   }
 
   getPerson(id: string): Promise<Person> {
-    var promise = new Promise<Person>( (resolve, reject) => {
+    var promise = new Promise<Person>((resolve, reject) => {
       this.peopleService
         .getDataById(id)
         .toPromise()
@@ -276,8 +273,8 @@ public today = new Date().toISOString();;
   delete(selected) {
     this.selected = selected;
 
-    this.scheduleService
-      .deactivateData(selected._id)
+    this.assignmentService
+      .deleteData(selected._id)
       .toPromise()
       .then(deleted => {
         if (deleted) {
@@ -311,4 +308,3 @@ public today = new Date().toISOString();;
     this.columns[0].showExpand = this.expandable;
   }
 }
-
