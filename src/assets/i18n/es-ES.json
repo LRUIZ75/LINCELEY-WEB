@@ -220,7 +220,10 @@
     "term": "plazo",
     "vehicle": "vehículo",
     "comments": "comentarios",
-    "startdate": "fecha de inicio"
+    "startdate": "fecha de inicio",
+    "assignments": "asignaciones",
+    "assignmentdate": "fecha de asignación",
+    "driver": "repartidor"
   },
   "AVAILABLE": "DISPONIBLE",
   "ON-DUTY": "EN SERVICIO",

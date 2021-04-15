@@ -16,8 +16,9 @@ import {
   ServiceSchedule,
   ServiceshedulesService,
   Assignment,
-  AssignmentsService
+  AssignmentsService,
 } from 'app/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fleet-assignments',
@@ -34,14 +35,24 @@ export class FleetAssignmentsComponent implements OnInit {
       sortable: true,
     },
     {
+      header: this.translate.stream('domain.assignmentdate'),
+      field: 'assignmentDate',
+      type: 'date',
+      typeParameter: {format: 'yyyy-MM-dd'},
+      sortable: true,
+    },
+    {
       header: this.translate.stream('domain.vehicle'),
       field: 'vehicle',
       sortable: true,
       disabled: true,
       hide: true,
     },
-    { header: this.translate.stream('domain.vehicle'), field: 'assignmentDate', sortable: true },
-    { header: this.translate.stream('domain.assignmentdate'), field: 'vehicleDescription', sortable: true },
+    {
+      header: this.translate.stream('domain.vehicle'),
+      field: 'vehicleDescription',
+      sortable: true,
+    },
     {
       header: this.translate.stream('domain.driver'),
       field: 'driver',
@@ -100,12 +111,15 @@ export class FleetAssignmentsComponent implements OnInit {
   public selected: Assignment;
 
   public driverList: any[] = [];
+  public personList: any[] = [];
+  public person: Person;
   public vehicleList: any[] = [];
 
   public assignmentList: any[] = [];
   public defaultDate: string;
 
   public title: string;
+  public personNames: string;
   dragging = false;
   opened = false;
 
@@ -120,6 +134,7 @@ export class FleetAssignmentsComponent implements OnInit {
   ) {
     this.title = this.translate.instant('domain.assigments');
     this.getDriverList();
+    this.getPersonList();
     this.getVehicleList();
     this.getList();
   }
@@ -144,6 +159,15 @@ export class FleetAssignmentsComponent implements OnInit {
       });
   }
 
+  getPersonList() {
+    this.peopleService
+      .getData()
+      .toPromise()
+      .then(resp => {
+        this.personList = resp.objects as Person[];
+      });
+  }
+
   getVehicleList() {
     this.vehicleService
       .getData()
@@ -155,32 +179,72 @@ export class FleetAssignmentsComponent implements OnInit {
 
   getList() {
     this.isLoading = true;
-    this.assignmentService.getData().subscribe(
-      res => {
-        if (res) {
-          var jsonResponse = JSON.stringify(res);
-          var response = JSON.parse(jsonResponse);
-          if (response.status != 'ok') return;
-          this.assignmentList = response.objects;
-          this.assignmentList = this.assignmentList.filter(it => it.isActive == true);
+    this.assignmentService
+      .getData()
+      .toPromise()
+      .then(
+        async resp => {
+          if (resp.status != 'ok') return;
+          this.assignmentList = resp.objects;
 
           for (var i = 0; i < this.assignmentList.length; i++) {
             var veh = this.vehicleList.find(ve => ve._id == this.assignmentList[i].vehicle);
-            this.assignmentList[i].vehicleDescription = !veh ? '' : veh.plateNumber + ' - ' 
-            +  veh.vehicleType + ': ' +veh.brand + ' ' + veh.model + ' ' + veh.year ;
+            this.assignmentList[i].driverDescription = '';
+            this.assignmentList[i].vehicleDescription = !veh
+              ? ''
+              : veh.plateNumber +
+                ' - ' +
+                veh.vehicleType +
+                ': ' +
+                veh.brand +
+                ' ' +
+                veh.model +
+                ' ' +
+                veh.year;
             var driver = this.driverList.find(drv => drv._id == this.assignmentList[i].driver);
-            this.assignmentList[i].driverDescription = !driver ? '' : getDriverName(driver);
+
             
+            if (driver.person) {
+
+/*               var promise = this.getPerson(driver.person);
+              //let persona:any = {};
+              await promise.then(value => {
+                this.person = value;
+              });
+              
+              this.assignmentList[i].driverDescription = this.person.names + ' ' + this.person.lastNames
+ */
+
+              var person = this.personList.find(p => p._id == driver.person);
+              this.assignmentList[i].driverDescription = person.names + ' ' + person.lastNames;
+            }
+          }
+        },
+        err => {
+          if (err.substring(0, 3) != '404') {
+            var msg = this.translate.stream('record_actions.error_occurred');
+            this.toaster.error(err);
           }
         }
-      },
-      err => {
-        if (err.substring(0, 3) != '404') {
-          var msg = this.translate.instant('record_actions.error_occurred');
-          this.toaster.error(err);
-        }
-      }
-    );
+      );
+  }
+
+
+
+  getPerson(id: string): Promise<Person> {
+    var promise = new Promise<Person>( (resolve, reject) => {
+      this.peopleService
+        .getDataById(id)
+        .toPromise()
+        .then(data => {
+          if (!data) reject('no hay datos');
+          resolve(data.objects[0]);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+    return promise;
   }
 
   handleDragStart(event: CdkDragStart): void {
@@ -241,9 +305,3 @@ export class FleetAssignmentsComponent implements OnInit {
     this.columns[0].showExpand = this.expandable;
   }
 }
-function getDriverName(driver: Driver): any {
-  return "conductor";
-
-  //throw new Error('Function not implemented.');
-}
-

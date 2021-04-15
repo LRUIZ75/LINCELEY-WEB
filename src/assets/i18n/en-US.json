@@ -220,7 +220,10 @@
     "term": "term",
     "repeatevery": "repeate every",
     "comments": "comments",
-    "startdate": "start date"
+    "startdate": "start date",
+    "assignments": "assignments",
+    "assignmentdate": "assignment date",
+    "driver": "driver"
   },
   "AVAILABLE": "AVAILABLE",
   "SERVICING": "SERVICING",
