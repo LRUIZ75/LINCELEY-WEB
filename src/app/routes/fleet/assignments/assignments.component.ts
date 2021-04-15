@@ -37,8 +37,6 @@ export class FleetAssignmentsComponent implements OnInit {
     {
       header: this.translate.stream('domain.assignmentdate'),
       field: 'assignmentDate',
-      type: 'date',
-      typeParameter: {format: 'yyyy-MM-dd'},
       sortable: true,
     },
     {
@@ -120,6 +118,8 @@ export class FleetAssignmentsComponent implements OnInit {
 
   public title: string;
   public personNames: string;
+public today = new Date().toISOString();;
+
   dragging = false;
   opened = false;
 
@@ -217,8 +217,12 @@ export class FleetAssignmentsComponent implements OnInit {
 
               var person = this.personList.find(p => p._id == driver.person);
               this.assignmentList[i].driverDescription = person.names + ' ' + person.lastNames;
+              this.assignmentList[i].assignmentDate = this.assignmentList[i].assignmentDate.substring(0,10);
             }
           }
+          //this.assignmentList = this.assignmentList.sort((a,b)=> (a.assignmentDate - b.assignmentDate));
+          this.today =new Date().toISOString().substring(0,10);
+          this.assignmentList = this.assignmentList.filter(a => a.assignmentDate == this.today);
         },
         err => {
           if (err.substring(0, 3) != '404') {
@@ -229,7 +233,9 @@ export class FleetAssignmentsComponent implements OnInit {
       );
   }
 
-
+   getDateISOString( date: Date) : string {
+    return date.toISOString().substring(0, 10);
+  }
 
   getPerson(id: string): Promise<Person> {
     var promise = new Promise<Person>( (resolve, reject) => {
@@ -305,3 +311,4 @@ export class FleetAssignmentsComponent implements OnInit {
     this.columns[0].showExpand = this.expandable;
   }
 }
+
