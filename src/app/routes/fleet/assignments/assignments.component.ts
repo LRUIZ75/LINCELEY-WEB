@@ -12,13 +12,10 @@ import {
   PeopleService,
   Vehicle,
   VehiclesService,
-  ServiceStatus,
-  ServiceSchedule,
   ServiceshedulesService,
   Assignment,
   AssignmentsService,
 } from 'app/services';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-fleet-assignments',
@@ -37,8 +34,6 @@ export class FleetAssignmentsComponent implements OnInit {
     {
       header: this.translate.stream('domain.assignmentdate'),
       field: 'assignmentDate',
-      type: 'date',
-      typeParameter: {format: 'yyyy-MM-dd'},
       sortable: true,
     },
     {
@@ -120,6 +115,8 @@ export class FleetAssignmentsComponent implements OnInit {
 
   public title: string;
   public personNames: string;
+  public today = new Date().toISOString();
+
   dragging = false;
   opened = false;
 
@@ -203,10 +200,8 @@ export class FleetAssignmentsComponent implements OnInit {
                 veh.year;
             var driver = this.driverList.find(drv => drv._id == this.assignmentList[i].driver);
 
-            
             if (driver.person) {
-
-/*               var promise = this.getPerson(driver.person);
+              /*               var promise = this.getPerson(driver.person);
               //let persona:any = {};
               await promise.then(value => {
                 this.person = value;
@@ -217,8 +212,14 @@ export class FleetAssignmentsComponent implements OnInit {
 
               var person = this.personList.find(p => p._id == driver.person);
               this.assignmentList[i].driverDescription = person.names + ' ' + person.lastNames;
+              this.assignmentList[i].assignmentDate = this.assignmentList[
+                i
+              ].assignmentDate.substring(0, 10);
             }
           }
+          //this.assignmentList = this.assignmentList.sort((a,b)=> (a.assignmentDate - b.assignmentDate));
+          this.today = new Date().toISOString().substring(0, 10);
+          this.assignmentList = this.assignmentList.filter(a => a.assignmentDate == this.today);
         },
         err => {
           if (err.substring(0, 3) != '404') {
@@ -229,10 +230,12 @@ export class FleetAssignmentsComponent implements OnInit {
       );
   }
 
-
+  getDateISOString(date: Date): string {
+    return date.toISOString().substring(0, 10);
+  }
 
   getPerson(id: string): Promise<Person> {
-    var promise = new Promise<Person>( (resolve, reject) => {
+    var promise = new Promise<Person>((resolve, reject) => {
       this.peopleService
         .getDataById(id)
         .toPromise()
@@ -270,8 +273,8 @@ export class FleetAssignmentsComponent implements OnInit {
   delete(selected) {
     this.selected = selected;
 
-    this.scheduleService
-      .deactivateData(selected._id)
+    this.assignmentService
+      .deleteData(selected._id)
       .toPromise()
       .then(deleted => {
         if (deleted) {

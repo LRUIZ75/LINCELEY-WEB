@@ -1,0 +1,79 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxLayout.lt-md="80" fxLayout.md="50" fxLayout.lg="40" fxFlexAlign="center">
+    <mat-card class="">
+      <mat-card-title class="mat-title" *ngIf="formMode == 'ADD'">
+        {{ 'record_actions.add_new' | translate | titlecase }}:
+        {{ 'domain.assignments' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-title class="mat-title" *ngIf="formMode == 'EDIT'">
+        {{ 'record_actions.edit' | translate | titlecase }}:
+        {{ 'domain.assignments' | translate | titlecase }}
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="assignmentFormGroup">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.assignmentdate' | translate | titlecase }}"
+              formControlName="assignmentDate"
+              [matDatepicker]="datePicker"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker startView="year"></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.vehicle' | translate | titlecase }}"
+              formControlName="vehicle"
+              required
+            >
+              <mat-option *ngFor="let item of vehicles" [value]="item._id">
+                {{ item.vehicleDescription }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="assignmentFormGroup.get('vehicle').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.driver' | translate | titlecase }}"
+              formControlName="driver"
+              required
+            >
+              <mat-option *ngFor="let item of drivers" [value]="item._id">
+                {{ item.driverDescription }}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="assignmentFormGroup.get('driver').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <button
+          *ngIf="formMode == 'ADD'"
+          mat-raised-button
+          color="default"
+          type="reset"
+          (click)="onReset()"
+        >
+          {{ 'record_actions.reset' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+          {{ 'record_actions.cancel' | translate | titlecase }}
+        </button>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+          {{ 'record_actions.save' | translate | titlecase }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
