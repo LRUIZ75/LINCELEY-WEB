@@ -46,19 +46,19 @@
 
           <div>
             <mat-checkbox formControlName="isExternal"  (change)="onChangeIsExternal($event)">{{
-              'domain.isExternal' | translate | titlecase
+              'domain.isexternal' | translate | titlecase
             }}</mat-checkbox>
             <mat-checkbox formControlName="isActive">{{
               'domain.isActive' | translate | titlecase
             }}</mat-checkbox>
             <mat-checkbox formControlName="isAvailable">{{
-              'domain.isAvailable' | translate | titlecase
+              'domain.isavailable' | translate | titlecase
             }}</mat-checkbox>
           </div>
           <mat-form-field>
             <input
               matInput
-              placeholder="{{ 'domain.licenseCard' | translate | titlecase }}"
+              placeholder="{{ 'domain.licensecard' | translate | titlecase }}"
               formControlName="licenseCard"
               required
             />
@@ -69,7 +69,7 @@
           <mat-form-field>
             <input
               matInput
-              placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
+              placeholder="{{ 'domain.insurancecard' | translate | titlecase }}"
               formControlName="insuranceCard"
               required
             />
@@ -77,7 +77,7 @@
               {{ 'validations.required' | translate }}
             </mat-error>
           </mat-form-field>
-          
+
 
           <div class="matero-row" fxAlign="center">
             <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
