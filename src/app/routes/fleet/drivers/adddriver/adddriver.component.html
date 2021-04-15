@@ -55,32 +55,62 @@
               'domain.isAvailable' | translate | titlecase
             }}</mat-checkbox>
           </div>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.licenseCard' | translate | titlecase }}"
+              formControlName="licenseCard"
+              required
+            />
+            <mat-error *ngIf="driverFormGroup.get('licenseCard').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
+              formControlName="insuranceCard"
+              required
+            />
+            <mat-error *ngIf="driverFormGroup.get('insuranceCard').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          
 
-          <div formGroupName="documents">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="{{ 'domain.licenseCard' | translate | titlecase }}"
-                formControlName="licenseCard"
-                required
-              />
-              <mat-error *ngIf="driverFormGroup.get('documents').get('licenseCard').hasError('required')">
-                {{ 'validations.required' | translate }}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="{{ 'domain.insuranceCard' | translate | titlecase }}"
-                formControlName="insuranceCard"
-                required
-              />
-              <mat-error *ngIf="driverFormGroup.get('documents').get('insuranceCard').hasError('required')">
-                {{ 'validations.required' | translate }}
-              </mat-error>
-            </mat-form-field>
+          <div class="matero-row" fxAlign="center">
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
+              <ngx-dropzone (change)="onSelectLicenseCard($event)">
+                <ngx-dropzone-label>Nueva Fotografía de Licencia de conducir: clic o arrastre</ngx-dropzone-label>
+                <ngx-dropzone-image-preview
+                  *ngFor="let f of filesLicenseCard"
+
+                  accept="image/*"
+                  [removable]="true"
+                  (removed)="onSelectLicenseCard(f)"
+                  [file]="f"
+                >
+                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+            </div>
+            <div class="matero-col" fxFlex="30" fxFlex.lt-sm="50" fxFlex.lt-md="50">
+              <ngx-dropzone (change)="onSelectInsuranceCard($event)">
+                <ngx-dropzone-label>Nueva Fotografía de tarjeta de seguro: clic o arrastre</ngx-dropzone-label>
+                <ngx-dropzone-image-preview
+                  *ngFor="let fi of filesInsuranceCard"
+
+                  accept="image/*"
+                  [removable]="true"
+                  (removed)="onSelectInsuranceCard(fi)"
+                  [file]="fi"
+                >
+                  <ngx-dropzone-label>{{ fi.name }} ({{ fi.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+            </div>
           </div>
-
 
         </form>
       </mat-card-content>

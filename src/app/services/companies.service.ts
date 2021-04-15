@@ -7,6 +7,7 @@ import { environment } from '@env/environment';
 import { NewLineKind } from 'typescript';
 
 export interface Company {
+  _id: string;
   fullName: string;
   shortName: string;
   isActive: boolean;
@@ -44,7 +45,7 @@ export class CompaniesService {
     const body = res;
     return body || {};
   }
-  
+
 
   /**
    * Adds new user by API

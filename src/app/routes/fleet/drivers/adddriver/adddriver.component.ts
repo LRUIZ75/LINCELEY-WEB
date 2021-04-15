@@ -35,6 +35,9 @@ export class AdddriverComponent implements OnInit {
  public personList: any[] = [];
  public people: any[] = [];
 
+ public filesLicenseCard: File[]=[];
+ public filesInsuranceCard: File[]=[];
+
  @Output() changeStateEvent = new EventEmitter<string>();
 
  @Input() formMode = 'ADD';
@@ -53,29 +56,34 @@ export class AdddriverComponent implements OnInit {
    this.driverFormGroup = this.formBuilder.group({
      company: ['', [Validators.required]],
      person: ['', [Validators.required]],
+     employee:[''],
      isExternal: [false, [Validators.required]],
      isActive: [true, [Validators.required]],
      isAvailable: [true, [Validators.required]],
-     documents: this.formBuilder.group({
-       licenseCard: ["", [Validators.required]],
-       insuranceCard: ["", [Validators.required]],
-     }),
+     licenseCard: [""],
+     insuranceCard: [""],
      documentsComparison: this.formBuilder.group({
       licenseCard: [""],
       insuranceCard: [""],
-      isOk: [true],
+      isOk: [false],
     }),
    });
 
    if (this.formMode == 'EDIT' && this.initialData) {
      this.driverFormGroup.patchValue(this.initialData as Driver);
+    this.getPersonList( this.driverFormGroup.get('isExternal').value)
+   }
+   else{ //entonces esta en modo ADD
+    this.getPersonList(false); //primer llenado con personas que son empleadas
    }
 
-   // obtener listas requeridas de las que depende el componente
    //build Company List for Selecte
    this.getCompanyList();
-   this.getPersonList(false); //primer llenado con personas que son empleadas
+   this.getEmployeeList();
+
+
  }
+
 
  getCompanyList() {
    this.companyService
@@ -126,6 +134,15 @@ export class AdddriverComponent implements OnInit {
       this.toaster.error(err.message);
     });
 }
+
+getEmployeeList() {
+  this.employeeService
+    .getData()
+    .toPromise()
+    .then(resp => {
+      this.employeeList = resp.objects;
+    });
+}
 // PROPIEDADES
  get company() {
    return this.driverFormGroup.get('company');
@@ -135,21 +152,27 @@ export class AdddriverComponent implements OnInit {
   return this.driverFormGroup.get('person');
  }
 
-get licenseCard() {
-  return this.driverFormGroup.get('documents').get('licenseCard');
-}
 
-set licenseCard(value) {
-  this.driverFormGroup.get('documents').get('licenseCard').setValue(value);
-}
+updatePicture(fieldName: string, id: string) {
+  //update picture data
+  var files: File[] = [];
+  if (fieldName == 'licenseCard') files = this.filesLicenseCard;
 
-get insuranceCard() {
-  return this.driverFormGroup.get('documents').get('insuranceCard');
-}
-set insuranceCard(value) {
-  this.driverFormGroup.get('documents').get('insuranceCard').setValue(value);
-}
+  if (fieldName == 'insuranceCard') files = this.filesInsuranceCard;
 
+  this.driverService
+    .updatePicture(fieldName, id, files[0])
+    .toPromise()
+    .then(resp => {
+      if (!resp) {
+        this.toaster.error('Operación fallida!');
+        return;
+      }
+    })
+    .catch(err => {
+      this.toaster.error(err);
+    });
+}
  /**
   * Resetea el valor de todos los campos
   */
@@ -180,6 +203,17 @@ set insuranceCard(value) {
 
    this.driver = <Driver>this.driverFormGroup.value;
 
+   //this.driver.documents.licenseCard  =  this.driverFormGroup.get('documents').get('licenseCard').value;
+   //this.driver.documents.insuranceCard = this.driverFormGroup.get('documents').get('insuranceCard').value;
+
+   if (!this.driver.isExternal)
+   { //obtener empleado
+      var emp = this.employeeList.find(it => it._id == this.driver.person);
+      this.driver.employee = !emp?null:emp._id;
+   }
+   else
+      this.driver.employee=null;
+
    switch (this.formMode) {
      case 'EDIT':
        this.driverService
@@ -192,6 +226,17 @@ set insuranceCard(value) {
            }
 
            this.driver = <Driver>resp.updated;
+
+           if (this.filesLicenseCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('licenseCard', this.driver._id);
+
+            if (this.filesInsuranceCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('insuranceCard', this.driver._id);
+
+
+
            this.toaster.success('Operación exitosa!');
            this.changeState('RETRIEVE');
          })
@@ -211,6 +256,16 @@ set insuranceCard(value) {
            }
 
            this.driver = <Driver>resp.created;
+
+           if (this.filesLicenseCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('licenseCard', this.driver._id);
+
+            if (this.filesInsuranceCard.length > 0)
+              //nueva foto de registro
+              this.updatePicture('insuranceCard', this.driver._id);
+
+
            this.toaster.success('Operación exitosa!');
            this.changeState('RETRIEVE');
          })
@@ -227,4 +282,21 @@ set insuranceCard(value) {
   this.getPersonList(event.checked);
 
  }
+
+ onSelectLicenseCard(event) {
+  console.log(event);
+  if (this.filesLicenseCard.length > 0) {
+    this.filesLicenseCard = [];
+  }
+  this.filesLicenseCard.push(...event.addedFiles);
+  this.driverFormGroup.get('licenseCard').setValue(this.filesLicenseCard[0].name);
+}
+onSelectInsuranceCard(event) {
+  console.log(event);
+  if (this.filesInsuranceCard.length > 0) {
+    this.filesInsuranceCard = [];
+  }
+  this.filesInsuranceCard.push(...event.addedFiles);
+  this.driverFormGroup.get('insuranceCard').setValue(this.filesInsuranceCard[0].name);
+}
 }
