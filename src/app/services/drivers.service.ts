@@ -7,16 +7,15 @@ import { environment } from '@env/environment';
 
 export interface Driver
 {
+  _id: string,
   employee: string,
   isExternal: boolean,
   person: string,
   company: string,
   isActive: boolean,
   isAvailable: boolean,
-  documents: {
-    licenseCard: string,
-    insuranceCard: string
-  },
+  licenseCard: string,
+  insuranceCard: string,
   documentsComparison: {
       licenseCard: string,
       insuranceCard: string,
@@ -86,15 +85,23 @@ export class DriversService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  updatePicture(id: string, picture: File): Observable<any> {
+  /**
+   * Update pictures into fields insuranceCard or registrationCard
+   * @param fieldname insuranceCard | registrationCard
+   * @param id Vehicle OID
+   * @param picture File
+   * @returns response or error
+   */
+   updatePicture(fieldname: string, id: string,  picture: File): Observable<any> {
     let formData: FormData = new FormData();
     formData.append('picture', picture);
-    const req = new HttpRequest('PUT', `${this.endpoint}/picture/${id}`, formData, {
+    const req = new HttpRequest('PUT', `${this.endpoint}${fieldname}/${id}`, formData, {
       reportProgress: true,
       responseType: 'json',
     });
     return this.http.request(req).pipe(map(this.extractData), catchError(this.handleError));
   }
+
 
   deleteData(id: string): Observable<any> {
     return this.http
