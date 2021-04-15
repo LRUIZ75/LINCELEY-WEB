@@ -1,6 +1,10 @@
 @import '~@angular/material/theming';
 @import '/src/styles/custom/linceley.scss';
 
+
+.ng-data-table-container .ng-data-table-top-header-container {
+  background-color: mat-color($mat-linceley-blue, 500);
+} 
 // Layout
 $gutter: 16px !default;
 

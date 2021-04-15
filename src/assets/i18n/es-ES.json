@@ -234,11 +234,25 @@
     "registrationcard": "tarjeta de registro",
     "vehicles": "vehículos",
     "vehicletype": "tipo de vehículo",
-    "year": "año"
+    "year": "año",
+    "startdate": "fecha de inicio",
+    "driver": "repartidor",
+    "comments": "comentarios",
+    "assignments": "asignaciones",
+    "assignmentdate": "fecha de asignación"
   },
   "AVAILABLE": "DISPONIBLE",
   "ON-DUTY": "EN SERVICIO",
   "SERVICING": "EN MANTENIMIENTO",
   "PICKUP": "CAMIONETA",
-  "TRUCK": "CAMIÓN"
+  "TRUCK": "CAMIÓN",
+  "pagination": {
+    "first": "primero",
+    "last": "último",
+    "limit": "límite",
+    "next": "siguiente",
+    "of": "de",
+    "previous": "previo",
+    "records": "registros"
+  }
 }

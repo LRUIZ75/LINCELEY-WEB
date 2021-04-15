@@ -6,10 +6,11 @@
     (changeStateEvent)="changeState($event)"
   >
   </app-addcompany>
-  
 </div>
 
-<mat-card *ngIf="currentState == 'RETRIEVE'">
+<!-- <mat-card *ngIf="currentState == '--'">
+
+
   <mat-toolbar>
     <div
       matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.companies' | translate }}"
@@ -48,6 +49,103 @@
     >
     </mtx-grid>
   </mat-card-content>
+</mat-card> -->
+
+<mat-card *ngIf="currentState == 'RETRIEVE'">
+  <mat-toolbar>
+    <div
+      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.companies' | translate }}"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button color="primary" (click)="openPanel($event)">
+        {{ 'record_actions.add_new' | translate }}
+      </button>
+    </div>
+  </mat-toolbar>
+  <ng-data-table
+    [id]="'sales_products_overview_03'"
+    [title]="translate.instant('domain.companies').toUpperCase()"
+    [items]="companyList"
+    [indexColumnTitle]="'#'"
+    [showIndexColumn]="true"
+    [indexColumnWidth]="30"
+    [showHeader]="true"
+    [pageable]="true"
+    [showRowSelectCheckbox]="false"
+    [rowSelectable]="false"
+    [selectOnRowClick]="true"
+    [showSubstituteRows]="false"
+    [persistTableState]="true"
+    [showColumnSelector]="false"
+    [expandableRows]="false"
+    [showLoadingSpinner]="true"
+    [selectMode]="'single'"
+    [showRowSelectAllCheckbox]="true"
+    [DataTableStorageMode] ="local"
+    [persistTableState] = "true"
+    [translations]="DataTableTranslations"
+  >
+    <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'fullName'"
+      [title]="translate.instant('domain.fullName').toUpperCase()"
+      [sortable]="true"
+      [filterable]="true"
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'shortName'"
+      [title]="translate.instant('domain.shortName').toUpperCase()"
+      [filterable]="true"
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'location.lat'"
+      [title]="translate.instant('domain.location-lat').toUpperCase()"
+      [sortable]="true"
+      [filterable]="true"
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'location.lng'"
+      [title]="translate.instant('domain.location-lng').toUpperCase()"
+      [sortable]="true"
+      [filterable]="true"
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'isActive'"
+      [title]="translate.instant('domain.isActive').toUpperCase()"
+      [width]="100"
+      [sortable]="true"
+      [filterable]="true"
+    >
+      <ng-template #ngDataTableCell let-row="row">
+        <td align="center">
+          <mat-slide-toggle color="primary" [checked]="row.item.isActive"
+          [disabled]="true"
+          > </mat-slide-toggle>
+        </td>
+      </ng-template>
+    </ng-data-table-column>
+    <ng-data-table-column [width]="100">
+      <ng-template #ngDataTableCell let-row="row">
+        <td align="center">
+          <button mat-icon-button (click)="edit(row.item)"
+          matTooltip="{{ 'record_actions.edit' | translate }}">
+            <mat-icon>edit</mat-icon>
+
+          </button>
+          <button mat-icon-button color="warn" (click)="delete(row.item)"
+          matTooltip="{{ 'record_actions.deactivate' | translate }}">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-template>
+    </ng-data-table-column>
+  </ng-data-table>
 </mat-card>
 
 <!-- Inicia listado de compañías' -->

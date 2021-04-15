@@ -125,7 +125,7 @@ export class SecurityPeopleComponent implements OnInit {
   }
 
   getList() {
-    this.isLoading = true;
+    this.isLoading = false;
     this.peopleService.getData().subscribe(
       res => {
         if (res) {
@@ -143,6 +143,7 @@ export class SecurityPeopleComponent implements OnInit {
         }
       }
     );
+    this.isLoading=true;
   }
 
   handleDragStart(event: CdkDragStart): void {

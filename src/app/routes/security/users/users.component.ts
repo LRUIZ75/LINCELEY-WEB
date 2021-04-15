@@ -96,6 +96,7 @@ export class SecurityUsersComponent implements OnInit {
   }
 
   getList() {
+    this.isLoading = false;
     this.userService.getData().subscribe(
       res => {
         if (res) {
@@ -111,6 +112,7 @@ export class SecurityUsersComponent implements OnInit {
         this.toaster.error(err.statusText + ': ' + err.message, msg);
       }
     );
+    this.isLoading = true;
   }
 
   handleDragStart(event: CdkDragStart): void {

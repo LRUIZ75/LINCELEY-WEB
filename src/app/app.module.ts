@@ -20,6 +20,7 @@ import { httpInterceptorProviders } from '@core/interceptors';
 import { appInitializerProviders } from '@core/initializers';
 import { FormlyConfigModule } from './formly-config.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DataTableModule } from 'ornamentum';
 
 
 
@@ -41,6 +42,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         deps: [HttpClient],
       },
     }),
+    DataTableModule.forRoot(),
     NoopAnimationsModule,
   ],
   providers: [httpInterceptorProviders, appInitializerProviders],

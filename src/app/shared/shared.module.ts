@@ -25,6 +25,7 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
+
 const MODULES = [
   MaterialModule,
   MaterialExtensionsModule,

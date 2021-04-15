@@ -241,6 +241,15 @@
     "assignmentdate": "assignment date",
     "driver": "driver"
   },
+  "pagination": {
+    "limit": "limit",
+    "records": "records",
+    "of": "of",
+    "next": "next",
+    "previous": "previous",
+    "last": "last",
+    "first": "first"
+  },
   "AVAILABLE": "AVAILABLE",
   "SERVICING": "SERVICING",
   "ON-DUTY": "ON-DUTY",
