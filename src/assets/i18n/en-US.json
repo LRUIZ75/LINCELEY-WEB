@@ -234,7 +234,14 @@
     "description": "description",
     "ownername": "owner name",
     "vehicles": "vehicles",
-    "drivers": "drivers"
+    "drivers": "drivers",
+    "comments": "comments",
+    "startdate": "start date",
+    "assignments": "assignments",
+    "assignmentdate": "assignment date",
+    "driver": "driver"
   },
-  "AVAILABLE": "AVAILABLE"
+  "AVAILABLE": "AVAILABLE",
+  "SERVICING": "SERVICING",
+  "ON-DUTY": "ON-DUTY"
 }

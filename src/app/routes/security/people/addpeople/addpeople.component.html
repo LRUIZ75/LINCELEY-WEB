@@ -95,7 +95,6 @@
               placeholder="{{ 'domain.birthdate' | translate | titlecase }}"
               formControlName="birthdate"
               [matDatepicker]="birthdayPicker"
-              [(ngModel)]="birthday"
               [max]="maxBirthday"
             />
             <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>

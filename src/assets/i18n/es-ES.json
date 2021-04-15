@@ -236,5 +236,7 @@
     "vehicletype": "tipo de vehículo",
     "year": "año"
   },
-  "AVAILABLE": "DISPONIBLE"
+  "AVAILABLE": "DISPONIBLE",
+  "ON-DUTY": "EN SERVICIO",
+  "SERVICING": "EN MANTENIMIENTO"
 }
