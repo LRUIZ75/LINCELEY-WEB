@@ -241,7 +241,9 @@
     "startdate": "start date",
     "assignments": "assignments",
     "assignmentdate": "assignment date",
-    "driver": "driver"
+    "driver": "driver",
+    "distributioncenter": "distribution center",
+    "dcs": "DC's"
   },
   "pagination": {
     "limit": "limit",

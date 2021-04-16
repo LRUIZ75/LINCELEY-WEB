@@ -241,7 +241,9 @@
     "driver": "repartidor",
     "comments": "comentarios",
     "assignments": "asignaciones",
-    "assignmentdate": "fecha de asignación"
+    "assignmentdate": "fecha de asignación",
+    "dcs": "CEDI's",
+    "distributioncenter": "CEDI"
   },
   "AVAILABLE": "DISPONIBLE",
   "ON-DUTY": "EN SERVICIO",

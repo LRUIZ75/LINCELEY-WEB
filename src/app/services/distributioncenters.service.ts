@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface DistributionCenter{
+  _id: string,
   company: string,
   name: string,
   location: {
