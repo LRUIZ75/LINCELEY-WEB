@@ -1,10 +1,10 @@
 @import '~@angular/material/theming';
 @import '/src/styles/custom/linceley.scss';
 
+//Ornamentum changes!
+$data-table-top-header-background :  mat-color($mat-linceley-blue,600);
 
-.ng-data-table-container .ng-data-table-top-header-container {
-  background-color: mat-color($mat-linceley-blue, 500);
-} 
+
 // Layout
 $gutter: 16px !default;
 
