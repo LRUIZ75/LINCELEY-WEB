@@ -24,62 +24,87 @@
   </mat-toolbar>
   <ng-data-table
     [id]="'sales_products_overview_03'"
-    [title]="translate.instant('domain.companies').toUpperCase()"
+    [title]="getTitle()"
     [items]="companyList"
+
     [indexColumnTitle]="'#'"
-    [showIndexColumn]="true"
     [indexColumnWidth]="30"
-    [showHeader]="true"
-    [pageable]="true"
+
+    [showIndexColumn]="true"
+    [showHeader]="false"
     [showRowSelectCheckbox]="false"
+    [showSubstituteRows]="false"
+    [showColumnSelector]="false"
+    [showRowSelectAllCheckbox]="true"
+
+    [pageable]="true"
     [rowSelectable]="false"
     [selectOnRowClick]="true"
-    [showSubstituteRows]="false"
     [persistTableState]="true"
-    [showColumnSelector]="false"
     [expandableRows]="false"
     [showLoadingSpinner]="true"
     [selectMode]="'single'"
-    [showRowSelectAllCheckbox]="true"
     [DataTableStorageMode] ="local"
     [persistTableState] = "true"
-    [translations]="DataTableTranslations"
+    [translations]="getDataTableTranslations()"
     [minContentWidth]="800"
   >
     <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+    
     <ng-data-table-column
       [field]="'fullName'"
       [title]="translate.instant('domain.fullName').toUpperCase()"
-      [sortable]="true"
+      
       [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
+
+
     >
     </ng-data-table-column>
     <ng-data-table-column
       [field]="'shortName'"
       [title]="translate.instant('domain.shortName').toUpperCase()"
+
       [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
+
+      
     >
     </ng-data-table-column>
     <ng-data-table-column
       [field]="'location.lat'"
       [title]="translate.instant('domain.location-lat').toUpperCase()"
-      [sortable]="true"
+
       [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
     >
     </ng-data-table-column>
     <ng-data-table-column
       [field]="'location.lng'"
       [title]="translate.instant('domain.location-lng').toUpperCase()"
-      [sortable]="true"
+
       [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
     >
     </ng-data-table-column>
     <ng-data-table-column
       [field]="'isActive'"
       [title]="translate.instant('domain.isActive').toUpperCase()"
-      [width]="100"
+      [width]="150"
+      
       [sortable]="true"
       [filterable]="true"
+      [dropdownFilterMenuPosition]="'bottom-right'"
+      [showDropdownFilter]="true"
+      [dropDownFilterShowOptionSelectCheckbox]="true"
     >
       <ng-template #ngDataTableCell let-row="row">
         <td align="center">

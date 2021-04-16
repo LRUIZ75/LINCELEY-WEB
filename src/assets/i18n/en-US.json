@@ -172,7 +172,8 @@
     "submit": "Submit",
     "reset": "Reset",
     "filterby": "filter by",
-    "confirmdelete": "confirm that you want to {{'delete'}}"
+    "confirmdelete": "confirm that you want to {{'delete'}}",
+    "search": "search"
   },
   "general": {
     "home": "Home",
@@ -258,6 +259,11 @@
     "cancel": "cancel",
     "confirm": "confirm",
     "delete": "delete"
+  },
+  "notifications": {
+    "nodata": "No data available!",
+    "can_deactivate": "Proceed to deactivate this record",
+    "can_delete": "Proceed to delete this record"
   },
   "AVAILABLE": "AVAILABLE",
   "SERVICING": "SERVICING",

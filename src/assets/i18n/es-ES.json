@@ -172,7 +172,8 @@
     "submit": "Enviar",
     "reset": "Resetear",
     "filterby": "filtrar por",
-    "confirmdelete": "confirme que desea {{'delete'}}"
+    "confirmdelete": "confirme que desea {{'delete'}}",
+    "search": "buscar"
   },
   "general": {
     "home": "Inicio",
@@ -263,5 +264,10 @@
     "delete": "eliminar",
     "no": "no",
     "yes": "sí"
+  },
+  "notifications": {
+    "nodata": "No hay datos disponibles!",
+    "can_deactivate": "Proceder en desactivar el registro",
+    "can_delete": "Proceder en eliminar el registro"
   }
 }
