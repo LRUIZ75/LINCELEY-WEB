@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface Department{
+  _id: string,
   name: string,
   company: string,
   isActive: boolean

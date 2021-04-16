@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { MtxDialog, MtxDialogBtns, MtxDialogData } from '@ng-matero/extensions/dialog';
+import { MtxDialog } from '@ng-matero/extensions/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
+
 
 //Import services
 import { Company, CompaniesService } from 'app/services';
 import { DataTableTranslations } from 'ornamentum';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
-import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-org-companies',
