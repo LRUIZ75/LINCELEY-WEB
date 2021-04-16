@@ -28,17 +28,7 @@ export class OrgCompaniesComponent implements OnInit {
   dragging = false;
   opened = false;
 
-  public dataTableTranslations: DataTableTranslations = {
-    pagination: {
-      limit: this.translate.instant('pagination.limit'),
-      rangeKey: this.translate.instant('pagination.records'),
-      rangeSeparator: this.translate.instant('pagination.of'),
-      nextTooltip: this.translate.instant('pagination.next'),
-      previousTooltip: this.translate.instant('pagination.previous'),
-      lastTooltip: this.translate.instant('pagination.last'),
-      firstTooltip: this.translate.instant('pagination.first'),
-    },
-  };
+  public dataTableTranslations: DataTableTranslations;
 
   constructor(
     public companyService: CompaniesService,

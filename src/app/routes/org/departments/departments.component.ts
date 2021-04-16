@@ -6,11 +6,9 @@ import { MtxDialog } from '@ng-matero/extensions/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
-
 //Import services
 import { CompaniesService, Department, DepartmentsService } from 'app/services';
 import { DataTableTranslations } from 'ornamentum';
-
 
 @Component({
   selector: 'app-org-departments',
@@ -19,19 +17,8 @@ import { DataTableTranslations } from 'ornamentum';
   providers: [DepartmentsService, CompaniesService],
 })
 export class OrgDepartmentsComponent implements OnInit {
-
-
-  public dataTableTranslations: DataTableTranslations = {
-    pagination: {
-      limit: this.translate.instant('pagination.limit'),
-      rangeKey: this.translate.instant('pagination.records'),
-      rangeSeparator: this.translate.instant('pagination.of'),
-      nextTooltip: this.translate.instant('pagination.next'),
-      previousTooltip: this.translate.instant('pagination.previous'),
-      lastTooltip: this.translate.instant('pagination.last'),
-      firstTooltip: this.translate.instant('pagination.first'),
-    },
-  };
+  
+  public dataTableTranslations: DataTableTranslations;
 
   /* Variables locales */
 
@@ -65,26 +52,24 @@ export class OrgDepartmentsComponent implements OnInit {
 
   getDataTableTranslations(): DataTableTranslations {
     this.dataTableTranslations = {
-     pagination: {
-       limit: this.translate.instant('pagination.limit'),
-       rangeKey: this.translate.instant('pagination.records'),
-       rangeSeparator: this.translate.instant('pagination.of'),
-       nextTooltip: this.translate.instant('pagination.next'),
-       previousTooltip: this.translate.instant('pagination.previous'),
-       lastTooltip: this.translate.instant('pagination.last'),
-       firstTooltip: this.translate.instant('pagination.first'),
-     },
-     noDataMessage: this.translate.instant('notifications.nodata'),
-     dropdownFilter: {
-       filterPlaceholder: this.translate.instant('record_actions.search'),
-       selectPlaceholder: this.translate.instant('record_actions.search')
-     },
-     columnSelector: { header: ">>"}
-       
-     
-   };
-   return this.dataTableTranslations;
- }
+      pagination: {
+        limit: this.translate.instant('pagination.limit'),
+        rangeKey: this.translate.instant('pagination.records'),
+        rangeSeparator: this.translate.instant('pagination.of'),
+        nextTooltip: this.translate.instant('pagination.next'),
+        previousTooltip: this.translate.instant('pagination.previous'),
+        lastTooltip: this.translate.instant('pagination.last'),
+        firstTooltip: this.translate.instant('pagination.first'),
+      },
+      noDataMessage: this.translate.instant('notifications.nodata'),
+      dropdownFilter: {
+        filterPlaceholder: this.translate.instant('record_actions.search'),
+        selectPlaceholder: this.translate.instant('record_actions.search'),
+      },
+      columnSelector: { header: '>>' },
+    };
+    return this.dataTableTranslations;
+  }
 
   getCompanyList() {
     this.companyService
@@ -104,8 +89,10 @@ export class OrgDepartmentsComponent implements OnInit {
           if (response.status != 'ok') return;
           this.departmentList = response.objects;
           this.departmentList = this.departmentList.filter(it => it.isActive == true);
-          if(this.companyFilter){
-            this.departmentList = this.departmentList.filter(it => it.company == this.companyFilter);
+          if (this.companyFilter) {
+            this.departmentList = this.departmentList.filter(
+              it => it.company == this.companyFilter
+            );
           }
           for (var i = 0; i < this.departmentList.length; i++) {
             var comp = this.companyList.find(it => it._id == this.departmentList[i].company);
@@ -120,7 +107,6 @@ export class OrgDepartmentsComponent implements OnInit {
         }
       }
     );
-
   }
 
   handleDragStart(event: CdkDragStart): void {
@@ -152,7 +138,8 @@ export class OrgDepartmentsComponent implements OnInit {
     const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translate.instant('record_actions.deactivate'),
-        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.name + ' ?',
+        message:
+          this.translate.instant('notifications.can_deactivate') + ': ' + selected.name + ' ?',
         button1Text: this.translate.instant('buttons.yes').toUpperCase(),
         button2Text: this.translate.instant('buttons.no').toUpperCase(),
       },
@@ -185,14 +172,10 @@ export class OrgDepartmentsComponent implements OnInit {
         this.toaster.error(err);
         return;
       });
-
   }
 
   changeState(state: string) {
     this.currentState = state;
     if (state == 'RETRIEVE') this.getList();
   }
-
-
-
 }

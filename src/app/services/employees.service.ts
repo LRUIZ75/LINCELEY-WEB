@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface Employee{
+  _id: string,
   employeeId: string,
   department: string,
   jobposition: string,

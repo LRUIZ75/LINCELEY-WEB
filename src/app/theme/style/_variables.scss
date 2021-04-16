@@ -3,7 +3,8 @@
 
 //Ornamentum changes!
 $data-table-top-header-background :  mat-color($mat-linceley-blue,600);
-
+$data-table-row-hover-background:  mat-color($mat-linceley-blue,400);
+$data-table-selected-row-hover-background:  mat-color($mat-linceley-blue,400);
 
 // Layout
 $gutter: 16px !default;

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface JobPosition{
+  _id: string,
   name: string,
   company: string,
   defaultRole: string,
