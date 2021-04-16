@@ -3,6 +3,8 @@ import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { MtxGridColumn } from '@ng-matero/extensions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 //Import services
 import { Company, CompaniesService } from 'app/services';
@@ -15,7 +17,7 @@ import { DataTableDataBindCallback, DataTableTranslations } from 'ornamentum';
   providers: [CompaniesService],
 })
 export class OrgCompaniesComponent implements OnInit {
-  columns: MtxGridColumn[] = [
+/*   columns: MtxGridColumn[] = [
     {
       header: this.translate.stream('Id'),
       field: '_id',
@@ -60,11 +62,11 @@ export class OrgCompaniesComponent implements OnInit {
       ],
     },
   ];
-
+ */
  
 
 
-  isLoading = true;
+/*   isLoading = true;
 
   multiSelectable = false;
   rowSelectable = true;
@@ -75,7 +77,7 @@ export class OrgCompaniesComponent implements OnInit {
   rowHover = true;
   rowStriped = true;
   showPaginator = true;
-  expandable = false;
+  expandable = false; */
 
   /* Variables locales */
 
@@ -101,6 +103,7 @@ export class OrgCompaniesComponent implements OnInit {
 
 
   constructor(
+    public snackBar: MatSnackBar,
     public companyService: CompaniesService,
     public translate: TranslateService,
     public toaster: ToastrService
@@ -133,7 +136,7 @@ export class OrgCompaniesComponent implements OnInit {
   }
 
   getList() {
-    this.isLoading=true;
+/*     this.isLoading=true; */
     this.companyService.getData().subscribe(
       res => {
         if (res) {
@@ -173,8 +176,14 @@ export class OrgCompaniesComponent implements OnInit {
     this.currentState = 'EDIT';
   }
 
+
+
   delete(selected){
     this.selected = selected;
+
+    if(!confirm("Esta seguro de eliminar el registro?")){
+      return;
+    }
 
     this.companyService.deactivateData(selected._id).
     toPromise()
@@ -211,7 +220,7 @@ export class OrgCompaniesComponent implements OnInit {
     console.log(e);
   }
 
-  enableRowExpandable() {
+/*   enableRowExpandable() {
     this.columns[0].showExpand = this.expandable;
-  }
+  } */
 }
