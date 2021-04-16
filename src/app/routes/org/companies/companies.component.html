@@ -8,48 +8,6 @@
   </app-addcompany>
 </div>
 
-<!-- <mat-card *ngIf="currentState == '--'">
-
-
-  <mat-toolbar>
-    <div
-      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.companies' | translate }}"
-      cdkDrag
-      (cdkDragStarted)="handleDragStart($event)"
-      *ngIf="currentState == 'RETRIEVE'"
-    >
-      <button mat-raised-button color="primary" (click)="openPanel($event)">
-        {{ 'record_actions.add_new' | translate }}
-      </button>
-    </div>
-  </mat-toolbar>
-
-  <mat-card-content>
-    <mtx-grid
-      [data]="companyList"
-      [columns]="columns"
-      [loading]="isLoading"
-      [multiSelectable]="multiSelectable"
-      [rowSelectable]="rowSelectable"
-      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-      [rowHover]="rowHover"
-      [rowStriped]="rowStriped"
-      [showToolbar]="showToolbar"
-      [toolbarTitle]="title"
-      [columnHideable]="columnHideable"
-      [columnMovable]="columnMovable"
-      [pageOnFront]="showPaginator"
-      [showPaginator]="showPaginator"
-      [pageSizeOptions]="[5, 10, 50, 100]"
-      [pageIndex]="0"
-      [pageSize]="10"
-      (sortChange)="changeSort($event)"
-      (selectionChange)="changeSelect($event)"
-      *ngIf="currentState == 'RETRIEVE'"
-    >
-    </mtx-grid>
-  </mat-card-content>
-</mat-card> -->
 
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
@@ -86,6 +44,9 @@
     [DataTableStorageMode] ="local"
     [persistTableState] = "true"
     [translations]="DataTableTranslations"
+    [minContentWidth]="1280"
+    [expandableRows]="true"
+    [expanderColumnWidth]="35"
   >
     <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
     <ng-data-table-column
@@ -138,7 +99,7 @@
             <mat-icon>edit</mat-icon>
 
           </button>
-          <button mat-icon-button color="warn" (click)="delete(row.item)"
+          <button mat-icon-button color="warn" (click)="confirmDelete(row.item)"
           matTooltip="{{ 'record_actions.deactivate' | translate }}">
             <mat-icon>delete</mat-icon>
           </button>

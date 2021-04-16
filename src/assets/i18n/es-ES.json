@@ -171,7 +171,8 @@
     "error_occurred": "Ha ocurrido un error!!",
     "submit": "Enviar",
     "reset": "Resetear",
-    "filterby": "filtrar por"
+    "filterby": "filtrar por",
+    "confirmdelete": "confirme que desea {{'delete'}}"
   },
   "general": {
     "home": "Inicio",
@@ -254,5 +255,13 @@
     "of": "de",
     "previous": "previo",
     "records": "registros"
+  },
+  "buttons": {
+    "accept": "aceptar",
+    "cancel": "cancelar",
+    "confirm": "confirmar",
+    "delete": "eliminar",
+    "no": "no",
+    "yes": "sí"
   }
 }

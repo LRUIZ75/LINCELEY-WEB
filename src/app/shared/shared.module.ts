@@ -24,7 +24,7 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 const MODULES = [
   MaterialModule,
@@ -38,15 +38,19 @@ const MODULES = [
   FormlyMaterialModule,
   ToastrModule,
   TranslateModule,
-  NgxDropzoneModule
+  NgxDropzoneModule,
 ];
-const COMPONENTS = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
-const COMPONENTS_DYNAMIC = [];
+const COMPONENTS = [
+  BreadcrumbComponent, 
+  PageHeaderComponent, 
+  ErrorCodeComponent, 
+];
+const COMPONENTS_DYNAMIC = [ConfirmDialogComponent];
 const DIRECTIVES = [DisableControlDirective];
 const PIPES = [SafeUrlPipe, ToObservablePipe];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, ...DIRECTIVES, ...PIPES],
+  declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, ...DIRECTIVES, ...PIPES, ],
   imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ...MODULES],
   exports: [
     CommonModule,

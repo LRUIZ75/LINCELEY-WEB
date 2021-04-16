@@ -171,7 +171,8 @@
     "error_occurred": "An error has occurred!!",
     "submit": "Submit",
     "reset": "Reset",
-    "filterby": "filter by"
+    "filterby": "filter by",
+    "confirmdelete": "confirm that you want to {{'delete'}}"
   },
   "general": {
     "home": "Home",
@@ -249,6 +250,14 @@
     "previous": "previous",
     "last": "last",
     "first": "first"
+  },
+  "buttons": {
+    "yes": "yes",
+    "no": "no",
+    "accept": "accept",
+    "cancel": "cancel",
+    "confirm": "confirm",
+    "delete": "delete"
   },
   "AVAILABLE": "AVAILABLE",
   "SERVICING": "SERVICING",
