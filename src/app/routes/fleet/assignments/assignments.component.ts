@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 //Import services
 import {
@@ -17,6 +18,8 @@ import {
   AssignmentsService,
 } from 'app/services';
 
+import { DataTableTranslations } from 'ornamentum';
+
 @Component({
   selector: 'app-fleet-assignments',
   templateUrl: './assignments.component.html',
@@ -24,81 +27,6 @@ import {
   providers: [DriversService, VehiclesService, ServiceshedulesService],
 })
 export class FleetAssignmentsComponent implements OnInit {
-  columns: MtxGridColumn[] = [
-    {
-      header: this.translate.stream('Id'),
-      field: '_id',
-      hide: true,
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('domain.assignmentdate'),
-      field: 'assignmentDate',
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('domain.vehicle'),
-      field: 'vehicle',
-      sortable: true,
-      disabled: true,
-      hide: true,
-    },
-    {
-      header: this.translate.stream('domain.vehicle'),
-      field: 'vehicleDescription',
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('domain.driver'),
-      field: 'driver',
-      sortable: true,
-      hide: true,
-    },
-    {
-      header: this.translate.stream('domain.driver'),
-      field: 'driverDescription',
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('table_kitchen_sink.operation'),
-      field: 'operation',
-      width: '120px',
-      pinned: 'right',
-      right: '0px',
-      type: 'button',
-      buttons: [
-        {
-          type: 'icon',
-          icon: 'edit',
-          tooltip: this.translate.stream('table_kitchen_sink.edit'),
-          click: record => this.edit(record),
-        },
-        {
-          color: 'warn',
-          icon: 'delete',
-          text: this.translate.stream('table_kitchen_sink.delete'),
-          tooltip: this.translate.stream('table_kitchen_sink.delete'),
-          pop: true,
-          popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
-          popCloseText: this.translate.stream('table_kitchen_sink.close'),
-          popOkText: this.translate.stream('table_kitchen_sink.ok'),
-          click: record => this.delete(record),
-        },
-      ],
-    },
-  ];
-  isLoading = true;
-
-  multiSelectable = false;
-  rowSelectable = true;
-  hideRowSelectionCheckbox = false;
-  showToolbar = false;
-  columnHideable = true;
-  columnMovable = true;
-  rowHover = true;
-  rowStriped = true;
-  showPaginator = true;
-  expandable = false;
 
   /* Variables locales */
 
@@ -120,6 +48,41 @@ export class FleetAssignmentsComponent implements OnInit {
   dragging = false;
   opened = false;
 
+  public dataTableTranslations: DataTableTranslations = {
+    pagination: {
+      limit: this.translate.instant('pagination.limit'),
+      rangeKey: this.translate.instant('pagination.records'),
+      rangeSeparator: this.translate.instant('pagination.of'),
+      nextTooltip: this.translate.instant('pagination.next'),
+      previousTooltip: this.translate.instant('pagination.previous'),
+      lastTooltip: this.translate.instant('pagination.last'),
+      firstTooltip: this.translate.instant('pagination.first'),
+    },
+  };
+
+  getDataTableTranslations(): DataTableTranslations {
+    this.dataTableTranslations = {
+     pagination: {
+       limit: this.translate.instant('pagination.limit'),
+       rangeKey: this.translate.instant('pagination.records'),
+       rangeSeparator: this.translate.instant('pagination.of'),
+       nextTooltip: this.translate.instant('pagination.next'),
+       previousTooltip: this.translate.instant('pagination.previous'),
+       lastTooltip: this.translate.instant('pagination.last'),
+       firstTooltip: this.translate.instant('pagination.first'),
+     },
+     noDataMessage: this.translate.instant('notifications.nodata'),
+     dropdownFilter: {
+       filterPlaceholder: this.translate.instant('record_actions.search'),
+       selectPlaceholder: this.translate.instant('record_actions.search')
+     },
+     columnSelector: { header: ">>"}
+
+
+   };
+   return this.dataTableTranslations;
+ }
+
   constructor(
     public vehicleService: VehiclesService,
     public driverService: DriversService,
@@ -127,7 +90,8 @@ export class FleetAssignmentsComponent implements OnInit {
     public scheduleService: ServiceshedulesService,
     public assignmentService: AssignmentsService,
     public translate: TranslateService,
-    public toaster: ToastrService
+    public toaster: ToastrService,
+    private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.assigments');
     this.getDriverList();
@@ -135,7 +99,11 @@ export class FleetAssignmentsComponent implements OnInit {
     this.getVehicleList();
     this.getList();
   }
-
+  getTitle()
+  {
+    this.title = this.translate.instant('domain.assignments');
+    return this.title;
+  }
   ngOnInit() {
     /*     if('geolocation' in navigator) {
       console.log('geolocation is available');
@@ -175,7 +143,7 @@ export class FleetAssignmentsComponent implements OnInit {
   }
 
   getList() {
-    this.isLoading = true;
+
     this.assignmentService
       .getData()
       .toPromise()
@@ -206,7 +174,7 @@ export class FleetAssignmentsComponent implements OnInit {
               await promise.then(value => {
                 this.person = value;
               });
-              
+
               this.assignmentList[i].driverDescription = this.person.names + ' ' + this.person.lastNames
  */
 
@@ -291,20 +259,26 @@ export class FleetAssignmentsComponent implements OnInit {
       });
   }
 
+  confirmDelete(selected) {
+
+    const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
+      data: {
+        title: this.translate.instant('record_actions.deactivate'),
+      //ODEM Cambiar la propiedad de select
+        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.vehicleDescription + ' - ' + selected.driverDescription +   ' ?',
+        button1Text: this.translate.instant('buttons.yes').toUpperCase(),
+        button2Text: this.translate.instant('buttons.no').toUpperCase(),
+      },
+    });
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result == true) this.delete(selected);
+    });
+  }
+
   changeState(state: string) {
     this.currentState = state;
     if (state == 'RETRIEVE') this.getList();
   }
 
-  changeSelect(e: any) {
-    console.log(e);
-  }
-
-  changeSort(e: any) {
-    console.log(e);
-  }
-
-  enableRowExpandable() {
-    this.columns[0].showExpand = this.expandable;
-  }
 }

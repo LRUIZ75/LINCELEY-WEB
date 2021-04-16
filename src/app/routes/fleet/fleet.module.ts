@@ -9,7 +9,7 @@ import { AdddriverComponent } from './drivers/adddriver/adddriver.component';
 import { AddvehicleComponent } from './vehicles/addvehicle/addvehicle.component';
 import { AddservscheduleComponent } from './serviceschedules/addservschedule/addservschedule.component';
 import { AddassignmentComponent } from './assignments/addassignment/addassignment.component';
-
+import { DataTableModule } from 'ornamentum';
 
 const COMPONENTS = [FleetDriversComponent, FleetVehiclesComponent, FleetServiceschedulesComponent, FleetAssignmentsComponent];
 const COMPONENTS_DYNAMIC = [];
@@ -17,7 +17,8 @@ const COMPONENTS_DYNAMIC = [];
 @NgModule({
   imports: [
     SharedModule,
-    FleetRoutingModule
+    FleetRoutingModule,
+    DataTableModule.forRoot()
   ],
   declarations: [
     ...COMPONENTS,
