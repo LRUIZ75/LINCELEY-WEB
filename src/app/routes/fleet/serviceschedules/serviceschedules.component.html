@@ -22,38 +22,135 @@
     </div>
   </mat-toolbar>
 
-  <mat-card-content>
-    <!-- Inicia listado de departamentos' -->
-    <mtx-grid
-      [data]="scheduleList"
-      [columns]="columns"
-      [loading]="isLoading"
-      [multiSelectable]="multiSelectable"
-      [rowSelectable]="rowSelectable"
-      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-      [rowHover]="rowHover"
-      [rowStriped]="rowStriped"
-      [showToolbar]="showToolbar"
-      [toolbarTitle]="title"
-      [columnHideable]="columnHideable"
-      [columnMovable]="columnMovable"
-      [pageOnFront]="showPaginator"
-      [showPaginator]="showPaginator"
-      [pageSizeOptions]="[5, 10, 50, 100]"
-      [pageIndex]="0"
-      [pageSize]="10"
-      (sortChange)="changeSort($event)"
-      (selectionChange)="changeSelect($event)"
-      *ngIf="currentState == 'RETRIEVE'"
-    >
-    </mtx-grid>
-  </mat-card-content>
+  <ng-data-table
+  [id]="'serviceschedule-list'"
+  [title]="getTitle()"
+  [items]="scheduleList"
+
+  [indexColumnTitle]="'#'"
+  [indexColumnWidth]="30"
+
+  [showIndexColumn]="true"
+  [showHeader]="false"
+  [showRowSelectCheckbox]="false"
+  [showSubstituteRows]="false"
+  [showColumnSelector]="false"
+  [showRowSelectAllCheckbox]="true"
+
+  [pageable]="true"
+  [rowSelectable]="false"
+  [selectOnRowClick]="true"
+  [persistTableState]="true"
+  [expandableRows]="false"
+  [showLoadingSpinner]="true"
+  [selectMode]="'single'"
+  [DataTableStorageMode] ="local"
+  [persistTableState] = "true"
+  [translations]="getDataTableTranslations()"
+  [minContentWidth]="800"
+>
+  <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+
+  <ng-data-table-column
+    [field]="'vehicleDescription'"
+    [title]="translate.instant('domain.vehicle').toUpperCase()"
+
+    [filterable]="true"
+    [showDropdownFilter]="false"
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+    [sortable]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'serviceStatusName'"
+    [title]="translate.instant('domain.servicestatus').toUpperCase()"
+
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'startDate'"
+    [title]="translate.instant('domain.startschedule').toUpperCase()"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'term'"
+    [title]="translate.instant('domain.term').toUpperCase()"
+
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+
+  <ng-data-table-column
+    [field]="'repeatEvery'"
+    [title]="translate.instant('domain.repeatevery').toUpperCase()"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+
+  </ng-data-table-column>
+
+
+  <ng-data-table-column
+    [field]="'isActive'"
+    [title]="translate.instant('domain.isActive').toUpperCase()"
+    [width]="120"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <mat-slide-toggle color="primary" [checked]="row.item.isActive"
+        [disabled]="true"
+        > </mat-slide-toggle>
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-data-table-column [width]="100">
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <button mat-icon-button color= "accent" (click)="edit(row.item)"
+        matTooltip="{{ 'record_actions.edit' | translate }}">
+          <mat-icon>edit</mat-icon>
+
+        </button>
+        <button mat-icon-button color="warn" (click)="confirmDelete(row.item)"
+        matTooltip="{{ 'record_actions.deactivate' | translate }}">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-template #ngDataTableNoRecords>
+    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+  </ng-template>
+  </ng-data-table>
+
+
 </mat-card>
-
-<!-- <ng-template #expansionTpl let-row>
-  {{row.name}}
-</ng-template> -->
-
-<!-- <button mat-stroked-button (click)="updateCell()">Update Cell</button>
-<button mat-stroked-button (click)="updateList()">Update List</button>
- -->

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 //Import services
 import {
@@ -15,6 +16,8 @@ import {
   ServiceshedulesService,
 } from 'app/services';
 
+import { DataTableTranslations } from 'ornamentum';
+
 @Component({
   selector: 'app-fleet-serviceschedules',
   templateUrl: './serviceschedules.component.html',
@@ -22,81 +25,6 @@ import {
   providers: [CompaniesService, VehiclesService, ServiceshedulesService],
 })
 export class FleetServiceschedulesComponent implements OnInit {
-  columns: MtxGridColumn[] = [
-    {
-      header: this.translate.stream('Id'),
-      field: '_id',
-      hide: true,
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('domain.vehicle'),
-      field: 'vehicle',
-      sortable: true,
-      disabled: true,
-      hide: true,
-    },
-    { header: this.translate.stream('domain.vehicle'), field: 'vehicleDescription', sortable: true },
-    {
-      header: this.translate.stream('domain.servicestatus'),
-      field: 'serviceStatus',
-      sortable: true,
-      hide: true,
-    },
-    {
-      header: this.translate.stream('domain.servicestatus'),
-      field: 'serviceStatusName',
-      sortable: true,
-    },
-    { header: this.translate.stream('domain.startschedule'), field: 'startDate' },
-    { header: this.translate.stream('domain.term'), field: 'term' },
-    { header: this.translate.stream('domain.repeatevery'), field: 'repeatEvery' },
-    {
-      header: this.translate.stream('domain.isActive'),
-      field: 'isActive',
-      sortable: true,
-      type: 'boolean',
-    },
-    {
-      header: this.translate.stream('table_kitchen_sink.operation'),
-      field: 'operation',
-      width: '120px',
-      pinned: 'right',
-      right: '0px',
-      type: 'button',
-      buttons: [
-        {
-          type: 'icon',
-          icon: 'edit',
-          tooltip: this.translate.stream('table_kitchen_sink.edit'),
-          click: record => this.edit(record),
-        },
-        {
-          color: 'warn',
-          icon: 'delete',
-          text: this.translate.stream('table_kitchen_sink.delete'),
-          tooltip: this.translate.stream('table_kitchen_sink.delete'),
-          pop: true,
-          popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
-          popCloseText: this.translate.stream('table_kitchen_sink.close'),
-          popOkText: this.translate.stream('table_kitchen_sink.ok'),
-          click: record => this.delete(record),
-        },
-      ],
-    },
-  ];
-  isLoading = true;
-
-  multiSelectable = false;
-  rowSelectable = true;
-  hideRowSelectionCheckbox = false;
-  showToolbar = false;
-  columnHideable = true;
-  columnMovable = true;
-  rowHover = true;
-  rowStriped = true;
-  showPaginator = true;
-  expandable = false;
 
   /* Variables locales */
 
@@ -112,17 +40,59 @@ export class FleetServiceschedulesComponent implements OnInit {
   dragging = false;
   opened = false;
 
+  public dataTableTranslations: DataTableTranslations = {
+    pagination: {
+      limit: this.translate.instant('pagination.limit'),
+      rangeKey: this.translate.instant('pagination.records'),
+      rangeSeparator: this.translate.instant('pagination.of'),
+      nextTooltip: this.translate.instant('pagination.next'),
+      previousTooltip: this.translate.instant('pagination.previous'),
+      lastTooltip: this.translate.instant('pagination.last'),
+      firstTooltip: this.translate.instant('pagination.first'),
+    },
+  };
+
+  getDataTableTranslations(): DataTableTranslations {
+    this.dataTableTranslations = {
+     pagination: {
+       limit: this.translate.instant('pagination.limit'),
+       rangeKey: this.translate.instant('pagination.records'),
+       rangeSeparator: this.translate.instant('pagination.of'),
+       nextTooltip: this.translate.instant('pagination.next'),
+       previousTooltip: this.translate.instant('pagination.previous'),
+       lastTooltip: this.translate.instant('pagination.last'),
+       firstTooltip: this.translate.instant('pagination.first'),
+     },
+     noDataMessage: this.translate.instant('notifications.nodata'),
+     dropdownFilter: {
+       filterPlaceholder: this.translate.instant('record_actions.search'),
+       selectPlaceholder: this.translate.instant('record_actions.search')
+     },
+     columnSelector: { header: ">>"}
+
+
+   };
+   return this.dataTableTranslations;
+ }
+
   constructor(
     public companyService: CompaniesService,
     public vehicleService: VehiclesService,
     public scheduleService: ServiceshedulesService,
     public translate: TranslateService,
-    public toaster: ToastrService
+    public toaster: ToastrService,
+    private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.serviceschedules');
     this.getCompanyList();
     this.getVehicleList();
     this.getList();
+  }
+
+  getTitle()
+  {
+    this.title = this.translate.instant('domain.serviceschedule');
+    return this.title;
   }
 
   ngOnInit() {
@@ -152,9 +122,11 @@ export class FleetServiceschedulesComponent implements OnInit {
         this.vehicleList = resp.objects;
       });
   }
-
+  getDateISOString(date: Date): string {
+    return date.toISOString().substring(0, 10);
+  }
   getList() {
-    this.isLoading = true;
+
     this.scheduleService.getData().subscribe(
       res => {
         if (res) {
@@ -166,8 +138,10 @@ export class FleetServiceschedulesComponent implements OnInit {
 
           for (var i = 0; i < this.scheduleList.length; i++) {
             var veh = this.vehicleList.find(ve => ve._id == this.scheduleList[i].vehicle);
-            this.scheduleList[i].vehicleDescription = !veh ? '' : veh.plateNumber + ' - ' 
+            this.scheduleList[i].vehicleDescription = !veh ? '' : veh.plateNumber + ' - '
             +  veh.vehicleType + ': ' +veh.brand + ' ' + veh.model + ' ' + veh.year ;
+
+            this.scheduleList[i].startDate = this.scheduleList[i].startDate.substring(0, 10);
             //traducir inemdiatamente los valores de estado de servicio
             this.scheduleList[i].serviceStatusName = this.translate.instant(
               this.scheduleList[i].serviceStatus
@@ -225,20 +199,27 @@ export class FleetServiceschedulesComponent implements OnInit {
       });
   }
 
+  confirmDelete(selected) {
+
+    const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
+      data: {
+        title: this.translate.instant('record_actions.deactivate'),
+      //ODEM Cambiar la propiedad de select
+        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.vehicleDescription + ' ?',
+        button1Text: this.translate.instant('buttons.yes').toUpperCase(),
+        button2Text: this.translate.instant('buttons.no').toUpperCase(),
+      },
+    });
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result == true) this.delete(selected);
+    });
+  }
+
   changeState(state: string) {
     this.currentState = state;
     if (state == 'RETRIEVE') this.getList();
   }
 
-  changeSelect(e: any) {
-    console.log(e);
-  }
 
-  changeSort(e: any) {
-    console.log(e);
-  }
-
-  enableRowExpandable() {
-    this.columns[0].showExpand = this.expandable;
-  }
 }

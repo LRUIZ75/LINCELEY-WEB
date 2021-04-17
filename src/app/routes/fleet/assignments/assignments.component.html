@@ -22,38 +22,88 @@
     </div>
   </mat-toolbar>
 
-  <mat-card-content>
-    <!-- Inicia listado de asignaciones' -->
-    <mtx-grid
-      [data]="assignmentList"
-      [columns]="columns"
-      [loading]="isLoading"
-      [multiSelectable]="multiSelectable"
-      [rowSelectable]="rowSelectable"
-      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-      [rowHover]="rowHover"
-      [rowStriped]="rowStriped"
-      [showToolbar]="showToolbar"
-      [toolbarTitle]="title"
-      [columnHideable]="columnHideable"
-      [columnMovable]="columnMovable"
-      [pageOnFront]="showPaginator"
-      [showPaginator]="showPaginator"
-      [pageSizeOptions]="[5, 10, 50, 100]"
-      [pageIndex]="0"
-      [pageSize]="10"
-      (sortChange)="changeSort($event)"
-      (selectionChange)="changeSelect($event)"
-      *ngIf="currentState == 'RETRIEVE'"
-    >
-    </mtx-grid>
-  </mat-card-content>
+  <ng-data-table
+  [id]="'assignments-list'"
+  [title]="getTitle()"
+  [items]="assignmentList"
+
+  [indexColumnTitle]="'#'"
+  [indexColumnWidth]="30"
+
+  [showIndexColumn]="true"
+  [showHeader]="false"
+  [showRowSelectCheckbox]="false"
+  [showSubstituteRows]="false"
+  [showColumnSelector]="false"
+  [showRowSelectAllCheckbox]="true"
+
+  [pageable]="true"
+  [rowSelectable]="false"
+  [selectOnRowClick]="true"
+  [persistTableState]="true"
+  [expandableRows]="false"
+  [showLoadingSpinner]="true"
+  [selectMode]="'single'"
+  [DataTableStorageMode] ="local"
+  [persistTableState] = "true"
+  [translations]="getDataTableTranslations()"
+  [minContentWidth]="800"
+>
+  <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'assignmentDate'"
+    [title]="translate.instant('domain.assignmentdate').toUpperCase()"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'vehicleDescription'"
+    [title]="translate.instant('domain.vehicle').toUpperCase()"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'driverDescription'"
+    [title]="translate.instant('domain.driver').toUpperCase()"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+  </ng-data-table-column>
+
+
+  <ng-data-table-column [width]="100">
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <button mat-icon-button color= "accent" (click)="edit(row.item)"
+        matTooltip="{{ 'record_actions.edit' | translate }}">
+          <mat-icon>edit</mat-icon>
+
+        </button>
+        <button mat-icon-button color="warn" (click)="confirmDelete(row.item)"
+        matTooltip="{{ 'record_actions.deactivate' | translate }}">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-template #ngDataTableNoRecords>
+    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+  </ng-template>
+  </ng-data-table>
+
+
 </mat-card>
-
-<!-- <ng-template #expansionTpl let-row>
-  {{row.name}}
-</ng-template> -->
-
-<!-- <button mat-stroked-button (click)="updateCell()">Update Cell</button>
-<button mat-stroked-button (click)="updateList()">Update List</button>
- -->

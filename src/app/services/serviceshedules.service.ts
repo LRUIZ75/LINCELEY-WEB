@@ -13,6 +13,7 @@ export enum ServiceStatus {
 }
 
 export interface ServiceSchedule {
+  _id: string,
   vehicle: string,
   serviceStatus: ServiceStatus | string,
   startSchedule: string,
