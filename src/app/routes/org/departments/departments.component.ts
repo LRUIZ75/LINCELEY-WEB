@@ -26,7 +26,6 @@ export class OrgDepartmentsComponent implements OnInit {
   public selected: Department;
 
   public departmentList: any[] = [];
-  public companyList: any[] = [];
 
   public title: string;
   dragging = false;
@@ -34,7 +33,6 @@ export class OrgDepartmentsComponent implements OnInit {
 
   @Input() companyFilter: string;
   constructor(
-    public companyService: CompaniesService,
     public departmentService: DepartmentsService,
     public translate: TranslateService,
     public toaster: ToastrService,
@@ -42,7 +40,7 @@ export class OrgDepartmentsComponent implements OnInit {
     private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.departments');
-    this.getCompanyList();
+/*     this.getCompanyList(); */
     this.getList();
   }
 
@@ -71,15 +69,6 @@ export class OrgDepartmentsComponent implements OnInit {
     return this.dataTableTranslations;
   }
 
-  getCompanyList() {
-    this.companyService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.companyList = resp.objects;
-      });
-  }
-
   getList() {
     this.departmentService.getData().subscribe(
       res => {
@@ -93,10 +82,6 @@ export class OrgDepartmentsComponent implements OnInit {
             this.departmentList = this.departmentList.filter(
               it => it.company == this.companyFilter
             );
-          }
-          for (var i = 0; i < this.departmentList.length; i++) {
-            var comp = this.companyList.find(it => it._id == this.departmentList[i].company);
-            this.departmentList[i].companyName = comp.fullName;
           }
         }
       },
@@ -125,6 +110,7 @@ export class OrgDepartmentsComponent implements OnInit {
 
   edit(selected) {
     this.selected = selected;
+    this.selected.company = selected.company._id; //depopulated
     this.opened = true;
     this.currentState = 'EDIT';
   }

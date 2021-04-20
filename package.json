@@ -39,6 +39,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
+    "ng-dropdown": "^1.0.0",
     "ng-matero": "^11.1.2",
     "ngx-dropzone": "^3.0.0",
     "ngx-progressbar": "^6.1.0",

@@ -11,16 +11,21 @@
       </mat-card-title>
       <mat-card-content>
         <form [formGroup]="employeeFormGroup">
-          <mat-form-field>
-            <mat-select
-              placeholder="{{'record_actions.filterby' | translate | titlecase }} {{ 'domain.company' | translate | titlecase }}"
-              (selectionChange)="onSelectCompany($event)"
-            >
-              <mat-option *ngFor="let item of companyList" [value]="item._id">
-                {{ item.fullName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+  
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-select placeholder="" (selectionChange)="onSelectCompany($event)">
+                <mat-option *ngFor="let item of companyList" [value]="item._id">
+                  {{ item.fullName }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix>search</mat-icon>
+              <mat-hint
+                >{{ 'record_actions.filterby' | translate | titlecase }}
+                {{ 'domain.company' | translate | titlecase }}</mat-hint
+              >
+            </mat-form-field>
+          </div>
 
           <mat-form-field>
             <input
@@ -37,13 +42,26 @@
               </mat-error> -->
           </mat-form-field>
 
-
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'domain.person' | translate | titlecase }}"
+              formControlName="person"
+              required
+            >
+              <mat-option *ngFor="let item of peopleList" [value]="item._id">
+                {{ item.names }} {{ item.lastNames }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>person_outline</mat-icon>
+            <mat-error *ngIf="employeeFormGroup.get('person').hasError('required')">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field>
             <mat-select
               placeholder="{{ 'domain.department' | translate | titlecase }}"
               formControlName="department"
-              [(ngModel)]="selectedDepartment"
               required
             >
               <mat-option *ngFor="let item of departmentList" [value]="item._id">
@@ -60,7 +78,6 @@
             <mat-select
               placeholder="{{ 'domain.jobposition' | translate | titlecase }}"
               formControlName="jobposition"
-              [(ngModel)]="selectedJobPosition"
               required
             >
               <mat-option *ngFor="let item of jobpositionList" [value]="item._id">
@@ -73,22 +90,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-select
-              placeholder="{{ 'domain.person' | translate | titlecase }}"
-              formControlName="person"
-              [(ngModel)]="selectedPerson"
-              required
-            >
-              <mat-option *ngFor="let item of peopleList" [value]="item._id">
-                {{ item.names }} {{ item.lastNames }}
-              </mat-option>
-            </mat-select>
 
-            <mat-error *ngIf="employeeFormGroup.get('person').hasError('required')">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
 
           <div>
             <mat-checkbox formControlName="isActive">{{

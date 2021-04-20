@@ -8,7 +8,7 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 import { DataTableTranslations } from 'ornamentum';
 
 //Import services
-import { Company, CompaniesService, DistributionCenter, DistributionCentersService } from 'app/services';
+import { CompaniesService, DistributionCenter, DistributionCentersService } from 'app/services';
 
 @Component({
   selector: 'app-org-dcs',
@@ -17,16 +17,13 @@ import { Company, CompaniesService, DistributionCenter, DistributionCentersServi
   providers: [DistributionCentersService],
 })
 export class OrgDcsComponent implements OnInit {
-
   /* Variables locales */
   public dataTableTranslations: DataTableTranslations;
 
   public currentState: string = 'RETRIEVE';
-  public selected:  DistributionCenter;
+  public selected: DistributionCenter;
 
-  public companyList: any[] = [];
   public dcList: any[] = [];
-
 
   public title: string;
   dragging = false;
@@ -41,22 +38,20 @@ export class OrgDcsComponent implements OnInit {
     public dialog: MtxDialog,
     private confirmDialog: MatDialog
   ) {
-    this.title = this.translate.instant('domain.distritutioncenters');
-    this.getCompanyList();
+    this.title = this.translate.instant('domain.distributioncenter');
+
     this.getList();
   }
 
   ngOnInit() {
-    
-    if('geolocation' in navigator) {
+    if ('geolocation' in navigator) {
       console.log('geolocation is available');
     } else {
       console.log('geolocation is NOT available');
     }
-    
+
     this.currentState = 'RETRIEVE';
   }
-
 
   getDataTableTranslations(): DataTableTranslations {
     this.dataTableTranslations = {
@@ -79,37 +74,22 @@ export class OrgDcsComponent implements OnInit {
     return this.dataTableTranslations;
   }
 
-
-  getCompanyList() {
-    this.companyService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.companyList = resp.objects;
-      });
-  }
-
   getList() {
     this.distributioncenterService.getData().subscribe(
       res => {
         if (res) {
-            var jsonResponse = JSON.stringify(res);
-            var response = JSON.parse(jsonResponse);
-            if (response.status != 'ok') return;
-            this.dcList = response.objects;
-            this.dcList = this.dcList.filter(it => it.isActive == true);
+          var jsonResponse = JSON.stringify(res);
+          var response = JSON.parse(jsonResponse);
+          if (response.status != 'ok') return;
+          this.dcList = response.objects;
+          this.dcList = this.dcList.filter(it => it.isActive == true);
 
-           if(this.companyFilter)
-            this.dcList = this.dcList.filter(it => it.company == this.companyFilter);
-           
-            for (var i = 0; i < this.dcList.length; i++) {
-              var comp = this.companyList.find(it => it._id == this.dcList[i].company);
-              this.dcList[i].companyName = comp.fullName;
-            }
+          if (this.companyFilter)
+            this.dcList = this.dcList.filter(it => it.company._id == this.companyFilter);
         }
       },
       err => {
-        if(err.substring(0,3)!= '404'){
+        if (err.substring(0, 3) != '404') {
           var msg = this.translate.instant('record_actions.error_occurred');
           this.toaster.error(err);
         }
@@ -131,12 +111,14 @@ export class OrgDcsComponent implements OnInit {
     this.currentState = 'ADD';
   }
 
-  edit(selected){
+  edit(selected) {
     this.selected = selected;
+    //depopulate
+    this.selected.company = selected.company._id;
+
     this.opened = true;
     this.currentState = 'EDIT';
   }
-
 
   confirmDelete(selected) {
     //Ejemplo del confirm de MTX= > NO USAR ESTO!!!
@@ -162,34 +144,29 @@ export class OrgDcsComponent implements OnInit {
     });
   }
 
-  delete(selected){
+  delete(selected) {
     this.selected = selected;
 
-    this.distributioncenterService.deactivateData(selected._id).
-    toPromise()
-    .then( deleted => {
-      if(deleted){
-        this.toaster.success("Operación exitosa!");
-        this.getList();
-      }
-      else
-        {
-          this.toaster.error("Operación fallida!");
+    this.distributioncenterService
+      .deactivateData(selected._id)
+      .toPromise()
+      .then(deleted => {
+        if (deleted) {
+          this.toaster.success('Operación exitosa!');
+          this.getList();
+        } else {
+          this.toaster.error('Operación fallida!');
           return;
         }
-    }).
-    catch(err => {
-      this.toaster.error(err);
-      return;
-    })
-
-    
+      })
+      .catch(err => {
+        this.toaster.error(err);
+        return;
+      });
   }
 
-  changeState(state: string){
+  changeState(state: string) {
     this.currentState = state;
-    if(state=='RETRIEVE')
-      this.getList();
+    if (state == 'RETRIEVE') this.getList();
   }
-
 }

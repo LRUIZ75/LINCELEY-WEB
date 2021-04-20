@@ -9,27 +9,16 @@ import { DataTableTranslations } from 'ornamentum';
 
 //Import services
 import {
-  CompaniesService,
-  Department,
-  DepartmentsService,
-  JobPositionsService,
+
   Employee,
-  EmployeesService,
-  Person,
-  PeopleService
+  EmployeesService
 } from 'app/services';
 
 @Component({
   selector: 'app-org-employees',
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.scss'],
-  providers: [
-    JobPositionsService, 
-    CompaniesService,
-    DepartmentsService, 
-    EmployeesService,
-    PeopleService,
-  ],
+  providers: [ EmployeesService],
 
 })
 export class OrgEmployeesComponent implements OnInit {
@@ -59,20 +48,12 @@ export class OrgEmployeesComponent implements OnInit {
   @Input() companyFilter: string = '';
   constructor(
     public employeeService: EmployeesService,
-    public companyService: CompaniesService,
-    public departmentService: DepartmentsService,
-    public jobpositionService: JobPositionsService,
-    public peopleService: PeopleService,
     public translate: TranslateService,
     public toaster: ToastrService,
     public dialog: MtxDialog,
     private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.departments');
-    this.getPeopleList();
-    this.getDepartmentList();
-    this.getJobpositionList();
-    this.getCompanyList();
 
     this.getList();
   }
@@ -102,44 +83,7 @@ export class OrgEmployeesComponent implements OnInit {
     return this.dataTableTranslations;
   }
 
-  getPeopleList() {
-    this.peopleService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.peopleList = resp.objects;
-      });
-  }
 
-  getCompanyList() {
-    this.companyService
-    .getData()
-    .toPromise()
-    .then(resp => {
-      this.companyList = resp.objects;
-      this.companyList = this.companyList.filter(company => company.isActive)
-    });
-  }
-
-  getDepartmentList() {
-    this.departmentService
-    .getData()
-    .toPromise()
-    .then(resp => {
-      this.departmentList = resp.objects;
-      this.departmentList = this.departmentList.filter(dep => dep.isActive);
-    });
-  }
-
-  getJobpositionList() {
-    this.jobpositionService
-    .getData()
-    .toPromise()
-    .then(resp => {
-      this.jobpositionList = resp.objects;
-      this.jobpositionList = this.jobpositionList.filter(jp => jp.isActive);
-    });
-  }
 
   getList() {
     this.employeeService.getData().subscribe(
@@ -152,26 +96,10 @@ export class OrgEmployeesComponent implements OnInit {
           this.employeeList = this.employeeList.filter(it => it.isActive == true);
           if (this.companyFilter) {
             this.employeeList = this.employeeList.filter(
-              it => it.isActive == true && it.company == this.companyFilter
+              it => it.isActive == true && it.company._id == this.companyFilter
             );
           }
-
-          for (var i = 0; i < this.employeeList.length; i++) {
-
-
-            //departments's names
-            var dept = this.departmentList.find(it => it._id == this.employeeList[i].department);
-            this.employeeList[i].departmentName = dept == undefined ?"": dept.name;
-            //user's names
-            var people = <Person> this.peopleList.find(it => it._id == this.employeeList[i].person);
-            this.employeeList[i].personName = people.names + " " + people.lastNames; //using virtual fullName
-            //job's positions names
-            var jp = this.jobpositionList.find(it => it._id == this.employeeList[i].jobposition);
-            this.employeeList[i].jobPositionName = jp==undefined?"":jp.name;
-          }
-
-
-
+          this.employeeList.forEach(e =>e.personName = e.person.names + " "  + e.person.lastNames);
         }
       },
       err => {
@@ -199,6 +127,13 @@ export class OrgEmployeesComponent implements OnInit {
 
   edit(selected) {
     this.selected = selected;
+
+    //depopulate
+
+    this.selected.department = selected.department._id;
+    this.selected.jobposition = selected.jobposition._id;
+    this.selected.person = selected.person._id;
+
     this.opened = true;
     this.currentState = 'EDIT';
   }

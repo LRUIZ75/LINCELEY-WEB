@@ -63,7 +63,7 @@
     >
     </ng-data-table-column>
     <ng-data-table-column
-      [field]="'companyName'"
+      [field]="'company.fullName'"
       [title]="translate.instant('domain.company').toUpperCase()"
 
       [sortable]="true"
@@ -96,7 +96,7 @@
   </ng-data-table-column>
     <ng-data-table-column
       [field]="'isActive'"
-      [title]="translate.instant('domain.isActive').toUpperCase()"
+      [title]="this.title.toUpperCase()"
       [width]="150"
       
       [sortable]="true"

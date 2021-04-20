@@ -22,9 +22,12 @@
     </div>
   </mat-toolbar>
 
+
+  
   <ng-data-table
   [id]="'driver-list'"
   [title]="getTitle()"
+
   [items]="driverList"
 
   [indexColumnTitle]="'#'"
@@ -64,7 +67,7 @@
   >
   </ng-data-table-column>
   <ng-data-table-column
-    [field]="'companyName'"
+    [field]="'company.fullName'"
     [title]="translate.instant('domain.company').toUpperCase()"
 
     [filterPlaceholder]="translate.instant('record_actions.search')"

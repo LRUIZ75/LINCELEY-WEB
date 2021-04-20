@@ -45,8 +45,8 @@ export class AdddcComponent implements OnInit {
       company: ['', [Validators.required]],
       isActive: [true, [Validators.required]],
       location: this.formBuilder.group({
-        lat: [1, [Validators.required]],
-        lng: [2, [Validators.required]],
+        lat: [0, [Validators.required]],
+        lng: [0, [Validators.required]],
       }),
     });
 

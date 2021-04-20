@@ -10,10 +10,6 @@ import { DataTableTranslations } from 'ornamentum';
 //Import services
 import {
   JobPositionsService,
-  CompaniesService,
-  Department,
-  DepartmentsService,
-  RolesService,
   JobPosition
 } from 'app/services';
 
@@ -21,7 +17,7 @@ import {
   selector: 'app-org-jobpositions',
   templateUrl: './jobpositions.component.html',
   styleUrls: ['./jobpositions.component.scss'],
-  providers: [JobPositionsService, DepartmentsService, CompaniesService, RolesService],
+  providers: [JobPositionsService],
 })
 export class OrgJobpositionsComponent implements OnInit {
 
@@ -47,19 +43,15 @@ export class OrgJobpositionsComponent implements OnInit {
 
   @Input() companyFilter: string = '';
   constructor(
-    public companyService: CompaniesService,
-    public departmentService: DepartmentsService,
+
     public jobpositionService: JobPositionsService,
-    public roleService: RolesService,
+ 
     public translate: TranslateService,
     public toaster: ToastrService,
     public dialog: MtxDialog,
     private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.departments');
-    this.getCompanyList();
-    this.getDepartmentList();
-    this.getRoleList();
 
     this.getList();
   }
@@ -89,33 +81,7 @@ export class OrgJobpositionsComponent implements OnInit {
     return this.dataTableTranslations;
   }
 
-  getCompanyList() {
-    this.companyService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.companyList = resp.objects;
-      });
-  }
-
-  getDepartmentList() {
-    this.departmentService
-    .getData()
-    .toPromise()
-    .then(resp => {
-      this.departmentList = resp.objects;
-    });
-  }
-
-  getRoleList() {
-    this.roleService
-    .getData()
-    .toPromise()
-    .then(resp => {
-      this.roleList = resp.objects;
-    });
-  }
-
+ 
   getList() {
     this.jobpositionService.getData().subscribe(
       res => {
@@ -127,20 +93,9 @@ export class OrgJobpositionsComponent implements OnInit {
           this.jobpositionList = this.jobpositionList.filter(it => it.isActive == true);
           if (this.companyFilter) {
             this.jobpositionList = this.jobpositionList.filter(
-              it => it.isActive == true && it.company == this.companyFilter
+              it => it.isActive == true && it.company._id == this.companyFilter
             );
           }
-
-          for (var i = 0; i < this.jobpositionList.length; i++) {
-            var comp = this.companyList.find(it => it._id == this.jobpositionList[i].company);
-            this.jobpositionList[i].companyName = comp.fullName;
-
-            var role = this.roleList.find(it => it._id == this.jobpositionList[i].defaultRole);
-            this.jobpositionList[i].roleName = role.name;
-          }
-
-
-
         }
       },
       err => {
@@ -168,6 +123,9 @@ export class OrgJobpositionsComponent implements OnInit {
 
   edit(selected) {
     this.selected = selected;
+    //depopulate
+    this.selected.company = selected.company._id;
+    this.selected.defaultRole = selected.defaultRole._id;
     this.opened = true;
     this.currentState = 'EDIT';
   }

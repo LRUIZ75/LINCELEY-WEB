@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DropdownModule } from 'ornamentum';
+
 import {
   JobPosition,
   JobPositionsService,
@@ -33,11 +35,9 @@ export class AddemployeeComponent implements OnInit {
   public companies: any[] = [];
   public selectedCompany: any;
 
-
   public departmentList: any[] = [];
   public departments: any[] = [];
   public selectedDepartment: any;
-
 
   public jobpositionList: any[] = [];
   public jobpositions: any[] = [];
@@ -46,7 +46,6 @@ export class AddemployeeComponent implements OnInit {
   public peopleList: any[] = [];
   public people: any[] = [];
   public selectedPerson: any;
- 
 
   @Output() changeStateEvent = new EventEmitter<string>();
 
@@ -68,7 +67,7 @@ export class AddemployeeComponent implements OnInit {
   ngOnInit(): void {
     this.employeeFormGroup = this.formBuilder.group({
       employeeId: [''],
-/*       company: ['', [Validators.required]], */
+      /*       company: ['', [Validators.required]], */
       department: ['', [Validators.required]],
       jobposition: ['', [Validators.required]],
       person: ['', [Validators.required]],
@@ -76,25 +75,18 @@ export class AddemployeeComponent implements OnInit {
     });
 
     if (this.formMode == 'EDIT' && this.initialData) {
-      var dataEditable = <Employee> this.initialData;
-    
+      var dataEditable = <Employee>this.initialData;
+
       this.employeeFormGroup.patchValue(dataEditable);
       //TODO: Actualizar también el valor actual de Company a partir de deparment
-      this.selectedDepartment = dataEditable.department;
+      /*       this.selectedDepartment = dataEditable.department;
       this.selectedJobPosition = dataEditable.jobposition;
-      this.selectedPerson = dataEditable.person;
-      
-
+      this.selectedPerson = dataEditable.person; */
     }
 
-    //build Company List for Selecte
     this.getCompanyList();
-    //build Department List for Select
     this.getDepartmentList();
-
-    //build Job Positions List for Selecte
     this.getJobPositionList();
-
     this.getPeopleList();
   }
 
@@ -139,13 +131,13 @@ export class AddemployeeComponent implements OnInit {
           default:
             this.departmentList = this.departments;
         }
-        if (filterById) this.departmentList = this.departmentList.filter(dep => dep.company == filterById);
+        if (filterById)
+          this.departmentList = this.departmentList.filter(dep => dep.company._id == filterById);
       })
       .catch(err => {
         this.toaster.error(err.message);
       });
   }
-
 
   getJobPositionList(filterById: string = '') {
     this.jobpositionService
@@ -164,13 +156,13 @@ export class AddemployeeComponent implements OnInit {
           default:
             this.jobpositionList = this.jobpositions;
         }
-        if (filterById) this.jobpositionList = this.jobpositionList.filter(jp => jp.company == filterById);
+        if (filterById)
+          this.jobpositionList = this.jobpositionList.filter(jp => jp.company._id == filterById);
       })
       .catch(err => {
         this.toaster.error(err.message);
       });
   }
-
 
   getPeopleList(filterById: string = '') {
     this.peopleService
@@ -184,7 +176,7 @@ export class AddemployeeComponent implements OnInit {
         this.people = response.objects;
         switch (this.formMode) {
           case 'ADD':
-            this.peopleList = this.people.filter(person => (!person.isEmployee));
+            this.peopleList = this.people.filter(person => !person.isEmployee);
             break;
           default:
             this.peopleList = this.people;
@@ -194,11 +186,6 @@ export class AddemployeeComponent implements OnInit {
       .catch(err => {
         this.toaster.error(err.message);
       });
-  }
-
-
-  get company() {
-    return this.employeeFormGroup.get('company');
   }
 
   /**
@@ -228,8 +215,8 @@ export class AddemployeeComponent implements OnInit {
       this.toaster.warning('El formulario tiene erorres!');
       return;
     }
-    
-    if(!this.selectedCompany && this.formMode=='ADD'){
+
+    if (!this.selectedCompany && this.formMode == 'ADD') {
       this.toaster.warning('El formulario puede tener erorres: filtre primero por compañía!');
       return;
     }
@@ -281,19 +268,17 @@ export class AddemployeeComponent implements OnInit {
   }
 
   onSelectCompany(selectedCompany) {
-    if(!selectedCompany || !selectedCompany.value){
+    if (!selectedCompany || !selectedCompany.value) {
       this.selectedCompany = undefined;
-      return; 
+      return;
     }
-      
 
     this.selectedCompany = selectedCompany.value;
 
-    this.selectedDepartment='';
+    this.selectedDepartment = '';
     this.getDepartmentList(selectedCompany.value);
 
-
-    this.selectedJobPosition='';
+    this.selectedJobPosition = '';
     this.getJobPositionList(selectedCompany.value);
 
     this.selectedPerson = '';
