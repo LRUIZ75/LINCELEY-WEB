@@ -20,6 +20,13 @@ mat-form-field {
   z-index: 1;
 }
 
+.buttons-row {
+
+  align-items: center;
+  justify-content: space-around;
+  margin: 5px;
+}
+
 //REM: Cambiado en base al tema Linceley
 
 $mat-linceley-blue: (
