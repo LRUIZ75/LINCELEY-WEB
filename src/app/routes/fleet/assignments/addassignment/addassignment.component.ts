@@ -2,16 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  ServiceshedulesService,
-  ServiceStatus,
-  ServiceSchedule,
   DriversService,
-  Driver,
-  Person,
-  PeopleService,
   VehiclesService,
-  Vehicle,
-  VehicleType,
   Assignment,
   AssignmentsService,
 } from 'app/services';
@@ -29,29 +21,19 @@ export class AddassignmentComponent implements OnInit {
   assignmentFormGroup: FormGroup;
   assignment: Assignment;
 
-  public driverList: any[] = [];
   public drivers: any[] = [];
-
   public vehicles: any[] = [];
-  public vehicleList: any[] = [];
-  public termList: any[] = [];
-  public serviceStatusList: any[] = [];
-  public startDate: Date;
 
   @Output() changeStateEvent = new EventEmitter<string>();
 
   @Input() formMode = 'ADD';
   @Input() initialData: any = {};
 
-  public personList: any[] = [];
-
   constructor(
     private formBuilder: FormBuilder,
     private assignmentService: AssignmentsService,
-    private scheduleService: ServiceshedulesService,
     private vehicleService: VehiclesService,
     private driverService: DriversService,
-    private peopleService: PeopleService,
     private toaster: ToastrService,
     private translate: TranslateService
   ) {}
@@ -65,46 +47,14 @@ export class AddassignmentComponent implements OnInit {
     });
 
     if (this.formMode == 'EDIT' && this.initialData) {
-      this.assignmentFormGroup.patchValue(this.initialData as ServiceSchedule);
+      this.assignmentFormGroup.patchValue(this.initialData as Assignment);
     }
 
-    this.getPersonList();
-    this.getStatusList();
     this.getDriverList();
     this.getVehicleList();
   }
 
-  getPersonList() {
-    this.peopleService
-      .getData()
-      .toPromise()
-      .then(data => {
-        this.personList = data.objects;
-      });
-  }
 
-  getStatusList() {
-    /* 
-    AVAILABLE = 'AVAILABLE',
-    SERVICING = 'SERVICING', //MANTENIMIENTO
-    ONDUTY = 'ON-DUTY' //DE SERVICIO
-   */
-
-    this.serviceStatusList.push({
-      id: ServiceStatus.AVAILABLE,
-      text: this.translate.instant(ServiceStatus.AVAILABLE),
-    });
-
-    this.serviceStatusList.push({
-      id: ServiceStatus.SERVICING,
-      text: this.translate.instant(ServiceStatus.SERVICING),
-    });
-
-    this.serviceStatusList.push({
-      id: ServiceStatus.ONDUTY,
-      text: this.translate.instant(ServiceStatus.ONDUTY),
-    });
-  }
 
   getDriverList() {
     this.driverService
@@ -124,12 +74,15 @@ export class AddassignmentComponent implements OnInit {
             this.drivers = this.drivers.filter(v => v.isActive);
         }
 
-        for (var i = 0; i < this.drivers.length; i++) {
-          var person = <Person> this.personList.find(p => p._id == this.drivers[i].person);
-          if (person)
-            this.drivers[i].driverDescription =
-              person.names + ' ' + person.lastNames + (this.drivers[i].isExternal == true?" (EXT)": " (EMP)");
-        }
+        this.drivers.forEach(d => {
+          d.driverDescription = !d.person
+            ? ''
+            : d.person.names +
+              ' ' +
+              d.person.lastNames +
+              ' ' +
+              (d.isExternal == true ? ' (Ext)' : '(Emp)');
+        });
       })
       .catch(err => {
         this.toaster.error(err.message);
@@ -153,18 +106,19 @@ export class AddassignmentComponent implements OnInit {
           default:
             this.vehicles = this.vehicles.filter(v => v.isActive);
         }
-        for (var i = 0; i < this.vehicles.length; i++) {
-          this.vehicles[i].vehicleDescription =
-            this.vehicles[i].plateNumber +
+        this.vehicles.forEach(v => {
+          v.vehicleDescription =
+            v.plateNumber +
             ' ' +
-            this.translate.instant(this.vehicles[i].vehicleType) +
+            this.translate.instant(v.vehicleType) +
             ' [' +
-            this.vehicles[i].brand +
+            v.brand +
             ' ' +
-            this.vehicles[i].model +
+            v.model +
             ' ' +
-            this.vehicles[i].year + "]";
-        }
+            v.year +
+            ']';
+        });
       })
       .catch(err => {
         this.toaster.error(err.message);
@@ -214,10 +168,10 @@ export class AddassignmentComponent implements OnInit {
 
             this.assignment = <Assignment>resp.updated;
             this.toaster.success('Operación exitosa!');
-            this.driverService.updateData(this.initialData.driver,{"isAvailable": "true"});
-            this.vehicleService.updateData(this.initialData.vehicle,{"isAvailable": "true"});    
-            this.driverService.updateData(this.assignment.driver,{"isAvailable": "false"});
-            this.vehicleService.updateData(this.assignment.vehicle,{"isAvailable": "false"});
+            this.driverService.updateData(this.initialData.driver, { isAvailable: 'true' });
+            this.vehicleService.updateData(this.initialData.vehicle, { isAvailable: 'true' });
+            this.driverService.updateData(this.assignment.driver, { isAvailable: 'false' });
+            this.vehicleService.updateData(this.assignment.vehicle, { isAvailable: 'false' });
             this.changeState('RETRIEVE');
           })
           .catch(err => {
@@ -236,11 +190,15 @@ export class AddassignmentComponent implements OnInit {
             }
 
             this.assignment = <Assignment>resp.created;
-            this.toaster.success('Operación exitosa!');   
-            this.driverService.updateData(this.assignment.driver,{"isAvailable": "false"})
-            .toPromise().then();
-            this.vehicleService.updateData(this.assignment.vehicle,{"isAvailable": "false"})
-            .toPromise().then();
+            this.toaster.success('Operación exitosa!');
+            this.driverService
+              .updateData(this.assignment.driver, { isAvailable: 'false' })
+              .toPromise()
+              .then();
+            this.vehicleService
+              .updateData(this.assignment.vehicle, { isAvailable: 'false' })
+              .toPromise()
+              .then();
             this.changeState('RETRIEVE');
           })
           .catch(err => {

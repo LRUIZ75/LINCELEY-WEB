@@ -7,11 +7,8 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 
 //Import services
 import {
-  Driver,
   DriversService,
-  Person,
   PeopleService,
-  Vehicle,
   VehiclesService,
   ServiceshedulesService,
   Assignment,
@@ -27,16 +24,10 @@ import { DataTableTranslations } from 'ornamentum';
   providers: [DriversService, VehiclesService, ServiceshedulesService],
 })
 export class FleetAssignmentsComponent implements OnInit {
-
   /* Variables locales */
 
   public currentState: string = 'RETRIEVE';
   public selected: Assignment;
-
-  public driverList: any[] = [];
-  public personList: any[] = [];
-  public person: Person;
-  public vehicleList: any[] = [];
 
   public assignmentList: any[] = [];
   public defaultDate: string;
@@ -48,40 +39,28 @@ export class FleetAssignmentsComponent implements OnInit {
   dragging = false;
   opened = false;
 
-  public dataTableTranslations: DataTableTranslations = {
-    pagination: {
-      limit: this.translate.instant('pagination.limit'),
-      rangeKey: this.translate.instant('pagination.records'),
-      rangeSeparator: this.translate.instant('pagination.of'),
-      nextTooltip: this.translate.instant('pagination.next'),
-      previousTooltip: this.translate.instant('pagination.previous'),
-      lastTooltip: this.translate.instant('pagination.last'),
-      firstTooltip: this.translate.instant('pagination.first'),
-    },
-  };
+  public dataTableTranslations: DataTableTranslations;
 
   getDataTableTranslations(): DataTableTranslations {
     this.dataTableTranslations = {
-     pagination: {
-       limit: this.translate.instant('pagination.limit'),
-       rangeKey: this.translate.instant('pagination.records'),
-       rangeSeparator: this.translate.instant('pagination.of'),
-       nextTooltip: this.translate.instant('pagination.next'),
-       previousTooltip: this.translate.instant('pagination.previous'),
-       lastTooltip: this.translate.instant('pagination.last'),
-       firstTooltip: this.translate.instant('pagination.first'),
-     },
-     noDataMessage: this.translate.instant('notifications.nodata'),
-     dropdownFilter: {
-       filterPlaceholder: this.translate.instant('record_actions.search'),
-       selectPlaceholder: this.translate.instant('record_actions.search')
-     },
-     columnSelector: { header: ">>"}
-
-
-   };
-   return this.dataTableTranslations;
- }
+      pagination: {
+        limit: this.translate.instant('pagination.limit'),
+        rangeKey: this.translate.instant('pagination.records'),
+        rangeSeparator: this.translate.instant('pagination.of'),
+        nextTooltip: this.translate.instant('pagination.next'),
+        previousTooltip: this.translate.instant('pagination.previous'),
+        lastTooltip: this.translate.instant('pagination.last'),
+        firstTooltip: this.translate.instant('pagination.first'),
+      },
+      noDataMessage: this.translate.instant('notifications.nodata'),
+      dropdownFilter: {
+        filterPlaceholder: this.translate.instant('record_actions.search'),
+        selectPlaceholder: this.translate.instant('record_actions.search'),
+      },
+      columnSelector: { header: '>>' },
+    };
+    return this.dataTableTranslations;
+  }
 
   constructor(
     public vehicleService: VehiclesService,
@@ -94,13 +73,9 @@ export class FleetAssignmentsComponent implements OnInit {
     private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.assigments');
-    this.getDriverList();
-    this.getPersonList();
-    this.getVehicleList();
     this.getList();
   }
-  getTitle()
-  {
+  getTitle() {
     this.title = this.translate.instant('domain.assignments');
     return this.title;
   }
@@ -115,35 +90,7 @@ export class FleetAssignmentsComponent implements OnInit {
     this.currentState = 'RETRIEVE';
   }
 
-  getDriverList() {
-    this.driverService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.driverList = resp.objects as Driver[];
-      });
-  }
-
-  getPersonList() {
-    this.peopleService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.personList = resp.objects as Person[];
-      });
-  }
-
-  getVehicleList() {
-    this.vehicleService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.vehicleList = resp.objects as Vehicle[];
-      });
-  }
-
   getList() {
-
     this.assignmentService
       .getData()
       .toPromise()
@@ -152,41 +99,30 @@ export class FleetAssignmentsComponent implements OnInit {
           if (resp.status != 'ok') return;
           this.assignmentList = resp.objects;
 
-          for (var i = 0; i < this.assignmentList.length; i++) {
-            var veh = this.vehicleList.find(ve => ve._id == this.assignmentList[i].vehicle);
-            this.assignmentList[i].driverDescription = '';
-            this.assignmentList[i].vehicleDescription = !veh
+
+
+          this.assignmentList.forEach(a => {
+            a.vehicleDescription = !a.vehicle
               ? ''
-              : veh.plateNumber +
+              : a.vehicle.plateNumber +
                 ' - ' +
-                veh.vehicleType +
+                a.vehicle.vehicleType +
                 ': ' +
-                veh.brand +
+                a.vehicle.brand +
                 ' ' +
-                veh.model +
+                a.vehicle.model +
                 ' ' +
-                veh.year;
-            var driver = this.driverList.find(drv => drv._id == this.assignmentList[i].driver);
+                a.vehicle.year;
 
-            if (driver.person) {
-              /*               var promise = this.getPerson(driver.person);
-              //let persona:any = {};
-              await promise.then(value => {
-                this.person = value;
-              });
+            a.assignmentDate = a.assignmentDate.substring(0, 10);
 
-              this.assignmentList[i].driverDescription = this.person.names + ' ' + this.person.lastNames
- */
+            a.driverDescription = !a.driver.person
+              ? ''
+              : a.driver.person.names + ' ' + a.driver.person.lastNames;
+          });
 
-              var person = this.personList.find(p => p._id == driver.person);
-              this.assignmentList[i].driverDescription = person.names + ' ' + person.lastNames;
-              this.assignmentList[i].assignmentDate = this.assignmentList[
-                i
-              ].assignmentDate.substring(0, 10);
-            }
-          }
-          //this.assignmentList = this.assignmentList.sort((a,b)=> (a.assignmentDate - b.assignmentDate));
           this.today = new Date().toISOString().substring(0, 10);
+          //TODO: Reactivar este comentario para filtrar solo el diario
           this.assignmentList = this.assignmentList.filter(a => a.assignmentDate == this.today);
         },
         err => {
@@ -200,22 +136,6 @@ export class FleetAssignmentsComponent implements OnInit {
 
   getDateISOString(date: Date): string {
     return date.toISOString().substring(0, 10);
-  }
-
-  getPerson(id: string): Promise<Person> {
-    var promise = new Promise<Person>((resolve, reject) => {
-      this.peopleService
-        .getDataById(id)
-        .toPromise()
-        .then(data => {
-          if (!data) reject('no hay datos');
-          resolve(data.objects[0]);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-    return promise;
   }
 
   handleDragStart(event: CdkDragStart): void {
@@ -234,6 +154,11 @@ export class FleetAssignmentsComponent implements OnInit {
 
   edit(selected) {
     this.selected = selected;
+    //depopulate
+    this.selected.driver = selected.driver._id;
+    this.selected.vehicle = selected.vehicle._id;
+    this.selected = <Assignment>this.selected;
+
     this.opened = true;
     this.currentState = 'EDIT';
   }
@@ -260,12 +185,17 @@ export class FleetAssignmentsComponent implements OnInit {
   }
 
   confirmDelete(selected) {
-
     const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translate.instant('record_actions.deactivate'),
-      //ODEM Cambiar la propiedad de select
-        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.vehicleDescription + ' - ' + selected.driverDescription +   ' ?',
+        //ODEM Cambiar la propiedad de select
+        message:
+          this.translate.instant('notifications.can_deactivate') +
+          ': ' +
+          selected.vehicleDescription +
+          ' - ' +
+          selected.driverDescription +
+          ' ?',
         button1Text: this.translate.instant('buttons.yes').toUpperCase(),
         button2Text: this.translate.instant('buttons.no').toUpperCase(),
       },
@@ -280,5 +210,4 @@ export class FleetAssignmentsComponent implements OnInit {
     this.currentState = state;
     if (state == 'RETRIEVE') this.getList();
   }
-
 }

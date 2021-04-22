@@ -7,10 +7,6 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 
 //Import services
 import {
-  Company,
-  CompaniesService,
-  Vehicle,
-  VehiclesService,
   ServiceStatus,
   ServiceSchedule,
   ServiceshedulesService,
@@ -22,7 +18,7 @@ import { DataTableTranslations } from 'ornamentum';
   selector: 'app-fleet-serviceschedules',
   templateUrl: './serviceschedules.component.html',
   styleUrls: ['./serviceschedules.component.scss'],
-  providers: [CompaniesService, VehiclesService, ServiceshedulesService],
+  providers: [ServiceshedulesService],
 })
 export class FleetServiceschedulesComponent implements OnInit {
 
@@ -31,26 +27,13 @@ export class FleetServiceschedulesComponent implements OnInit {
   public currentState: string = 'RETRIEVE';
   public selected: ServiceSchedule;
 
-  public companyList: any[] = [];
-  public vehicleList: any[] = [];
-
   public scheduleList: any[] = [];
 
   public title: string;
   dragging = false;
   opened = false;
 
-  public dataTableTranslations: DataTableTranslations = {
-    pagination: {
-      limit: this.translate.instant('pagination.limit'),
-      rangeKey: this.translate.instant('pagination.records'),
-      rangeSeparator: this.translate.instant('pagination.of'),
-      nextTooltip: this.translate.instant('pagination.next'),
-      previousTooltip: this.translate.instant('pagination.previous'),
-      lastTooltip: this.translate.instant('pagination.last'),
-      firstTooltip: this.translate.instant('pagination.first'),
-    },
-  };
+  public dataTableTranslations: DataTableTranslations;
 
   getDataTableTranslations(): DataTableTranslations {
     this.dataTableTranslations = {
@@ -76,16 +59,13 @@ export class FleetServiceschedulesComponent implements OnInit {
  }
 
   constructor(
-    public companyService: CompaniesService,
-    public vehicleService: VehiclesService,
-    public scheduleService: ServiceshedulesService,
-    public translate: TranslateService,
-    public toaster: ToastrService,
+    private scheduleService: ServiceshedulesService,
+    private translate: TranslateService,
+    private toaster: ToastrService,
     private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.serviceschedules');
-    this.getCompanyList();
-    this.getVehicleList();
+
     this.getList();
   }
 
@@ -105,26 +85,11 @@ export class FleetServiceschedulesComponent implements OnInit {
     this.currentState = 'RETRIEVE';
   }
 
-  getCompanyList() {
-    this.companyService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.companyList = resp.objects;
-      });
-  }
 
-  getVehicleList() {
-    this.vehicleService
-      .getData()
-      .toPromise()
-      .then(resp => {
-        this.vehicleList = resp.objects;
-      });
-  }
   getDateISOString(date: Date): string {
     return date.toISOString().substring(0, 10);
   }
+
   getList() {
 
     this.scheduleService.getData().subscribe(
@@ -136,17 +101,17 @@ export class FleetServiceschedulesComponent implements OnInit {
           this.scheduleList = response.objects;
           this.scheduleList = this.scheduleList.filter(it => it.isActive == true);
 
-          for (var i = 0; i < this.scheduleList.length; i++) {
-            var veh = this.vehicleList.find(ve => ve._id == this.scheduleList[i].vehicle);
-            this.scheduleList[i].vehicleDescription = !veh ? '' : veh.plateNumber + ' - '
-            +  veh.vehicleType + ': ' +veh.brand + ' ' + veh.model + ' ' + veh.year ;
+          this.scheduleList.forEach(s => {
+            s.vehicleDescription = !s.vehicle?'':
+            s.vehicle.plateNumber + ' - ' +
+             s.vehicle.vehicleType + ': ' +
+             s.vehicle.brand + ' ' + s.vehicle.model + ' ' + s.vehicle.year;
 
-            this.scheduleList[i].startDate = this.scheduleList[i].startDate.substring(0, 10);
-            //traducir inemdiatamente los valores de estado de servicio
-            this.scheduleList[i].serviceStatusName = this.translate.instant(
-              this.scheduleList[i].serviceStatus
-            );
-          }
+            s.startDate = s.startDate.substring(0, 10);
+            
+            s.serviceStatusName = this.translate.instant(s.serviceStatus);
+
+          });
         }
       },
       err => {
@@ -174,6 +139,9 @@ export class FleetServiceschedulesComponent implements OnInit {
 
   edit(selected) {
     this.selected = selected;
+    //depopulate
+    this.selected.vehicle = selected.vehicle._id
+
     this.opened = true;
     this.currentState = 'EDIT';
   }
