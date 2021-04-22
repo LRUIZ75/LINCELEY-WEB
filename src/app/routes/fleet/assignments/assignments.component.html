@@ -20,6 +20,16 @@
         {{ 'record_actions.add_new' | translate }}
       </button>
     </div>
+    <div
+      matTooltip="Asignación automática"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button class="m-l-8" color="accent" (click)="doAutomatic()">
+        Automático
+      </button>
+    </div>
   </mat-toolbar>
 
   <ng-data-table

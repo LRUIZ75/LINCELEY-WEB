@@ -99,8 +99,6 @@ export class FleetAssignmentsComponent implements OnInit {
           if (resp.status != 'ok') return;
           this.assignmentList = resp.objects;
 
-
-
           this.assignmentList.forEach(a => {
             a.vehicleDescription = !a.vehicle
               ? ''
@@ -209,5 +207,10 @@ export class FleetAssignmentsComponent implements OnInit {
   changeState(state: string) {
     this.currentState = state;
     if (state == 'RETRIEVE') this.getList();
+  }
+
+  doAutomatic() {
+    alert(`Requiere que Linceley explique las reglas aplicables para asignación automática.
+Especialmente en las posibles combinaciones de vehiculos y conductores internos/externos`);
   }
 }
