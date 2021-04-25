@@ -73,7 +73,7 @@
           <mat-form-field>
             <input
               matInput
-              matTooltip="Formato: nn&lt; d | w | m | y &gt;"
+              matTooltip="REGEX: [0-9]+ [dwMy] {1} -&gt; 2d, 3w, 1M, 1y"
               placeholder="{{ 'domain.term' | translate | titlecase }}"
               formControlName="term"
               pattern="[0-9]+[dwmy]{1}"
@@ -89,10 +89,10 @@
           <mat-form-field>
             <input
               matInput
-              matTooltip="Formato: nn&lt; d | w | m | y &gt;"
+              matTooltip="REGEX: [0-9]+ [dwMy] {1} -&gt; 2d, 3w, 1M, 1y"
               placeholder="{{ 'domain.repeatevery' | translate | titlecase }}"
               formControlName="repeatEvery"
-              pattern="[0-9]+[dwmy]{1}"
+              pattern="[0-9]+[dwMy]{1}"
               minlength="2"
               maxlength="3"
             />
