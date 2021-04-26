@@ -208,7 +208,7 @@ export class SecurityPeopleComponent implements OnInit {
     const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translate.instant('record_actions.deactivate'),
-        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.fullName + ' ?',
+        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.names + ' ' +  selected.lastNames  + ' ?',
         button1Text: this.translate.instant('buttons.yes').toUpperCase(),
         button2Text: this.translate.instant('buttons.no').toUpperCase(),
       },

@@ -1,6 +1,4 @@
 <page-header></page-header>
-<app-personcard *ngIf="selected && currentState !='ADD'" [person] = selected>
-</app-personcard>
 
 <div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
   <app-addpeople
@@ -28,32 +26,6 @@
     </div>
   </mat-toolbar>
 
-  <mat-card-content>
-    <mtx-grid
-      [data]="peopleList"
-      [columns]="columns"
-      [loading]="isLoading"
-      [multiSelectable]="multiSelectable"
-      [rowSelectable]="rowSelectable"
-      [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-      [rowHover]="rowHover"
-      [rowStriped]="rowStriped"
-      [showToolbar]="showToolbar"
-      [toolbarTitle]="title"
-      [columnHideable]="columnHideable"
-      [columnMovable]="columnMovable"
-      [pageOnFront]="showPaginator"
-      [showPaginator]="showPaginator"
-      [pageSizeOptions]="[5, 10, 50, 100]"
-      [pageIndex]="0"
-      [pageSize]="10"
-      (sortChange)="changeSort($event)"
-      (selectionChange)="changeSelect($event)"
-      (rowSelectionChange)="changeSelect($event)"
-      *ngIf="currentState == 'RETRIEVE'"
-    >
-    </mtx-grid>
-  </mat-card-content>
 
   <ng-data-table
   [id]="'person-list'"
@@ -65,37 +37,25 @@
 
   [showIndexColumn]="true"
   [showHeader]="false"
-  [showRowSelectCheckbox]="true"
+  [showRowSelectCheckbox]="false"
   [showSubstituteRows]="false"
   [showColumnSelector]="false"
-  [showRowSelectAllCheckbox]="false"
+  [showRowSelectAllCheckbox]="true"
 
   [pageable]="true"
-  [rowSelectable]="true"
+  [rowSelectable]="false"
   [selectOnRowClick]="true"
   [persistTableState]="true"
   [expandableRows]="false"
   [showLoadingSpinner]="true"
-  [selectMode]="'single_toggle'"
+  [selectMode]="'single'"
   [DataTableStorageMode] ="local"
   [persistTableState] = "true"
   [translations]="getDataTableTranslations()"
   [minContentWidth]="800"
-  (rowSelectChange)="changeSelect($event)"
-  (selectionChange)="changeSelect($event)"
-  (toggleChange)="changeSelect($event)"
 >
   <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
-  <ng-data-table-column [width]="100">
-    <ng-template #ngDataTableCell let-row="row">
-      <td align="center">
-        <mat-checkbox  (change)="changeSelected($event, row.item)" >
 
-        </mat-checkbox>
-
-      </td>
-    </ng-template>
-  </ng-data-table-column>
   <ng-data-table-column
     [field]="'names'"
     [title]="translate.instant('domain.names').toUpperCase()"
@@ -200,7 +160,7 @@
     </ng-template>
   </ng-data-table-column>
   <ng-template #ngDataTableNoRecords>
-    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{'notifications.nodata' | translate | titlecase}}</h1>
   </ng-template>
 </ng-data-table>
 
