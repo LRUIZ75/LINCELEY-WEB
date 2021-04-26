@@ -9,20 +9,21 @@
     (changeStateEvent)="changeState($event)"
   >
   </app-addpeople>
-  
+
 </div>
 
 
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
     <div
-      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.people' | translate }}"
+      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.people' | translate | titlecase }}"
       cdkDrag
       (cdkDragStarted)="handleDragStart($event)"
       *ngIf="currentState == 'RETRIEVE'"
     >
       <button mat-raised-button color="primary" (click)="openPanel($event)">
-        {{ 'record_actions.add_new' | translate }}
+        <mat-icon>add</mat-icon>
+        {{ 'record_actions.add_new' | translate | titlecase }}
       </button>
     </div>
   </mat-toolbar>
@@ -53,6 +54,156 @@
     >
     </mtx-grid>
   </mat-card-content>
+
+  <ng-data-table
+  [id]="'person-list'"
+  [title]="getTitle()"
+  [items]="peopleList"
+
+  [indexColumnTitle]="'#'"
+  [indexColumnWidth]="30"
+
+  [showIndexColumn]="true"
+  [showHeader]="false"
+  [showRowSelectCheckbox]="true"
+  [showSubstituteRows]="false"
+  [showColumnSelector]="false"
+  [showRowSelectAllCheckbox]="false"
+
+  [pageable]="true"
+  [rowSelectable]="true"
+  [selectOnRowClick]="true"
+  [persistTableState]="true"
+  [expandableRows]="false"
+  [showLoadingSpinner]="true"
+  [selectMode]="'single_toggle'"
+  [DataTableStorageMode] ="local"
+  [persistTableState] = "true"
+  [translations]="getDataTableTranslations()"
+  [minContentWidth]="800"
+  (rowSelectChange)="changeSelect($event)"
+  (selectionChange)="changeSelect($event)"
+  (toggleChange)="changeSelect($event)"
+>
+  <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+  <ng-data-table-column [width]="100">
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <mat-checkbox  (change)="changeSelected($event, row.item)" >
+
+        </mat-checkbox>
+
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'names'"
+    [title]="translate.instant('domain.names').toUpperCase()"
+
+    [filterable]="true"
+    [showDropdownFilter]="false"
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+    [sortable]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'lastNames'"
+    [title]="translate.instant('domain.lastnames').toUpperCase()"
+
+    [filterable]="true"
+    [showDropdownFilter]="false"
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+    [sortable]="true"
+  >
+  </ng-data-table-column>
+  <ng-data-table-column
+    [field]="'citizenId'"
+    [title]="translate.instant('domain.citizenid').toUpperCase()"
+
+    [filterable]="true"
+    [showDropdownFilter]="false"
+    [filterPlaceholder]="translate.instant('record_actions.search')"
+    [sortable]="true"
+  >
+  </ng-data-table-column>
+
+  <ng-data-table-column
+    [field]="'isUser'"
+    [title]="translate.instant('domain.isuser').toUpperCase()"
+    [width]="150"
+
+    [sortable]="true"
+    [filterable]="true"
+    [dropdownFilterMenuPosition]="'bottom-right'"
+    [showDropdownFilter]="true"
+    [dropDownFilterShowOptionSelectCheckbox]="true"
+  >
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <mat-slide-toggle color="primary" [checked]="row.item.isUser"
+        [disabled]="true"
+        > </mat-slide-toggle>
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-data-table-column
+  [field]="'isEmployee'"
+  [title]="translate.instant('domain.isemployee').toUpperCase()"
+  [width]="150"
+
+  [sortable]="true"
+  [filterable]="true"
+  [dropdownFilterMenuPosition]="'bottom-right'"
+  [showDropdownFilter]="true"
+  [dropDownFilterShowOptionSelectCheckbox]="true"
+>
+  <ng-template #ngDataTableCell let-row="row">
+    <td align="center">
+      <mat-slide-toggle color="primary" [checked]="row.item.isEmployee"
+      [disabled]="true"
+      > </mat-slide-toggle>
+    </td>
+  </ng-template>
+</ng-data-table-column>
+<ng-data-table-column
+[field]="'isClient'"
+[title]="translate.instant('domain.isclient').toUpperCase()"
+[width]="150"
+
+[sortable]="true"
+[filterable]="true"
+[dropdownFilterMenuPosition]="'bottom-right'"
+[showDropdownFilter]="true"
+[dropDownFilterShowOptionSelectCheckbox]="true"
+>
+<ng-template #ngDataTableCell let-row="row">
+  <td align="center">
+    <mat-slide-toggle color="primary" [checked]="row.item.isClient"
+    [disabled]="true"
+    > </mat-slide-toggle>
+  </td>
+</ng-template>
+</ng-data-table-column>
+  <ng-data-table-column [width]="100">
+    <ng-template #ngDataTableCell let-row="row">
+      <td align="center">
+        <button mat-icon-button color= "accent" (click)="edit(row.item)"
+        matTooltip="{{ 'record_actions.edit' | translate }}">
+          <mat-icon>edit</mat-icon>
+
+        </button>
+        <button mat-icon-button color="warn" (click)="confirmDelete(row.item)"
+        matTooltip="{{ 'record_actions.deactivate' | translate }}">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-template>
+  </ng-data-table-column>
+  <ng-template #ngDataTableNoRecords>
+    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+  </ng-template>
+</ng-data-table>
+
 </mat-card>
 
 

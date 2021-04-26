@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
 export interface User {
+  _id: string,
   name: string,
   email: string,
   salt: string,

@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MtxDialog } from '@ng-matero/extensions/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 //Import services
-import { User, UsersService, PeopleService } from 'app/services';
+import { User, UsersService } from 'app/services';
+import { DataTableTranslations } from 'ornamentum';
 
 @Component({
   selector: 'app-security-users',
@@ -14,89 +17,59 @@ import { User, UsersService, PeopleService } from 'app/services';
   providers: [UsersService],
 })
 export class SecurityUsersComponent implements OnInit {
-  columns: MtxGridColumn[] = [
-    {
-      header: this.translate.stream('Id'),
-      field: '_id',
-      hide: true,
-      sortable: true,
-    },
-    {
-      header: this.translate.stream('Nombre'),
-      field: 'name',
-      sortable: true,
-      disabled: true,
-    },
-    { header: this.translate.stream('Email'), field: 'email' },
-    { header: this.translate.stream('Verificado'), field: 'emailVerified' },
-    { header: this.translate.stream('Activo?'), field: 'isActive' },
-    {
-      header: this.translate.stream('table_kitchen_sink.operation'),
-      field: 'operation',
-      width: '120px',
-      pinned: 'right',
-      right: '0px',
-      type: 'button',
-      buttons: [
-        {
-          type: 'icon',
-          icon: 'edit',
-          tooltip: this.translate.stream('table_kitchen_sink.edit'),
-          //click: record => this.edit(record),
-        },
-        {
-          color: 'warn',
-          icon: 'delete',
-          text: this.translate.stream('table_kitchen_sink.delete'),
-          tooltip: this.translate.stream('table_kitchen_sink.delete'),
-          pop: true,
-          popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
-          popCloseText: this.translate.stream('table_kitchen_sink.close'),
-          popOkText: this.translate.stream('table_kitchen_sink.ok'),
-          //click: record => this.delete(record),
-        },
-      ],
-    },
-  ];
-  isLoading = true;
-
-  multiSelectable = false;
-  rowSelectable = true;
-  hideRowSelectionCheckbox = false;
-  showToolbar = true;
-  columnHideable = true;
-  columnMovable = true;
-  rowHover = true;
-  rowStriped = true;
-  showPaginator = true;
-  expandable = false;
 
   /* Variables locales */
 
   public currentState: string = 'RETRIEVE';
-  public selected: string;
-  public selectedUser: User;
+  public selected: User;
+
   public userList: User[] = [];
   public title: string;
   dragging = false;
   opened = false;
 
+  public dataTableTranslations: DataTableTranslations;
+
   constructor(
     public userService: UsersService,
-    public peopleService: PeopleService,
     public translate: TranslateService,
-    public toaster: ToastrService
+    public toaster: ToastrService,
+    public dialog: MtxDialog,
+    private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.users');
-   // this.getList();
+    this.getList();
   }
 
   ngOnInit() {
-    this.changeState('RETRIEVE');
+    //this.changeState('RETRIEVE');
   }
 
+  getDataTableTranslations(): DataTableTranslations {
+    this.dataTableTranslations = {
+     pagination: {
+       limit: this.translate.instant('pagination.limit'),
+       rangeKey: this.translate.instant('pagination.records'),
+       rangeSeparator: this.translate.instant('pagination.of'),
+       nextTooltip: this.translate.instant('pagination.next'),
+       previousTooltip: this.translate.instant('pagination.previous'),
+       lastTooltip: this.translate.instant('pagination.last'),
+       firstTooltip: this.translate.instant('pagination.first'),
+     },
+     noDataMessage: this.translate.instant('notifications.nodata'),
+     dropdownFilter: {
+       filterPlaceholder: this.translate.instant('record_actions.search'),
+       selectPlaceholder: this.translate.instant('record_actions.search')
+     },
+     columnSelector: { header: ">>"}
+
+
+   };
+   return this.dataTableTranslations;
+ }
+
   getList() {
-    this.isLoading = false;
+
     this.userService.getData().subscribe(
       res => {
         if (res) {
@@ -112,7 +85,7 @@ export class SecurityUsersComponent implements OnInit {
         this.toaster.error(err.statusText + ': ' + err.message, msg);
       }
     );
-    this.isLoading = true;
+
   }
 
   handleDragStart(event: CdkDragStart): void {
@@ -124,14 +97,56 @@ export class SecurityUsersComponent implements OnInit {
       this.dragging = false;
       return;
     }
+    this.selected=undefined;
     this.opened = true;
-    this.changeState('ADD');
+    this.currentState='ADD'
+  }
+
+  edit(selected) {
+    this.selected = selected;
+    this.opened = true;
+    this.currentState = 'EDIT';
+  }
+
+  confirmDelete(selected) {
+    const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
+      data: {
+        title: this.translate.instant('record_actions.deactivate'),
+        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.name + ' ?',
+        button1Text: this.translate.instant('buttons.yes').toUpperCase(),
+        button2Text: this.translate.instant('buttons.no').toUpperCase(),
+      },
+    });
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result == true) this.delete(selected);
+    });
+  }
+
+  delete(selected) {
+    this.selected = selected;
+
+    this.userService
+      .deactivateData(selected._id)
+      .toPromise()
+      .then(deleted => {
+        if (deleted) {
+          this.toaster.success('Operación exitosa!');
+          this.getList();
+        } else {
+          this.toaster.error('Operación fallida!');
+          return;
+        }
+      })
+      .catch(err => {
+        this.toaster.error(err);
+        return;
+      });
   }
 
   changeState(state: string){
-    if(state=='RETRIEVE')
-      this.getList();
     this.currentState = state;
+    if(state=='RETRIEVE') this.getList();
   }
 
   changeSelect(e: any) {
@@ -142,7 +157,4 @@ export class SecurityUsersComponent implements OnInit {
     console.log(e);
   }
 
-  enableRowExpandable() {
-    this.columns[0].showExpand = this.expandable;
-  }
 }
