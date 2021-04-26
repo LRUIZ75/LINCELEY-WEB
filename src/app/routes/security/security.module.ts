@@ -7,7 +7,8 @@ import { AddComponent } from './users/add/add.component';
 import { SecurityRolesComponent } from './roles/roles.component';
 import { AddpeopleComponent } from './people/addpeople/addpeople.component';
 import { PersoncardComponent } from './people/personcard/personcard.component';
-
+import { DataTableModule, DropdownModule } from 'ornamentum';
+//import { EventsRowSelectChangeUsageComponent } from 'ornamentum';
 const COMPONENTS = [SecurityUsersComponent, SecurityPeopleComponent, SecurityRolesComponent];
 const COMPONENTS_DYNAMIC = [];
 
@@ -15,6 +16,8 @@ const COMPONENTS_DYNAMIC = [];
   imports: [
     SharedModule,
     SecurityRoutingModule,
+    DataTableModule.forRoot(),
+    DropdownModule.forRoot(),
   ],
   declarations: [
     ...COMPONENTS,

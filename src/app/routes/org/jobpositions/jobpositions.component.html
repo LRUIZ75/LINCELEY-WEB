@@ -11,13 +11,14 @@
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
     <div
-      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.jobpositions' | translate }}"
+      matTooltip="{{ 'record_actions.add_new' | translate | titlecase }} {{ 'domain.jobpositions' | translate | titlecase }}"
       cdkDrag
       (cdkDragStarted)="handleDragStart($event)"
       *ngIf="currentState == 'RETRIEVE'"
     >
       <button mat-raised-button color="primary" (click)="openPanel($event)">
-        {{ 'record_actions.add_new' | translate }}
+        <mat-icon>add</mat-icon>
+        {{ 'record_actions.add_new' | translate | titlecase }}
       </button>
     </div>
   </mat-toolbar>
@@ -43,17 +44,16 @@
     [expandableRows]="false"
     [showLoadingSpinner]="true"
     [selectMode]="'single'"
-    [DataTableStorageMode] ="local"
     [persistTableState] = "true"
     [translations]="getDataTableTranslations()"
     [minContentWidth]="800"
   >
     <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
-    
+
     <ng-data-table-column
       [field]="'name'"
       [title]="translate.instant('domain.department').toUpperCase()"
-      
+
       [filterable]="true"
       [showDropdownFilter]="false"
       [filterPlaceholder]="translate.instant('record_actions.search')"
@@ -71,7 +71,7 @@
       [dropdownFilterMenuPosition]="'bottom-right'"
       [showDropdownFilter]="true"
       [dropDownFilterShowOptionSelectCheckbox]="true"
-      
+
     >
     </ng-data-table-column>
 
@@ -84,15 +84,15 @@
     [dropdownFilterMenuPosition]="'bottom-right'"
     [showDropdownFilter]="true"
     [dropDownFilterShowOptionSelectCheckbox]="true"
-    
+
   >
   </ng-data-table-column>
-   
+
     <ng-data-table-column
       [field]="'isActive'"
       [title]="translate.instant('domain.isActive').toUpperCase()"
       [width]="150"
-      
+
       [sortable]="true"
       [filterable]="true"
       [dropdownFilterMenuPosition]="'bottom-right'"
@@ -123,7 +123,7 @@
       </ng-template>
     </ng-data-table-column>
     <ng-template #ngDataTableNoRecords>
-      <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+      <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{'notifications.nodata' | translate | titlecase}}</h1>
     </ng-template>
   </ng-data-table>
 </mat-card>

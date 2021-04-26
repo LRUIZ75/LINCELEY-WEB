@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 import { Company, CompaniesService } from 'app/services';
 import { DataTableTranslations } from 'ornamentum';
 
+
 @Component({
   selector: 'app-org-companies',
   templateUrl: './companies.component.html',
@@ -44,7 +45,7 @@ export class OrgCompaniesComponent implements OnInit {
   getTitle()
   {
     this.title = this.translate.instant('domain.companies');
-  
+
     return this.title;
   }
 
@@ -74,11 +75,13 @@ export class OrgCompaniesComponent implements OnInit {
         selectPlaceholder: this.translate.instant('record_actions.search')
       },
       columnSelector: { header: ">>"}
-        
-      
+
+
     };
     return this.dataTableTranslations;
   }
+
+
 
   getList() {
     /*     this.isLoading=true; */
@@ -89,7 +92,6 @@ export class OrgCompaniesComponent implements OnInit {
           var response = JSON.parse(jsonResponse);
           if (response.status != 'ok') return;
           this.companyList = response.objects as Company[];
-          //this.userList = this.userList.filter(it => it.isActive == true);
         }
       },
       err => {
@@ -122,11 +124,6 @@ export class OrgCompaniesComponent implements OnInit {
   }
 
   confirmDelete(selected) {
-    //Ejemplo del confirm de MTX= > NO USAR ESTO!!!
-    /*     this.dialog.confirm("Desactivar registro?",null,()=>
-      this.delete(selected)
-    ); */
-
     const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
       data: {
         title: this.translate.instant('record_actions.deactivate'),
@@ -135,9 +132,6 @@ export class OrgCompaniesComponent implements OnInit {
         button2Text: this.translate.instant('buttons.no').toUpperCase(),
       },
     });
-
-    //Ejemplo de un confirmDialog sin data injection => Versión básica
-    //const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent);
 
     confirmDialog.afterClosed().subscribe(result => {
       if (result == true) this.delete(selected);
@@ -178,7 +172,4 @@ export class OrgCompaniesComponent implements OnInit {
     console.log(e);
   }
 
-  /*   enableRowExpandable() {
-    this.columns[0].showExpand = this.expandable;
-  } */
 }

@@ -30,7 +30,6 @@ export class AddpeopleComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private peopleService: PeopleService,
-    private companyService: CompaniesService,
     private toaster: ToastrService
   ) {}
 
@@ -55,7 +54,7 @@ export class AddpeopleComponent implements OnInit {
     }
 
     this.personFormGroup.get("picture").disable();
-    
+
   }
 
   /*   get fullName() {

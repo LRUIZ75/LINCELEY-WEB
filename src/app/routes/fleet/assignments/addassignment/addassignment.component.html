@@ -1,14 +1,20 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxLayout.lt-md="80" fxLayout.md="50" fxLayout.lg="40" fxFlexAlign="center">
-    <mat-card class="">
-      <mat-card-title class="mat-title" *ngIf="formMode == 'ADD'">
-        {{ 'record_actions.add_new' | translate | titlecase }}:
-        {{ 'domain.assignments' | translate | titlecase }}
-      </mat-card-title>
-      <mat-card-title class="mat-title" *ngIf="formMode == 'EDIT'">
-        {{ 'record_actions.edit' | translate | titlecase }}:
-        {{ 'domain.assignments' | translate | titlecase }}
-      </mat-card-title>
+<div fxLayout="row wrap" fxLayoutAlign="center">
+  <div fxFlexAlign="center" fxFlex="430px" fxFlex.lt-xs="80" fxLayout="column" style="padding: 5px">
+    <mat-card class="bg-linceley-blue-50">
+      <!-- [ngClass]="{'bg-linceley-yellow-50':(formMode=='EDIT'), 'bg-linceley-blue-50': (formMode=='ADD')}" -->
+      <mat-card-header class="bg-linceley-blue-700">
+        <!-- [ngClass]="{'bg-linceley-yellow-700':(formMode=='EDIT'), 'bg-linceley-blue-700': (formMode=='ADD')}" -->
+        <mat-card-subtitle class="p-8 text-linceley-blue-100">
+          <!-- [ngClass]="{'text-linceley-yellow-50':(formMode=='EDIT'), 'text-linceley-blue-50': (formMode=='ADD')}" -->
+          <span *ngIf="formMode == 'ADD'">{{
+            'record_actions.add_new' | translate | uppercase
+          }}</span>
+          <span *ngIf="formMode == 'EDIT'">{{
+            'record_actions.edit' | translate | uppercase
+          }}</span>
+          - {{ 'domain.assignments' | translate | uppercase }}
+        </mat-card-subtitle>
+      </mat-card-header>
       <mat-card-content>
         <form [formGroup]="assignmentFormGroup">
           <mat-form-field>
@@ -58,21 +64,17 @@
         </form>
       </mat-card-content>
       <mat-card-actions align="right">
-        <button
-          *ngIf="formMode == 'ADD'"
-          mat-raised-button
-          color="default"
-          type="reset"
-          (click)="onReset()"
-        >
-          {{ 'record_actions.reset' | translate | titlecase }}
-        </button>
-        <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
-          {{ 'record_actions.cancel' | translate | titlecase }}
-        </button>
-        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
-          {{ 'record_actions.save' | translate | titlecase }}
-        </button>
+        <div class="buttons-row">
+          <button *ngIf="formMode == 'ADD'" mat-raised-button color="default" type="reset" (click)="onReset()" >
+            {{ 'record_actions.reset' | translate | titlecase }}
+          </button>
+          <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
+            {{ 'record_actions.cancel' | translate | titlecase }}
+          </button>
+          <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+            {{ 'record_actions.save' | translate | titlecase }}
+          </button>
+        </div>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -1,48 +1,114 @@
 <page-header></page-header>
-<div *ngIf="currentState == 'ADD'">
-  <users-add (changeStateEvent)="changeState($event)"> </users-add>
+<div *ngIf="currentState == 'ADD' || currentState == 'EDIT'">
+  <users-add
+
+    (changeStateEvent)="changeState($event)"
+  >
+  </users-add>
 </div>
 
-<div
-  class="customizer-handle"
-  matTooltip="Agregar usuario"
-  cdkDrag
-  (cdkDragStarted)="handleDragStart($event)"
-  *ngIf="currentState == 'RETRIEVE'"
->
-  <button mat-fab color="accent" (click)="openPanel($event)">
-    <mat-icon aria-label="Agregar un nuevo usuario">add</mat-icon>
-  </button>
-</div>
 
-<!-- Inicia listado de usuarios -->
-<mtx-grid
-  [data]="userList"
-  [columns]="columns"
-  [loading]="isLoading"
-  [multiSelectable]="multiSelectable"
-  [rowSelectable]="rowSelectable"
-  [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
-  [rowHover]="rowHover"
-  [rowStriped]="rowStriped"
-  [showToolbar]="showToolbar"
-  [toolbarTitle]="title"
-  [columnHideable]="columnHideable"
-  [columnMovable]="columnMovable"
-  [pageOnFront]="showPaginator"
-  [showPaginator]="showPaginator"
-  [pageSizeOptions]="[5, 10, 50, 100]"
-  [pageIndex]="0"
-  [pageSize]="10"
-  (sortChange)="changeSort($event)"
-  (selectionChange)="changeSelect($event)"
-  *ngIf="currentState == 'RETRIEVE'"
->
-</mtx-grid>
-<!-- <ng-template #expansionTpl let-row>
-  {{row.name}}
-</ng-template> -->
+<mat-card *ngIf="currentState == 'RETRIEVE'">
+  <mat-toolbar>
+    <div
+      matTooltip="{{ 'record_actions.add_new' | translate| titlecase}} {{ 'domain.user' | translate | titlecase}}"
+      cdkDrag
+      (cdkDragStarted)="handleDragStart($event)"
+      *ngIf="currentState == 'RETRIEVE'"
+    >
+      <button mat-raised-button color="primary" (click)="openPanel($event)">
+        <mat-icon>add</mat-icon>
+        {{ 'record_actions.add_new' | translate| titlecase}}
+      </button>
+    </div>
+  </mat-toolbar>
+  <ng-data-table
+    [id]="'user-list'"
+    [title]="'getTitle'"
+    [items]="userList"
+    [indexColumnTitle]="'#'"
+    [indexColumnWidth]="30"
+    [showIndexColumn]="true"
+    [pageable]="true"
+    [showLoadingSpinner]="true"
+    [selectMode]="'single'"
+    [persistTableState] = "true"
+    [translations]="getDataTableTranslations()"
+    [minContentWidth]="800"
+  >
 
-<!-- <button mat-stroked-button (click)="updateCell()">Update Cell</button>
-<button mat-stroked-button (click)="updateList()">Update List</button>
- -->
+   <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
+
+    <ng-data-table-column
+      [field]="'name'"
+      [title]="translate.instant('domain.name').toUpperCase()"
+
+      [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'email'"
+      [title]="translate.instant('email').toUpperCase()"
+
+      [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
+
+
+    >
+    </ng-data-table-column>
+    <ng-data-table-column
+      [field]="'emailVerified'"
+      [title]="translate.instant('email verificado').toUpperCase()"
+
+      [filterable]="true"
+      [showDropdownFilter]="false"
+      [filterPlaceholder]="translate.instant('record_actions.search')"
+      [sortable]="true"
+    >
+    </ng-data-table-column>
+
+    <ng-data-table-column
+      [field]="'isActive'"
+      [title]="translate.instant('domain.isActive').toUpperCase()"
+      [width]="150"
+
+      [sortable]="true"
+      [filterable]="true"
+      [dropdownFilterMenuPosition]="'bottom-right'"
+      [showDropdownFilter]="true"
+      [dropDownFilterShowOptionSelectCheckbox]="true"
+    >
+      <ng-template #ngDataTableCell let-row="row">
+        <td align="center">
+          <mat-slide-toggle color="primary" [checked]="row.item.isActive"
+          [disabled]="true"
+          > </mat-slide-toggle>
+        </td>
+      </ng-template>
+    </ng-data-table-column>
+    <ng-data-table-column [width]="100">
+      <ng-template #ngDataTableCell let-row="row">
+        <td align="center">
+          <button mat-icon-button color= "accent" (click)="edit(row.item)"
+          matTooltip="{{ 'record_actions.edit' | translate }}">
+            <mat-icon>edit</mat-icon>
+
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(row.item)"
+          matTooltip="{{ 'record_actions.deactivate' | translate }}">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-template>
+    </ng-data-table-column>
+
+    <ng-template #ngDataTableNoRecords>
+      <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{'notifications.nodata' | translate | titlecase}}</h1>
+    </ng-template>
+  </ng-data-table>
+</mat-card>

@@ -78,13 +78,7 @@
       </mat-card-content>
       <mat-card-actions align="right">
         <div class="buttons-row">
-          <button
-            *ngIf="formMode == 'ADD'"
-            mat-raised-button
-            color="default"
-            type="reset"
-            (click)="onReset()"
-          >
+          <button *ngIf="formMode == 'ADD'" mat-raised-button color="default" type="reset" (click)="onReset()" >
             {{ 'record_actions.reset' | translate | titlecase }}
           </button>
           <button mat-raised-button color="default" type="cancel" (click)="onCancel()">
@@ -93,10 +87,6 @@
           <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
             {{ 'record_actions.save' | translate | titlecase }}
           </button>
-          <!-- *ngIf="formMode == 'ADD'"  -->
-          <!--           <button mat-raised-button *ngIf="formMode == 'EDIT'" color="accent"  type="submit" (click)="onSubmit()">
-            {{ 'record_actions.save' | translate | titlecase }}
-          </button> -->
         </div>
       </mat-card-actions>
     </mat-card>

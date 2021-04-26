@@ -2,10 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { MtxDialog } from '@ng-matero/extensions/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+
 import { MtxGridColumn } from '@ng-matero/extensions';
 
 //Import services
-import { Company, CompaniesService, PeopleService, Person } from 'app/services';
+import { PeopleService, Person } from 'app/services';
+import { DataTableTranslations } from 'ornamentum';
 
 @Component({
   selector: 'app-security-people',
@@ -107,13 +113,23 @@ export class SecurityPeopleComponent implements OnInit {
   dragging = false;
   opened = false;
 
+  public dataTableTranslations: DataTableTranslations;
+
   constructor(
     public peopleService: PeopleService,
     public translate: TranslateService,
-    public toaster: ToastrService
+    public toaster: ToastrService,
+    public dialog: MtxDialog,
+    private confirmDialog: MatDialog
   ) {
     this.title = this.translate.instant('domain.people');
     this.getList();
+  }
+
+  getTitle()
+  {
+    this.title = this.translate.instant('domain.companies');
+    return this.title;
   }
 
   ngOnInit() {
@@ -124,8 +140,31 @@ export class SecurityPeopleComponent implements OnInit {
     }
   }
 
+  getDataTableTranslations(): DataTableTranslations {
+    this.dataTableTranslations = {
+     pagination: {
+       limit: this.translate.instant('pagination.limit'),
+       rangeKey: this.translate.instant('pagination.records'),
+       rangeSeparator: this.translate.instant('pagination.of'),
+       nextTooltip: this.translate.instant('pagination.next'),
+       previousTooltip: this.translate.instant('pagination.previous'),
+       lastTooltip: this.translate.instant('pagination.last'),
+       firstTooltip: this.translate.instant('pagination.first'),
+     },
+     noDataMessage: this.translate.instant('notifications.nodata'),
+     dropdownFilter: {
+       filterPlaceholder: this.translate.instant('record_actions.search'),
+       selectPlaceholder: this.translate.instant('record_actions.search')
+     },
+     columnSelector: { header: ">>"}
+
+
+   };
+   return this.dataTableTranslations;
+ }
+
   getList() {
-    this.isLoading = false;
+
     this.peopleService.getData().subscribe(
       res => {
         if (res) {
@@ -133,7 +172,6 @@ export class SecurityPeopleComponent implements OnInit {
           var response = JSON.parse(jsonResponse);
           if (response.status != 'ok') return;
           this.peopleList = response.objects;
-          //this.userList = this.userList.filter(it => it.isActive == true);
         }
       },
       err => {
@@ -164,6 +202,21 @@ export class SecurityPeopleComponent implements OnInit {
     this.selected = selected;
     this.opened = true;
     this.currentState = 'EDIT';
+  }
+
+  confirmDelete(selected) {
+    const confirmDialog = this.confirmDialog.open(ConfirmDialogComponent, {
+      data: {
+        title: this.translate.instant('record_actions.deactivate'),
+        message: this.translate.instant('notifications.can_deactivate') + ': ' + selected.names + ' ' +  selected.lastNames  + ' ?',
+        button1Text: this.translate.instant('buttons.yes').toUpperCase(),
+        button2Text: this.translate.instant('buttons.no').toUpperCase(),
+      },
+    });
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result == true) this.delete(selected);
+    });
   }
 
   disableDelete(record): boolean
@@ -198,15 +251,19 @@ export class SecurityPeopleComponent implements OnInit {
     if (state == 'RETRIEVE') this.getList();
   }
 
-  changeSelect(e: any) {
-    this.selected = <Person>e[0];
+  changeSelected(event:MatCheckboxChange,per:any) {
+    if (event.checked)
+       this.selected = <Person>per[0];
+    else
+       this.selected=null;
+  }
+
+  changeSelect (e: any){
+    this.selected=<Person>e[0];
   }
 
   changeSort(e: any) {
     console.log(e);
   }
 
-  enableRowExpandable() {
-    this.columns[0].showExpand = this.expandable;
-  }
 }
