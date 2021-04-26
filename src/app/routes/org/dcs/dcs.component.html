@@ -11,13 +11,14 @@
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
     <div
-      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.distributioncenter' | translate }}"
+      matTooltip="{{ 'record_actions.add_new' | translate | titlecase }} {{ 'domain.distributioncenter' | translate | titlecase }}"
       cdkDrag
       (cdkDragStarted)="handleDragStart($event)"
       *ngIf="currentState == 'RETRIEVE'"
     >
       <button mat-raised-button color="primary" (click)="openPanel($event)">
-        {{ 'record_actions.add_new' | translate }}
+        <mat-icon>add</mat-icon>
+        {{ 'record_actions.add_new' | translate | titlecase }}
       </button>
     </div>
   </mat-toolbar>
@@ -49,11 +50,11 @@
     [minContentWidth]="800"
   >
     <ng-data-table-column [field]="'_id'" [title]="'ID'" [visible]="false"> </ng-data-table-column>
-    
+
     <ng-data-table-column
       [field]="'name'"
       [title]="translate.instant('domain.distributioncenter').toUpperCase()"
-      
+
       [filterable]="true"
       [showDropdownFilter]="false"
       [filterPlaceholder]="translate.instant('record_actions.search')"
@@ -71,7 +72,7 @@
       [dropdownFilterMenuPosition]="'bottom-right'"
       [showDropdownFilter]="true"
       [dropDownFilterShowOptionSelectCheckbox]="true"
-      
+
     >
     </ng-data-table-column>
     <ng-data-table-column
@@ -98,7 +99,7 @@
       [field]="'isActive'"
       [title]="this.title.toUpperCase()"
       [width]="150"
-      
+
       [sortable]="true"
       [filterable]="true"
       [dropdownFilterMenuPosition]="'bottom-right'"

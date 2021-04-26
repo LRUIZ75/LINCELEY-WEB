@@ -11,13 +11,14 @@
 <mat-card *ngIf="currentState == 'RETRIEVE'">
   <mat-toolbar>
     <div
-      matTooltip="{{ 'record_actions.add_new' | translate }} {{ 'domain.assignments' | translate }}"
+      matTooltip="{{ 'record_actions.add_new' | translate | titlecase }} {{ 'domain.assignments' | translate | titlecase }}"
       cdkDrag
       (cdkDragStarted)="handleDragStart($event)"
       *ngIf="currentState == 'RETRIEVE'"
     >
       <button mat-raised-button color="primary" (click)="openPanel($event)">
-        {{ 'record_actions.add_new' | translate }}
+        <mat-icon>add</mat-icon>
+        {{ 'record_actions.add_new' | translate | titlecase }}
       </button>
     </div>
     <div
