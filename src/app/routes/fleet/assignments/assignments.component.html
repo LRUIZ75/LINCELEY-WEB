@@ -55,7 +55,7 @@
   [expandableRows]="false"
   [showLoadingSpinner]="true"
   [selectMode]="'single'"
-  [DataTableStorageMode] ="local"
+ 
   [persistTableState] = "true"
   [translations]="getDataTableTranslations()"
   [minContentWidth]="800"
@@ -111,8 +111,9 @@
       </td>
     </ng-template>
   </ng-data-table-column>
+
   <ng-template #ngDataTableNoRecords>
-    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{notifications.nodata | translate | titlecase}}</h1>
+    <h1 color="text-linceley-yellow-900"><mat-icon>api</mat-icon> {{ 'notifications.nodata' | translate | titlecase }}</h1>
   </ng-template>
   </ng-data-table>
 
